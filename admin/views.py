@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.models import LogEntry
 
 TEMPLATE_DIR = 'admin/../'
 

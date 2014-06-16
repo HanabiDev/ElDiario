@@ -1,41 +1,30 @@
 {% extends "base.html" %}
+{% load static %}
 {% load url from future %}
 
 {% block extrahead %}
-	{% comment %}
-	{% if ga_data and not ga_data.error %}
-		<script src="https://www.google.com/jsapi"></script>
-		<script>
-			google.load("visualization", "1", {packages:["corechart"]}); 
-			google.setOnLoadCallback(drawChart);
-			
-			function drawChart() {   
-				var data = google.visualization.arrayToDataTable([
-					["{% trans 'Date' %}", "{% trans 'New' %}", "{% trans 'Returning' %}", "{% trans 'Total visits' %}"],
-					{% for row in ga_data.chart %}
-						["{{row.date}}", {{row.new}}, {{row.returning}}, {{row.total}}],
-					{% endfor %}
-				]);
+	<script src='{% static "js/oocharts.min.js" %}'></script>
+	<script src="https://www.google.com/jsapi"></script>
+	<script>
+		
+        window.onload = function(){
 
-				var options = {
-					title: "{% trans 'Last 30 days visits' %}",
-					titleTextStyle: {color: '#111', fontSize: 18, fontName: 'Ubuntu Condensed' },
-					pointSize: 6,
-					chartArea: {width: '100%', top : 30, height: 220 },
-					legend: {position: 'in'},
-					axisTitlesPosition: 'in',
-					vAxis: {textPosition: 'in'},
-					hAxis: {textPosition: 'none'},
-					colors: ['#ED8D2D', '#F54747', '#2F96B4']
-				};
+            oo.setAPIKey("cf691005659d07762ba947e6368d45138336d0ac");
 
-				var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-				chart.draw(data, options);
-			}
-		</script>
-	{% endif %}
-	{% endcomment %}
-	<script type="text/javascript">window.location.replace(url);</script>
+            oo.load(function(){
+
+                var timeline = new oo.Timeline("86155580", "7d");
+
+                timeline.addMetric("ga:visits", "Visitantes");
+
+                timeline.addMetric("ga:newVisits", "Nuevos visitantes");
+
+                timeline.draw('chart');
+
+            });
+        };
+
+	</script>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -61,12 +50,11 @@
 				    </div>
 				    <div id="collapseOne" class="panel-collapse collapse in">
 				      <div class="panel-body">
-				      	{%comment%}
-				        {% if ga_data %}
-							{% if not ga_data.error %}
+				        	
 							<div class="row-fluid hidden-phone">
-								<div class="span12" id="chart_div"></div>
+								<div id='chart'></div>
 							</div>
+							{%comment%}
 							<div class="row-fluid grey-degrade analytics-sum-wrapper add-bottom hidden-phone">
 								<div class="span2 analytics-sum"><strong>{% trans 'Total visits' %}:</strong><br/>{{ga_data.summed.visits}}</div>
 								<div class="span2 analytics-sum"><strong>{% trans 'Visitors' %}:</strong><br/>{{ga_data.summed.visitors}}</div>
@@ -148,20 +136,29 @@
 								Encuestas
 							</a>
 						</div>
+						<div class="app_link col-xs-5 col-sm-3 col-md-2">
+							<a href="suscripciones" class="section app_link_content">
+								<span class="fa fa-send"></span>
+								Suscripciones
+							</a>
+						</div>
+						<div class="app_link col-xs-5 col-sm-3 col-md-2">
+							<a href="plugins" class="section app_link_content">
+								<span class="fa fa-sliders"></span>
+								Plugins
+							</a>
+						</div>
 				      </div>
 				    </div>
 				  </div>
 				</div>
 		  	</div>
 
-
-		  	{%comment%}
 		  	<div class="col-xs-12 col-sm-2 col-md-3">
 				<div class="well well-open">
 					<h3 class="filter-title">Acciones recientes</h3>
 					<ul class="nav nav-list">
-						{% load log %}
-							{% get_admin_log 10 as admin_log for_user user %}
+						
 							{% if not admin_log %}
 								<li>
 									<p class="tip">No se han registrado acciones</p>
@@ -194,7 +191,6 @@
 					</ul>
 				</div>
 		  	</div>
-		  	{%endcomment%}
 		</div>
 	</div>
 {% endblock %}
