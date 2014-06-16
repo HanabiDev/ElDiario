@@ -1,0 +1,24 @@
+{% load static %}
+<div class="container-fluid" style="padding: 0 8px;">
+	<div class="row ad ad_1">
+		{% include "pos1/template_index.html"%}
+	</div>
+	<div class="row">
+
+		<ul class="list-inline org">
+			<li><a id="hide-ads" href="#"><span class="fa fa-eye"></span> Cerrar publicidades</a></li>
+			<li><a href=""><span class="fa fa-paper-plane"></span> Suscríbase</a></li>
+			<a href="#"><span class="glyphicon glyphicon-print"></span>	Edición Impresa</a>
+			<li><a href=""><span class="fa fa-university"></span> Quiénes somos</a></li>
+			<li><a href=""><span class="fa fa-bullhorn"></span> Paute con nosotros</a></li>
+		</ul>
+
+	</div>
+
+	<div class="row logo" style="padding:25px;height:110px;">
+		<img src="{% static "images/logo.png" %}" style="max-height:100%;">
+	</div>
+	<div class="row date text-center" style="background:#333; color:white; font-size:12px;">
+		{% now " l j \d\e F \d\e\l Y " %}
+	</div>
+</div>

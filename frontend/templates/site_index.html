@@ -1,0 +1,612 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><!--<![endif]-->
+
+<html lang="{{ LANGUAGE_CODE|default:"es-co" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}Periódico El Diario - Incicio{% endblock %}</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="Administración del sitio web de El Diario">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="{% static "css/bootstrap.css" %}" />
+		<link rel="stylesheet" href="{% static "css/bootstrap-theme.min.css" %}">
+		<link rel="stylesheet" href="{% static "css/main.css" %}">
+		<link rel="stylesheet" href="{% static "redactor/css/redactor.css" %}">
+		<link rel="stylesheet" href="{% static "css/bootstrap-datetimepicker.min.css" %}">
+
+		<style>
+		body, html{
+			height: 100%;
+			padding: 0; 
+			margin: 0;
+			width: 100%;
+			overflow-x: hidden;
+			background: #ddd;
+		}
+		body{
+			margin-top: 0px;
+			height: 100%;
+		}
+		</style>
+
+		<script src="{% static "js/jquery.js" %}"></script>
+		<script src="{% static "js/bootstrap.min.js" %}"></script>
+		<script src="{% static "js/moment.min.js" %}"></script>
+		<script src="{% static "redactor/redactor.js" %}"></script>
+		<script src="{% static "redactor/jquery-migrate.min.js" %}"></script>
+		<script src="{% static "js/bootstrap-datetimepicker.min.js" %}"></script>
+		<script src="{% static "js/jquery.confirm.min.js" %}"></script>
+
+		{% block extrastyle %}{% endblock %}
+		{% block extrahead %}{% endblock %}
+		{% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+	</head>
+
+	<body>
+		<div class="container-fluid text-justify" style="padding:0 0 30px 0;">
+
+			<div class="col-xs-1" style="padding-right:20px">
+				<div class="row ad ad2">
+					{% include "pos2/template_index.html"%}
+				</div>
+			</div>
+
+			<div class="col-xs-10">
+				{% block header %}
+					{% include "header.html"%}
+				{% endblock %}
+
+				{% block topmenu %}
+					{% include "site_topmenu.html" %}
+				{% endblock %}
+				
+
+				<div class="container-fluid" style="padding: 0 8px;">
+					
+					{% block indicators %}
+						<div class="row indicators text-right" style="line-height:30px;">
+							<div class="col-xs-2" style="width:11%;"><b><span class="fa fa-money"></span> Indicadores</b></div>
+							<div class="col-xs-10">
+								<div id="bgBody" class="bgCarouselH">
+									<script type="text/javascript">
+									  // <![CDATA[
+									  var bgHost = "http://www.applab.in/";
+									  var bgType = "CO-19288-1";
+									  var bgIndi = "1|2|3|4|5|6|7|8|9|10";
+									  (function(d){ var f = bgHost+ "apps/indicators/"+bgType+"/"+bgIndi+"/functions.js"; d.write(unescape("%3Cscript src='"+f+"' type='text/javascript'%3E%3C/script%3E")); })(document);
+									  // ]]>
+									</script>
+								</div>
+							</div>
+						</div>
+					{% endblock %}
+
+					<div class="row ad ad_4">
+						{% include "pos4/template_index.html" %}
+					</div>
+
+					{% block full_news %}
+						{% if full_width_article %}
+						<div class="row" style="padding:5px; margin-bottom:0;background:white;">
+							<div class="panel panel-default">
+							  	<div class="panel-body">
+							  		<div class="full_head">
+										<h1>{{full_width_article.title}}</h1>
+
+										<small>
+											<span class="fa fa-user"></span> Por: {{full_width_article.author.first_name}} {{full_width_article.author.last_name}}
+										</small>
+										<small>
+											<span class="glyphicon glyphicon-calendar"></span> {{ full_width_article.creation_date|date:"d \d\e F \d\e\l Y" }}
+										</small>
+									</div>
+									<hr style="margin-top:10px; margin-bottom:15px;">
+									{{ full_width_article.abstract | safe }}
+									{{ full_width_article.content | safe }}
+								</div>
+							</div>	
+						</div>
+						{% endif %}
+					{% endblock %}
+
+					<div class="row" style="background:white; padding:10px 10px 0 0;">
+
+						<!--Main Content-->
+						<div class="col-xs-8">
+							<div class="row-fluid ad ad_5">
+								{% include "pos5/template_index.html" %}
+							</div>
+
+							<div class="row-fluid main_news">
+								{% block main_content %}
+								<div class="panel panel-default">
+								  	<div class="panel-body">
+										<div class="row-fluid">
+											{% with articles|first as first_art %}
+												<h2> <a href="{{first_art.slug}}">{{first_art.title}}</a></h2>
+												<hr>
+												<a href="articulos/{{first_art.slug}}">
+													<p>
+														{{first_art.abstract | safe}}
+													</p>
+												</a>
+											{% endwith %}
+										</div>
+									</div>
+								</div>
+								{% endblock %}
+							</div>
+
+
+							<div class="row-fluid main_news">
+								<div class="panel panel-default">
+								  	<div class="panel-body">
+										<div class="row-fluid">
+											
+											{% for art in articles %}
+
+												{% if forloop.counter < 4 %}
+													{% if art == articles|first %}
+													{% else %}
+														Left {{art}}
+													{% endif %}
+												{% endif %}
+
+												{% if forloop.counter >= 4 %}
+											        {{art}}
+												{% endif %}
+											{% endfor %}
+
+
+
+											<div class="col-xs-7" style="padding:0 10px 0 0">
+												<h2>Ejemplo de artículo</h2>
+												<hr>
+												<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
+												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+												tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+												quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+												consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+												cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+												proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+												</p>
+											</div>
+											<div class="col-xs-5" style="border-left:1px solid #ddd">
+												<div class="row-fluid">
+													<h4>Noticia principal de ejemplo</h4>
+													<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
+													<p>
+														Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+														tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+														quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+														consequat.
+													</p>
+												</div>
+												<div class="row-fluid">
+													<h4>Noticia principal de ejemplo</h4>
+													<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
+													<p>
+														Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+														tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+														quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+														consequat.
+													</p>
+												</div>			
+											</div>
+										</div>	
+									</div>
+								</div>
+							</div>
+							<div class="row-fluid ad ad_6">
+								{% include "pos6/template_index.html" %}
+							</div>
+						</div>
+						<!--End Main Content-->
+						
+
+
+
+
+
+
+						{% block right_col %}
+						<!--Right Col-->
+						<div class="col-xs-4">
+							{% block social_links %}
+								<div class="row">
+									<div class="btn-group" id="social_buttons">
+									  <span class="btn btn-default disabled">
+									  	<b>Síguenos en: </b>
+									  </span>
+									  <a class="btn btn-default" href="https://www.facebook.com/periodicoeldiario" class="btn btn-default">
+										<span class="fa fa-facebook"></span>
+									  </a>
+									  <a class="btn btn-default" href="https://twitter.com/eldiarioboyaca">
+										<span class="fa fa-twitter"></span>
+									  </a>
+									  <a class="btn btn-default" href="https://plus.google.com/115531395616996043693/posts">
+										<span class="fa fa-google-plus"></span>
+									  </a>
+									  <a class="btn btn-default" href="http://www.youtube.com/channel/UCC8r9OquHiDaI2IydAYqOZw?feature=watch">
+										<span class="fa fa-youtube-play"></span>
+									  </a>
+									  <a class="btn btn-default" href="https://pinterest.com/ElDiarioBoyaca/">
+										<span class="fa fa-pinterest"></span>
+									  </a>
+									  <a class="btn btn-default" href="https://www.linkedin.com/reg/join?session_redirect=http%3A%2F%2Fwww.linkedin.com%2FpostLogin%3Fsession_rikey%3DoZtL5JSaGZ4Zom0IZAdGh4L-ZpzcKH01Pf-zI53EI6y-AyXFbCOx-AqYnubdoToNl8mhoOblcXwAlpo-AC70-5ddI3Pxomkv8Ar%26l%3Dhttp%253A%252F%252Fwww%252Elinkedin%252Ecom%252Fsearch%26id%3D0%26b%3D315bbd1e-5163-4b92-8878-bcb96237ffd2%26h%3D5AaA%26m%3DGET">
+										<span class="fa fa-linkedin"></span>
+									  </a>
+									  <a class="btn btn-default" href="https://soundcloud.com/periodicoeldiario">
+										<span class="fa fa-soundcloud"></span>
+									  </a>
+									</div>
+								</div>
+							{% endblock %}
+							<br>
+
+							<div class="row alt-news text-justify">
+								{% block alt_news %}
+								<div class="panel panel-default">
+								  <div class="panel-body">
+								    <div class="container-fluid">
+										<h4><b>Noticia de ejemplo</b></h4>
+										<img src="http://periodicoeldiario.com/images/stories/FotosAGUA/EspecialAgua/aguespeciala1.jpg">
+										<p>
+											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										</p>
+										<hr>
+								    </div>
+								    <div class="container-fluid">
+										<h4><b>Noticia de ejemplo 2</b></h4>
+										<img src="http://periodicoeldiario.com/images/stories/fotosactualidad/gota-a-gota-2.jpg">
+										<p>
+											Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+										</p>
+										<hr>
+								    </div>
+								  </div>
+								</div>
+								{% endblock %}
+							</div>
+
+							<div class="row ad ad_7">
+								{% include "pos7/template_index.html"%}
+							</div>
+
+							{% block editorial %}
+							<div class="row editorial">Editorial</div>
+							{% endblock %}
+
+							{% block printed_ed%}
+							<div class="row printed_edition">
+								<div class="panel panel-default">
+								  	<div class="panel-body">
+										<h4><b><span class="glyphicon glyphicon-print"></span> Edición Impresa</b></h4><hr>
+										<p class="text-center">
+											<img class="img-thumbnail" src="http://periodicoeldiario.com/images/stories/EdiconesPDFImpresas/edicionpdf711.jpg">
+											<br>
+											<a href=""><span class="glyphicon glyphicon-time"></span> Ediciones anteriores</a>
+										</p>
+
+									</div>
+								</div>
+							</div>
+							{% endblock %}
+
+							<div class="row banner">Banner</div>
+
+							<div class="row polls">
+								{% block polls_app %}
+
+								<div class="panel panel-default">
+								  	<div class="panel-body">
+										<h4><span class="fa fa-tasks"></span> Encuesta</h4><hr>
+										<p>Qué opina sobre el nuevo sitio de El Diario</p>
+										<div class="container-fluid" style="background:#eee; padding-top:20px;">
+											<form role="form">
+												<div class="form-group">
+													<input id="option1" type="radio"/>
+													<label for="option1">Opción 1</label>
+												</div>
+												
+												<div class="form-group">
+													<input id="option2" type="radio"/>
+													<label for="option2">Opción 2</label>
+												</div>
+
+												<div class="form-group">
+													<input id="option3" type="radio"/>
+													<label for="option3">Opción 3</label>
+												</div>
+
+												<div class="form-group">
+													<input id="option4" type="radio"/>
+													<label for="option4">Opción 4</label>
+												</div>
+												<div class="form-group text-right">
+													<input type="submit" class="btn btn-success" value="Votar">
+													<a class="btn btn-primary">Ver votaciones</a>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								{% endblock %}
+							</div>							
+
+							<div class="row especials">Informes Especiales</div>
+
+							<div class="row ad ad_8">
+								{% include "pos8/template_index.html" %}
+							</div>
+
+							<div class="row twitter_widget">
+								{% block twitter_plugin %}
+								<a class="twitter-timeline" href="https://twitter.com/eldiarioboyaca" 
+								   data-widget-id="475919964482703360">Tweets por @ELDIARIOBOYACA</a>
+								<script>!function(d,s,id){
+									var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+									if(!d.getElementById(id)){
+										js=d.createElement(s);
+										js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+										fjs.parentNode.insertBefore(js,fjs);
+									}}(document,"script","twitter-wjs");
+								</script>
+								{% endblock %}
+							</div>
+
+							<div class="row fb_widget">
+								{% block facebook_plugin %}
+								<div id="fb-root"></div>
+								<div class="panel panel-default">
+								  	<div class="panel-body">
+										<script>(function(d, s, id) {
+										  var js, fjs = d.getElementsByTagName(s)[0];
+										  if (d.getElementById(id)) return;
+										  js = d.createElement(s); js.id = id;
+										  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.0";
+										  fjs.parentNode.insertBefore(js, fjs);
+										}(document, 'script', 'facebook-jssdk'));</script>
+
+										<div class="fb-like-box" data-href="https://www.facebook.com/periodicoeldiario" 
+											 data-height="450px" data-colorscheme="light" data-show-faces="true" 
+											 data-header="true" data-stream="false" data-show-border="true">
+										</div>
+									</div>
+								</div>
+								{% endblock %}
+							</div>
+
+							<div class="row">
+								{% block weather_app %}
+								
+									<div class="panel panel-default">
+									  	<div class="panel-body">
+											<iframe src="http://www.tutiempo.net/widget/app/?sc=1&LocId=70493" 
+													scrolling="no" frameborder="0" 
+													style="margin-left:5px;border:none; overflow:hidden; width:100%; height:411px;" 
+													allowTransparency="true">
+											</iframe>
+										</div>
+									</div>
+								{% endblock %}
+							</div>
+						</div>
+						{% endblock %}
+						<!--End Left Col-->
+
+					</div>
+
+					<div class="container-fluid" style="padding: 0">
+						<div class="row">
+							<div style="background:#F0F0F0; padding:20px;">
+								<h4>Secciones</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div style="background:#740000; padding:20px;border-radius:0 0 8px 8px;color:white;">
+								<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.es_ES">
+									<img alt="Licencia de Creative Commons" style="border-width: 0px; float:left; margin-right: 10px;" 
+										 src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" height="32" width="92">
+								</a>
+								<b>periodicoeldiario.com</b> por <a href="">EL DIARIO</a> 
+								está bajo licencia Creative Commons Reconocimiento-NoComercial-SinObraDerivada 3.0 Unported License.
+								Creado a partir de la obra en <a href="http://periodicoeldiario.com/">http://periodicoeldiario.com/</a>. 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-xs-1" style="padding-left:20px;">
+				<div class="row ad ad3">
+					{% include "pos3/template_index.html" %}
+				</div>
+			</div>
+
+
+
+		</div>
+	
+		
+
+		<canvas id="world" style="display:none;z-index:3;position:absolute; top:0; left:0; width:100%; height:100%"></canvas>
+	</body>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#hide-ads").click(function(){
+				$(".ad").fadeOut();
+			});
+
+		});
+	</script>
+
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript" src="http://www.applab.in/Scripts/js/jquery.carouFredSel-5.5.0-packed.js"></script>
+
+	<script type="text/javascript" language="javascript">
+    	$(function() {
+	        $("#bgUl").carouFredSel({
+	            auto: {
+	                items           : 5, // número de item a mostrar
+	                duration        : 8500, // velocidad
+	                easing          : "linear",
+	                pauseDuration   : 0,
+	                pauseOnHover    : "immediate"
+	            }
+	        });
+	    });
+	</script>
+
+
+	<script type="text/javascript">
+
+var T = function() {
+  var COLORS, Confetti, NUM_CONFETTI, PI_2, canvas, confetti, context, drawCircle, i, range, resizeWindow, xpos;
+
+  NUM_CONFETTI = 350;
+
+  COLORS = [[85, 71, 106], [174, 61, 99], [219, 56, 83], [244, 92, 68], [248, 182, 70]];
+
+  PI_2 = 2 * Math.PI;
+
+  canvas = document.getElementById("world");
+
+  context = canvas.getContext("2d");
+
+  window.w = 0;
+
+  window.h = 0;
+
+  resizeWindow = function() {
+    window.w = canvas.width = window.innerWidth;
+    return window.h = canvas.height = window.innerHeight;
+  };
+
+  window.addEventListener('resize', resizeWindow, false);
+
+  window.onload = function() {
+    return setTimeout(resizeWindow, 0);
+  };
+
+  range = function(a, b) {
+    return (b - a) * Math.random() + a;
+  };
+
+  drawCircle = function(x, y, r, style) {
+    context.beginPath();
+    context.arc(x, y, r, 0, PI_2, false);
+    context.fillStyle = style;
+    return context.fill();
+  };
+
+  xpos = 0.5;
+
+  document.onmousemove = function(e) {
+    return xpos = e.pageX / w;
+  };
+
+  window.requestAnimationFrame = (function() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) {
+      return window.setTimeout(callback, 1000 / 60);
+    };
+  })();
+
+  Confetti = (function() {
+    function Confetti() {
+      this.style = COLORS[~~range(0, 5)];
+      this.rgb = "rgba(" + this.style[0] + "," + this.style[1] + "," + this.style[2];
+      this.r = ~~range(2, 6);
+      this.r2 = 2 * this.r;
+      this.replace();
+    }
+
+    Confetti.prototype.replace = function() {
+      this.opacity = 0;
+      this.dop = 0.03 * range(1, 4);
+      this.x = range(-this.r2, w - this.r2);
+      this.y = range(-20, h - this.r2);
+      this.xmax = w - this.r;
+      this.ymax = h - this.r;
+      this.vx = range(0, 2) + 8 * xpos - 5;
+      return this.vy = 0.7 * this.r + range(-1, 1);
+    };
+
+    Confetti.prototype.draw = function() {
+      var _ref;
+      this.x += this.vx;
+      this.y += this.vy;
+      this.opacity += this.dop;
+      if (this.opacity > 1) {
+        this.opacity = 1;
+        this.dop *= -1;
+      }
+      if (this.opacity < 0 || this.y > this.ymax) {
+        this.replace();
+      }
+      if (!((0 < (_ref = this.x) && _ref < this.xmax))) {
+        this.x = (this.x + this.xmax) % this.xmax;
+      }
+      return drawCircle(~~this.x, ~~this.y, this.r, "" + this.rgb + "," + this.opacity + ")");
+    };
+
+    return Confetti;
+
+  })();
+
+  confetti = (function() {
+    var _i, _results;
+    _results = [];
+    for (i = _i = 1; 1 <= NUM_CONFETTI ? _i <= NUM_CONFETTI : _i >= NUM_CONFETTI; i = 1 <= NUM_CONFETTI ? ++_i : --_i) {
+      _results.push(new Confetti);
+    }
+    return _results;
+  })();
+
+  window.step = function() {
+    var c, _i, _len, _results;
+    requestAnimationFrame(step);
+    context.clearRect(0, 0, w, h);
+    _results = [];
+    for (_i = 0, _len = confetti.length; _i < _len; _i++) {
+      c = confetti[_i];
+      _results.push(c.draw());
+    }
+    return _results;
+  };
+
+  step();
+};
+
+T();
+
+
+	$(document).ready(function(){
+		window.setTimeout(function(){$("#world").fadeOut(function(){$(this).detach();})}, 10);
+	});
+	
+	
+
+</script>
+
+</html>
+
+
+
+
+
+
+
+
+
+

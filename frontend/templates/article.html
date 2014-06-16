@@ -1,0 +1,29 @@
+{% extends "site_index.html" %}
+
+{% block indicators %}{% endblock %}
+
+{% block main_content %}
+	<div class="new_extended">
+		<div class="new_head">
+			<h2>{{article.title}}</h2>
+
+			<small>
+				<span class="fa fa-user"></span> Por: {{article.author.first_name}} {{article.author.last_name}}
+			</small>
+			<small>
+				<span class="glyphicon glyphicon-calendar"></span> {{ article.creation_date|date:"d \d\e F \d\e\l Y" }}
+			</small>
+		</div>
+		<hr>
+		{{article.abstract | safe}}
+		{{article.content | safe}}
+	</div>
+{% endblock %}
+
+{% block right_col %}
+	{{block.super}}
+	{% block editorial %}{% endblock %}
+	{% block twitter_plugin %}{% endblock %}
+	{% block facebook_plugin %}{% endblock %}
+	{% block weather_app %}{% endblock %}
+{% endblock %}
