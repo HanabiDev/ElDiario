@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %} Administrar Artículos {% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li class="active"><i class="fa fa-leaf"></i> Artículos</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+				    <h2 class="panel-title" style="display:inline-block; margin-right:5px">
+				    	<span class="fa fa-leaf"></span> Artículos
+				    </h2>
+				    <div class="hidden-xs" style="display:inline-block;width:50%;"></div>
+				    <div class="btn-group" style="display:inline-block;">
+						<a href="nuevo/" class="btn btn-success">
+							<span class="fa fa-plus"></span> <span class="hidden-xs"> Nuevo Artículo</span>
+						</a>
+						<a href="destacar/" class="btn btn-info toggle_feature disabled hidden-xs">
+							<span class="fa fa-star"></span> <span class="hidden-xs"> Destacar</span>
+						</a>
+						<a href="no_destacar/" class="btn btn-info toggle_feature disabled hidden-xs">
+							<span class="fa fa-star-o"></span> <span class="hidden-xs"> No Destacar</span>
+						</a>
+						<a href="publicar/" class="btn btn-primary toggle_publish disabled">
+							<span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-xs">Publicar</span>
+						</a>
+						<a href="despublicar/" class="btn btn-warning toggle_publish disabled">
+							<span class="glyphicon glyphicon-eye-close"></span> <span class="hidden-xs">Despublicar</span>
+						</a>
+						<a href="eliminar/" class="btn btn-danger delete disabled">
+							<span class="glyphicon glyphicon-fire"></span> <span class="hidden-xs">Eliminar</span>
+						</a>
+					</div>
+				  </div>
+				  <div class="panel-body" style="padding:0">
+
+				  	<form id="all_objects" method="POST">{% csrf_token %}</form>
+				    
+				    <table class="table table-striped">
+				      <thead>
+				        <tr class="active">
+				        	<th><input type="checkbox" id="toggle_all"/></th>
+				        	<th class="text-center hidden-xs">ID</th>
+				        	<th class="text-left">Título</th>
+				        	<th class="text-center hidden-xs">Autor</th>
+				        	<th class="text-center hidden-xs">Página Principal</th>
+				        	<th class="text-center hidden-xs">Creación</th>
+				        	<th class="text-center hidden-xs">Categoría</th>
+				        	<th class="text-center">Publicado</th>
+				        	<th class="text-center">Vistas</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				      	{% for art in art_list%}
+				        <tr>
+				        	<td class="text-left;">
+				        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{art.id}}"/>
+				        	</td>
+				        	<td class="text-center hidden-xs">{{art.id}}</td>
+				        	<td class="text-left"><a href="editar/{{art.id}}">{{art.title}}</a></td>
+				        	<td class="text-center hidden-xs">{{art.author}}</td>
+				        	<td class="text-center hidden-xs">
+				        		{% if art.featured %}
+				        		<a href="no_destacar/{{art.id}}">
+				        			<span class="glyphicon glyphicon-star text-warning"></span>
+				        		{% else %}
+				        		<a href="destacar/{{art.id}}">
+				        			<span class="glyphicon glyphicon-star-empty text-primary"></span>
+				        		{% endif %}
+				        	</td>
+				        	<td class="text-center hidden-xs">{{art.creation_date}}</td>
+				        	<td class="text-center hidden-xs">
+				        		{% if art.category %} {{art.category}} {% else %} General {% endif %}
+				        	</td>
+				        	<td class="text-center">
+				        		{% if art.published %}
+				        		<a href="despublicar/{{art.id}}">
+				        			<span class="glyphicon glyphicon-eye-open text-primary"></span>
+				        		{% else %}
+				        		<a href="publicar/{{art.id}}">
+				        			<span class="glyphicon glyphicon-eye-close text-warning"></span>
+				        		{% endif %}
+				        		</a> 
+				        	</td>
+				        	<td class="text-center">{{art.hits}}</td>
+				        </tr>
+				        {% empty %}
+				        <tr>
+				        	<td colspan="9" class="text-center">
+				        		<div class="alert alert-info">No has creado artículos
+				        			<br><br>
+				        			<b>
+				        				<a href="nuevo/"> 
+				        					<span class="fa fa-plus"></span> Crear un Artículo
+				        				</a>
+				        			</b>
+				        		</div>
+				        	</td>
+				        </tr>
+				        {% endfor %}
+				      </tbody>
+				    </table>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	$(".delete").confirm({
+		text: "Vas a eliminar uno o más artículos, esta acción no se puede deshacer. ¿Aún deseas continuar?",
+	    title: "Procede con cuidado!",
+	    confirm: function(button) {
+	        $("#all_objects").attr("action", button.attr("href"));
+			$("#all_objects").submit();
+	    },
+	    cancel: function(button) {
+	        return false;
+	    },
+	    confirmButton: "Lo entiendo, deseo continuar",
+	    cancelButton: "No",
+	    post: false
+	});
+	</script>
+
+
+{% endblock %}
+

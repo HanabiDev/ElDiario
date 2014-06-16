@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block topmenu %}{% endblock %}
+
+{% block mainbody %}
+
+	<div class="jumbotron" style="padding-top:100px; height:100%; margin-bottom:0; position:absolute; top:0; bottom:0;left:0; right:0; text-align">
+    	<div class="row">
+    		<div class="col-xs-1 col-sm-2 col-md-2"></div>
+    		<div class="col-xs-10 col-sm-8 col-md-8">
+    			<div style="text-align:center">
+    				<img src="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-ash3/t1.0-9/734113_389386964485689_331498768_n.jpg" 
+		    			 alt="Periódico El Diario" class="img-rounded" width="100">
+					<h1>Periódico El Diario</h1>
+					<p>Administrador web</p>
+                    <p>Permisos insuficientes</p>
+		      		<small>Al parecer no tienes permisos suficientes para realizar esta acción</small>
+		      		<h3><a href="/backend/">Volver al inicio</a></h3>
+    			</div>
+    		</div>
+      	</div>
+    </div>
+{% endblock %} 

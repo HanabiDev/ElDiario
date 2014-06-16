@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %} {% if editing %} Editando la categoría: {{title}} {% else %} Nueva Categoría {% endif %} {% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li><a href="/backend/contenido/categorias"><i class="fa fa-inbox"></i> Categorías</a></li>
+		<li>
+			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i> 
+			{% if editing %} Editar categoría ({{title}}) {% else %} Nueva Categoría {% endif %}
+		</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+				    	<h2 class="panel-title">
+				    		{% if editing %} <span class="fa fa-edit"></span> Editar categoría ({{title}}) 
+				    		{% else %} <span class="fa fa-plus"></span> Nueva Categoría {% endif %}
+				    		 
+				    	</h2>
+				  	</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+				  			<div class="col-md-1"></div>
+				  			<div class="col-xs-12 col-md-10">
+				  				<form role="form" action="." method="POST">
+									{% csrf_token %}
+
+									<input type="hidden" name="user_id" value="{{user}}" />
+									
+									{% for field in form %}
+
+										{% if field.field.name != "password" %}
+											<div class="form-group {% if field.errors %} has-error{% endif %}">
+
+												{% if not form.this_is_the_login_form.errors %}
+												<label class="control-label required" for="{{field.field.id}}">
+													{{field.label}}:
+												</label>
+												{% endif %}
+
+												{% if field.errors %}
+													<span class="help-inline text-danger">
+														{{field.errors}}
+													</span>
+												{% endif %}
+
+												<div class="input-group">
+													<span class="input-group-addon">
+														<span class="glyphicon glyphicon-asterisk"></span>
+													</span>
+													{{ field }}
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+
+									<br><br>
+									<div class="form-group" style="text-align:right;">
+										<a href="{% if editing %}../../{% else %}../{% endif %}" class="btn btn-danger">
+											Cancelar
+										</a>
+										<button type="submit" class="btn btn-success">
+											{% if editing %} Guardar cambios
+				    						{% else %} Crear Categoría {% endif %}
+				    					</button>
+									</div>	
+								</form>
+				  			</div>
+				  		</div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+

@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block title %} Administrar Acceso {% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li class="active"><i class="fa fa-lock"></i> Acceso</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<ul class="nav nav-tabs">
+				  <li {% if not show_groups %} class="active" {% endif %}>
+				  	<a href="#users" data-toggle="tab"><span class="fa fa-user"></span> Usuarios</a>
+				  </li>
+				  <li {% if show_groups %} class="active" {% endif %}>
+				  	<a href="#groups" data-toggle="tab"><span class="fa fa-group"></span> Grupos</a></a>
+				  </li>
+				</ul>
+
+				<div class="tab-content">
+
+					<div class="tab-pane {% if not show_groups %} active {% endif %}" id="users">
+
+						<div class="content" style="padding:10px">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h2 class="panel-title" style="display:inline-block; margin-right:5px">
+										<span class="fa fa-user"></span> Usuarios
+									</h2>
+									<div class="hidden-xs" style="display:inline-block;width:60%;"></div>
+									<div class="btn-group" style="display:inline-block;">
+										<a href="usuarios/nuevo/" class="btn btn-success">
+											<span class="fa fa-plus"></span><span class="hidden-xs"> Nuevo Usuario</span>
+										</a>
+										<a href="usuarios/desbloquear/" class="btn btn-primary toggle_publish disabled">
+											<span class="fa fa-unlock-alt"></span> <span class="hidden-xs">Desbloquear</span>
+										</a>
+										<a href="usuarios/bloquear/" class="btn btn-warning toggle_publish disabled">
+											<span class="fa fa-lock"></span> <span class="hidden-xs">Bloquear</span>
+										</a>
+									</div>
+								</div>
+
+								<div class="panel-body" style="padding:0">
+
+									<form id="all_objects" method="POST">{% csrf_token %}</form>
+
+									<table class="table table-striped">
+										<thead>
+											<tr class="active">
+												<th><input type="checkbox" id="toggle_all"/></th>
+												<th class="text-center hidden-xs">ID</th>
+												<th class="text-left">Nombre</th>
+												<th class="text-center hidden-xs">Usuario</th>
+												<th class="text-center">Email</th>
+												<th class="text-center">Activo</th>
+												<th class="text-center hidden-xs">Miembro desde</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for user in users%}
+											<tr>
+												<td class="text-left;">
+													<input type="checkbox" class="check" name="id" form="all_objects" value="{{user.id}}"/>
+												</td>
+												<td class="text-center hidden-xs">{{user.id}}</td>
+												<td class="text-left">
+													<a href="usuarios/editar/{{user.id}}">
+														{% if user.first_name or user.last_name %}
+															{{user.first_name}} {{user.last_name}}
+														{% else %}
+															Sin nombre
+														{%endif%}
+													</a>
+												</td>
+												<td class="text-center hidden-xs">{{user.username}}</td>
+												<td class="text-center">{{user.email}}</td>
+												<td class="text-center">
+													{% if user.is_active %}
+													<a href="usuarios/bloquear/{{user.id}}">
+														<span class="glyphicon glyphicon-ok text-primary"></span>
+													{% else %}
+													<a href="usuarios/desbloquear/{{user.id}}">
+														<span class="glyphicon glyphicon-remove text-danger"></span>
+													{% endif %}
+													</a> 
+												</td>
+												<td class="text-center hidden-xs">{{user.date_joined|date:"d \d\e M \d\e\l Y"}}</td>
+											</tr>
+											{% empty %}
+											<tr>
+												<td colspan="8" class="text-center">
+													<div class="alert alert-info">No has creado usuarios
+														<br><br>
+														<b>
+															<a href="usuarios/nuevo/"> 
+																<span class="fa fa-plus"></span> Crear un Usuario
+															</a>
+														</b>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="tab-pane {% if show_groups %} active {% endif %}" id="groups">
+
+
+						<div class="content" style="padding:10px">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h2 class="panel-title" style="display:inline-block; margin-right:5px">
+										<span class="fa fa-group"></span> Grupos
+									</h2>
+									<div class="hidden-xs" style="display:inline-block;width:60%;"></div>
+									<div class="btn-group" style="display:inline-block;">
+										<a href="grupos/nuevo/" class="btn btn-success">
+											<span class="fa fa-plus"></span><span class="hidden-xs"> Nuevo Grupo</span>
+										</a>
+										<a href="grupos/eliminar/" class="btn btn-danger delete disabled">
+											<span class="glyphicon glyphicon-fire"></span> <span class="hidden-xs">Eliminar</span>
+										</a>
+									</div>
+								</div>
+
+								<div class="panel-body" style="padding:0">
+
+									<form id="all_groups" method="POST">{% csrf_token %}</form>
+
+									<table class="table table-striped">
+										<thead>
+											<tr class="active">
+												<th><input type="checkbox" id="toggle_all_groups"/></th>
+												<th class="text-center hidden-xs">ID</th>
+												<th class="text-left">Nombre</th>
+												<th class="text-center">Miembros</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for group in groups%}
+											<tr>
+												<td class="text-left;">
+													<input type="checkbox" class="group_check" name="group_id" form="all_groups" value="{{group.id}}"/>
+												</td>
+												<td class="text-center hidden-xs">{{group.id}}</td>
+												<td class="text-left">
+													<a href="grupos/editar/{{group.id}}">
+														{{group.name}}
+													</a>
+												</td>
+												<td class="text-center">{{group.members}}</td>
+											</tr>
+											{% empty %}
+											<tr>
+												<td colspan="8" class="text-center">
+													<div class="alert alert-info">No has creado grupos
+														<br><br>
+														<b>
+															<a href="grupos/nuevo/"> 
+																<span class="fa fa-plus"></span> Crear un Grupo
+															</a>
+														</b>
+													</div>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+
+	$(".group_check").change(function(){
+    	if($(".group_check:checked").length>0){
+    		$(".delete").removeClass('disabled');
+    	}else{
+    		$(".delete").addClass('disabled');
+    	}
+
+    	if($(".group_check").length===$(".group_check:checked").length){
+    		$("#toggle_all_groups").attr("checked", true);	
+    	}else{
+    		$("#toggle_all_groups").attr("checked", false);
+    	}		    	
+    });
+
+	$('#toggle_all_groups').click(function(event) {
+        if(this.checked) {
+        	$(".delete").removeClass('disabled');
+            $('.group_check').each(function() {
+                this.checked = true;   
+            });
+        }else{
+        	$(".delete").addClass('disabled');
+            $('.group_check').each(function() {
+                this.checked = false;             
+            });         
+        }
+    });
+
+
+	$(".delete").confirm({
+		text: "Estaás a punto de eliminar un grupo. Esta acción no se puede deshacer. ¿Aún deseas continuar?",
+	    title: "Procede con cuidado!",
+	    confirm: function(button) {
+	        $("#all_groups").attr("action", button.attr("href"));
+			$("#all_groups").submit();
+	    },
+	    cancel: function(button) {
+	        return false;
+	    },
+	    confirmButton: "Lo entiendo, deseo continuar",
+	    cancelButton: "No",
+	    post: false
+	});
+	</script>
+{% endblock %}
+

@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% load url from future %}
+{% block title %} {% if editing %} Editando el galería: {{title}} {% else %} Nueva Galería {% endif %} {% endblock %}
+
+{% block extrahead %}
+	<script src="{% static "js/jquery.form.js"%}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li><a href="/backend/fotogalerias"><i class="fa fa-camera"></i> Galerías</a></li>
+		<li>
+			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i> 
+			{% if editing %} Editar Galería ({{title}}) {% else %} Nueva Galería {% endif %}
+		</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+				    	<h2 class="panel-title">
+				    		{% if editing %} <span class="fa fa-edit"></span> Editar Galería ({{title}}) 
+				    		{% else %} <span class="fa fa-plus"></span> Nueva Galería  {% endif %}
+				    		 
+				    	</h2>
+				  	</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+				  			<div class="col-md-1 hidden-xs" style="width:4%;"></div>
+				  			<div class="col-xs-12 col-md-6">
+				  				<form role="form" action="." method="POST">
+									{% csrf_token %}
+
+									<input type="hidden" name="user_id" value="{{user}}" />
+									
+									{% for field in form %}
+
+										<div class="form-group {% if field.errors %} has-error{% endif %}">
+											{% if not form.this_is_the_login_form.errors %}
+												{% if field.name != "images" %}
+												<label class="control-label required" for="{{field.field.id}}">
+													{{field.label}}:
+												</label>
+												{% endif %}
+											{% endif %}
+
+											{% if field.errors %}
+												<span class="help-inline text-danger">
+													{{field.errors}}
+												</span>
+											{% endif %}
+
+											{% if field.name != "images" %}
+											<div class="input-group">
+											{% else %}
+											<div class="input-group">
+											{% endif %}
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-asterisk"></span>
+												</span>
+												{{ field }}
+											</div>
+										</div>
+									{% endfor %}
+
+									<br><br>
+									<div class="form-group" style="text-align:right;">
+										<a href="{% if editing %}../../{% else %}../{% endif %}" class="btn btn-danger">
+											Cancelar
+										</a>
+										<button type="submit" class="btn btn-success">
+											{% if editing %} Guardar cambios
+				    						{% else %} Crear Galería {% endif %}
+				    					</button>
+									</div>	
+								</form>
+				  			</div>
+				  			<div class="col-xs-12 col-md-5">
+				  				<div class="panel panel-default">
+								  <div class="panel-body">
+								    <h3 style="display:inline-block; margin-right: 20px;">
+								    	<span class="glyphicon glyphicon-picture">
+								    	</span> Imágenes de la galería
+								    </h3>
+							    	<div class="btn-group" style="display:inline-block">
+										<button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">
+											<span class="fa fa-plus"></span> Nueva
+										</button>
+										<button type="button" id="drop_img" class="btn btn-default delete disabled">
+											<span class="glyphicon glyphicon-fire"></span> Eliminar
+										</button>
+										<button type="button" class="btn btn-default preview" data-toggle="modal" data-target="#carousel-prev-modal">
+											<span class="glyphicon glyphicon-fullscreen"></span> Vista
+										</button>
+									</div>
+									<hr style="margin-bottom:0;">
+									<div class="text-center">
+
+										<table id="current_images" class="table table-striped" style="margin-bottom:0;">
+									      <thead>
+									        <tr class="active">
+									        	<th class="text-center"><input type="checkbox" id="toggle_all"/></th>
+									        	<th class="text-left" class="hidden-xs">Imagen</th>
+									        	<th class="text-left">Título</th>
+									        	<th class="text-center" class="hidden-xs">Fotógtrafo</th>
+									        </tr>
+									      </thead>
+									      <tbody>
+
+									      	{% for g_image in g_images%}
+									        <tr>
+									        	<td class="text-left">
+									        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{g_image.id}}"/>
+									        	</td>
+									        	<td class="text-left">
+									        		<a href="#">
+									        			<img class="img-thumbnail" src="{{MEDIA_URL}}{{g_image.image}}">
+									        		</a>
+									        	</td>
+									        	<td class="text-left">{{g_image.image_title}}</td>
+									        	<td class="text-center">{{g_image.author}}</td>
+									        	<td class="text-left">{{g_image.capture_datetime|date:"d \d\e M \d\e\l Y \a \l\a\s H:i"}}</td>
+									        	<td class="text-left">{{g_image.description}}</td>
+									        </tr>
+									        {% empty %}
+									        <tr>
+									        	<td colspan="4">
+									        		<div class="alert alert-info">
+														No has agregado imágenes a esta galería <br>
+														<a href="" data-toggle="modal" data-target=".bs-example-modal-lg">
+															<b><span class="fa fa-plus">
+															</span> Agregar una imagen</b>
+														</a>
+													</div>
+									        	</td>
+									        </tr>
+									        {% endfor %}
+									      </tbody>
+									    </table>
+									</div>
+								    <hr style="margin-top:0;">
+								  </div>
+								</div>
+				  			</div>
+				  		</div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="carousel-prev-modal" tabindex="-1" role="dialog" aria-labelledby="CarouselPrev" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="CarouselPrev">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					<div id="gallery-prev" class="carousel slide" data-ride="carousel">
+						<ol class="carousel-indicators">
+							<li class="play-btn"><span "glyphicon glyphicon-play"></span></li>
+							
+						</ol>
+						<div class="carousel-inner">
+							<div class="item active">
+					          <img data-src="holder.js/900x500/auto/#777:#777" alt="900x500" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzc3NyIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNzc3O2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjU2cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+OTAweDUwMDwvdGV4dD48L3N2Zz4=">
+					        </div>
+						</div>
+						<a class="left carousel-control" href="#gallery-prev" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left"></span>
+						</a>
+						<a class="right carousel-control" href="#gallery-prev" data-slide="next">
+							<span class="glyphicon glyphicon-chevron-right"></span>
+						</a>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% include 'img_preview.html'%}
+
+	{% include 'picmanager.html' %}
+
+	<script>
+        var message = '';
+        var options = {
+            url: '/backend/fotogalerias/upload/',
+            error: function(response) {
+            	alert(response.result)
+                message = '<span class="error">We\'re sorry, but something went wrong. Retry.</span>';
+                $('.upload-message').html(message);
+                $('fileInput').val('');
+            },
+            success: function(response) {
+                $("#uploadForm input, #uploadForm textarea").val('');
+                $('#image_tabs a:first').tab('show');
+                $(".pic_manager").append(
+                	'<img class="img-thumbnail" img_id="'+response.id+'" img_title="'+response.title+'"\
+										img_author="'+response.author+'" src="{{MEDIA_URL}}'+response.fileLink+'"/>')
+                $("#id_images").append('<option value="'+response.id+'" id="img_'+response.id+'">'+response.fileLink+'<option/>')
+            }
+        };
+
+        $("#send_form").click(function(event){
+        	event.preventDefault();
+        	$('#uploadForm').ajaxSubmit(options);
+        });
+
+        $(".pic_manager").on("click","img", function(){
+        	$(this).toggleClass("selected");
+        	$("#img_"+$(this).attr('img_id')).attr('selected', true);
+
+        	$("#current_images tbody").append(
+        		'<tr>\
+		        	<td class="text-left">\
+		        		<input type="checkbox" class="check" name="id" form="all_objects" value="'+$(this).attr('img_id')+'"/>\
+		        	</td>\
+		        	<td class="text-left">\
+		        		<a href="#"><img class="img-thumbnail" src="'+$(this).attr('src')+'"></a>\
+		        	</td>\
+		        	<td class="text-left">'+$(this).attr('img_title')+'</td>\
+		        	<td class="text-center">'+$(this).attr('img_author')+'</td>\
+		        	<td class="text-left">'+$(this).attr('img_date')+'</td>\
+		        	<td class="text-left">'+$(this).attr('img_description')+'</td>\
+		        </tr>'
+        	);
+
+
+        });
+
+        $(document).ready(function(){
+
+        	$("#id_images option").each(function(){
+        		$(this).attr('id', 'img_'+$(this).attr('value'));
+        	});
+
+        	$("#drop_img").click(function(){
+        		$(".check:checked").each(function(){
+        			$("#img_"+$(this).val()).attr('selected', false);
+        			$(this).parent().parent().remove();
+        		});
+        	});
+
+        	$("#current_images").delegate("tr td img", "click", function(){
+        		alert();
+
+        		$('.image-prev-modal').modal('show');
+
+        		data = $(this).parents('td').siblings(':not(:first)');
+        		$('.image-prev-modal .img_prev_title').html($(data[0]).html());
+        		$('.image-prev-modal .author').html($(data[1]).html());
+
+        		$('.image-prev-modal img').attr('src', $(this).attr('src'));
+        	});
+
+        	$(".preview").click(function(){
+        		$("#gallery-prev .carousel-inner").html("");
+        		$("#gallery-prev .carousel-indicators").html("");
+
+        		var slide_index=0;
+        		$("#current_images img").each(function(){
+
+        			data = $(this).parents('td').siblings(':not(:first)');
+        			//alert(data[0]+' '+data[1]);
+
+        			$("#gallery-prev .carousel-indicators").append(
+        				'<li data-target="#carousel-prev" data-slide-to="'+slide_index+'" class=""></li>'
+        			);
+        			active = ""
+        			if(slide_index===0){
+        				active = "active";
+        			}
+
+        			$("#gallery-prev .carousel-inner").append(
+        				'<div class="item '+active+'">\
+							<img src="'+$(this).attr('src')+'" alt="...">\
+							<div class="carousel-caption">\
+								<h3>'+$(data[0]).html()+' <small>(Por '+$(data[1]).html()+', el '+$(data[2]).html()+')</small></h3>\
+								<p>'+$(data[3]).html()+'</p>\
+							</div>\
+						</div>'
+        			);
+
+        			slide_index += 1;
+        		});
+        	});
+
+        });   
+    </script>
+
+{% endblock %}
+

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+{% block title %} {% if editing %} Editando el grupo: {{groupname}} {% else %} Nuevo Grupo {% endif %} {% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li><a href="/backend/acceso/"><i class="fa fa-group"></i> Grupos</a></li>
+		<li>
+			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i> 
+			{% if editing %} Editar Usuario ({{groupname}}) {% else %} Nuevo Grupo {% endif %}
+		</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+				    	<h2 class="panel-title">
+				    		{% if editing %} 
+				    			<span class="fa fa-edit"></span> Editar Grupo ({{groupname}})
+				    		{% else %} 
+				    			<span class="fa fa-plus"></span> Nuevo Grupo 
+				    		{% endif %}
+				    		 
+				    	</h2>
+				  	</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+				  			<div class="col-md-1"></div>
+				  			<div class="col-xs-12 col-md-10">
+				  				{% if editing and not editing_pass%} 
+				  					<p class="text-right">
+				  						<a href="cambiar_password" class="btn btn-primary" style="width:25%;">
+				  							<span class="fa fa-lock"></span> Cambiar contraseña
+				  						</a>
+				  					</p>
+				  				{% endif %}
+				  				<form role="form" action="." method="POST">
+									{% csrf_token %}
+
+									<input type="hidden" name="user_id" value="{{user}}" />
+									
+									{% for field in form %}
+
+										
+											<div class="form-group {% if field.errors %} has-error{% endif %}">
+
+												{% if not form.this_is_the_login_form.errors %}
+
+													{% if field.name != "password"%}
+														<label class="control-label required" for="{{field.field.id}}">
+															{{field.label}}:
+														</label>
+													{% endif %}
+												{% endif %}
+
+												{% if field.errors %}
+													<span class="help-inline text-danger">
+														{{field.errors}}
+													</span>
+												{% endif %}
+												{% if field.name != "password" %}
+												<div class="input-group">
+												{% else %}
+												<div class="input-group hidden">
+												{% endif %}
+													<span class="input-group-addon">
+														<span class="glyphicon glyphicon-asterisk"></span>
+													</span>
+													
+													{{ field }}
+												
+												</div>
+											</div>
+									{% endfor %}
+
+									<br><br>
+									<div class="form-group" style="text-align:right;">
+										<a href="{% if editing and not editing_pass %}../../../
+												 {% elif editing_pass %} ../
+												 {% else %}../../{% endif %}" class="btn btn-danger">
+											Cancelar
+										</a>
+										<button type="submit" class="btn btn-success">
+											{% if editing %} Guardar cambios
+				    						{% else %} Crear Grupo {% endif %}
+				    					</button>
+									</div>	
+								</form>
+				  			</div>
+				  		</div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
