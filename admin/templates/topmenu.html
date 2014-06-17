@@ -1,5 +1,5 @@
 {% load url from future %}
-
+{% load static %}
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -11,7 +11,8 @@
 				<span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="/backend">
-				<i class="icon-globe icon-white"></i> Perdiódico El Diario
+				<img src="{% static "images/home.png" %}" style="margin: 0 10px 4px 0;">
+				Perdiódico El Diario
 			</a>
 		</div>
 
