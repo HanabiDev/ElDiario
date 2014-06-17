@@ -69,6 +69,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
     'redactor',
+    'session_security',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -81,13 +82,14 @@ INSTALLED_APPS = (
     'ads',
     'frontend',
     'polls',
+    'suscriptions',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.request',
     'django.core.context_processors.static',
-    'django.contrib.messages.context_processors.messages'
+    'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,7 +99,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'session_security.middleware.SessionSecurityMiddleware',
 )
+
+SESSION_SECURITY_WARN_AFTER = 540
+SESSION_SECURITY_EXPIRE_AFTER = 600
 
 ROOT_URLCONF = 'ElDiario.urls'
 
@@ -139,6 +145,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'photogallery', 'templates'),
     os.path.join(BASE_DIR, 'auth', 'templates'),
     os.path.join(BASE_DIR, 'ads', 'templates'),
+    os.path.join(BASE_DIR, 'suscriptions', 'templates'),
     os.path.join(BASE_DIR, 'frontend', 'templates'),
     os.path.join(MEDIA_ROOT, 'uploads/ads'),
 )

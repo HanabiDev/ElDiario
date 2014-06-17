@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT,
     }),
+    url(r'session_security/', include('session_security.urls')),
 )+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

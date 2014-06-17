@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^/publicidad', include('ads.urls')),
     url(r'^/acceso', include('auth.urls')),
     url(r'^/encuestas', include('polls.urls')),
+    url(r'^/suscripciones', include('suscriptions.urls')),
 )

@@ -36,6 +36,7 @@
         </style>
 		
 		<script src="{% static "js/jquery.js" %}"></script>
+		{% include "session_security/all.html" %}
 		<script src="{% static "js/bootstrap.min.js" %}"></script>
 		<script src="{% static "js/moment.min.js" %}"></script>
 		<script src="{% static "redactor/redactor.js" %}"></script>
@@ -72,14 +73,14 @@
 				
 				$("textarea").siblings(".input-group-addon").remove();
 				
-				$("#id_creation_date").siblings('.input-group-addon, input').detach();
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").siblings('.input-group-addon, input').detach();
 				
-				$("#id_creation_date").after(
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").after(
 					'<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>'
 				);
 
-				$("#id_creation_date").parents('.input-group').addClass('date').attr('data-date-format', 'DD/MM/YYYY');
-				$("#id_creation_date").parents('.input-group').datetimepicker({pickTime:false, language: 'es'});
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").parents('.input-group').addClass('date').attr('data-date-format', 'DD/MM/YYYY');
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").parents('.input-group').datetimepicker({pickTime:false, language: 'es'});
 
 
 				$("input, textarea").addClass("form-control");

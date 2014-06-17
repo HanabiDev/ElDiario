@@ -45,7 +45,6 @@
 				        	<th class="text-center hidden-xs">ID</th>
 				        	<th class="text-left">Título</th>
 				        	<th class="text-center">Posición</th>
-				        	<th class="text-center hidden-xs">Animación</th>
 				        	<th class="text-center">Publicada</th>
 				        	<th class="text-center hidden-xs">Creación</th>
 				        </tr>
@@ -59,13 +58,6 @@
 				        	<td class="text-center hidden-xs">{{ad.id}}</td>
 				        	<td class="text-left"><a href="editar/{{ad.id}}">{{ad.title}}</a></td>
 				        	<td class="text-center">{{ad.position}}</td>
-				        	<td class="text-center hidden-xs">
-				        		{% if ad.animated %}
-				        			<span class="glyphicon glyphicon-ok text-primary"></span>
-				        		{% else %}
-				        			<span class="glyphicon glyphicon-close"></span>
-				        		{% endif %}
-				        	</td>
 				        	<td class="text-center">
 				        		{% if ad.published %}
 				        		<a href="despublicar/{{ad.id}}">
