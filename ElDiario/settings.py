@@ -151,6 +151,7 @@ TEMPLATE_DIRS = (
     os.path.join(MEDIA_ROOT, 'uploads/ads'),
 )
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 ADS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, "uploads/ads"),
 
