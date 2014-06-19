@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load url from future %}
-{% block title %} {% if editing %} Editando la encuesta: {{title}} {% else %} Nuevo Artículo {% endif %} {% endblock %}
+{% block title %} {% if editing %} Editando el artículo: {{title}} {% else %} Nuevo Artículo {% endif %} {% endblock %}
 
 {% block extrastyle %}
 		<link rel="stylesheet" href="{% static "css/chosen.min.css"%}"></link>
@@ -15,7 +15,7 @@
 {% block breadcrumbs %}
 	<ul class="breadcrumb">
 		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
-		<li><a href="/backend/contenido/articulos"><i class="fa fa-inbox"></i> Artículos</a></li>
+		<li><a href="/backend/contenido/articulos"><i class="fa fa-leaf"></i> Artículos</a></li>
 		<li>
 			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i> 
 			{% if editing %} Editar Artículo ({{title}}) {% else %} Nuevo Artículo {% endif %}

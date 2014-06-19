@@ -146,7 +146,7 @@
 								  	<div class="panel-body">
 										<div class="row-fluid">
 											{% with articles|first as first_art %}
-												<h2> <a href="{{first_art.slug}}">{{first_art.title}}</a></h2>
+												<h2> <a href="articulos/{{first_art.slug}}">{{first_art.title}}</a></h2>
 												<hr>
 												<a href="articulos/{{first_art.slug}}">
 													<p>
@@ -160,7 +160,7 @@
 								{% endblock %}
 							</div>
 
-
+							{% block other_news %}
 							<div class="row-fluid main_news">
 								<div class="panel panel-default">
 								  	<div class="panel-body">
@@ -220,6 +220,7 @@
 									</div>
 								</div>
 							</div>
+							{% endblock %}
 							<div class="row-fluid ad ad_6">
 								{% include "pos6/template_index.html" %}
 							</div>
