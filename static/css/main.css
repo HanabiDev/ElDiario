@@ -12,7 +12,7 @@ p{
 .app_link{
 	border-radius: 5px;
 	border: 1px solid rgba(0,0,0,0.2);
-	margin-right: 10px; 
+	margin-right: 10px;
 	position: relative;
 	margin-bottom: 10px;
 	vertical-align: middle;
@@ -167,7 +167,7 @@ td input[type=checkbox], th input[type=checkbox]{
 /* Frontend CSS */
 
 .org{
-	background: #740000;
+	background: #8C0808;
 	padding: 2px 20px;
 	margin:0;
 	text-align: right;
@@ -175,9 +175,12 @@ td input[type=checkbox], th input[type=checkbox]{
 	z-index: 1;
 	position: relative;
 	margin-top: 10px;
+	height: 28px;
 }
 
-.org a{color: white !important; margin-left: 20px;}
+.org a{color: white !important; padding: 0 5px 5px;}
+.org li{height:26px; line-height:25px;}
+.org li:hover{background:#660A0A}
 
 .logo{
 	background-image: -moz-linear-gradient(left, #aa1717, #860c0c);
@@ -226,22 +229,24 @@ h4{
 
 .indicators{background: #f8f8f8;}
 
-.ad{position: relative; z-index: 0; height: auto;margin-bottom: 10px; border:1px solid #ddd;display: none;}
+.ad{position: relative; z-index: 0; height: auto;margin-bottom: 10px; border:1px solid #ddd;display: block;}
 
+#bgBody{padding-bottom: 25px !important;}
+#bgUl li a{color:white !important;}
 
 .ad object, .ad object embed, .ad iframe, .ad img{
 	max-width: 100%;
-	max-height: 100%;
+	max-height: 98%;
 	min-width: 100%;
-	min-height: 100%;
+	min-height: 98%;
 }
 
 .ad_1{max-height: 150px;}
 .ad_2, .ad_3 {max-height: 660px;}
 .ad_4, .ad_8{max-height: 90px;}
 .ad_4{margin-bottom: 0;}
-.ad_5{max-height: 120px;}
-.ad_6{max-height: 160px;}
+.ad_5{max-height: 150px;}
+.ad_6{max-height: 150px;}
 .ad_7{max-height: 300px;}
 
 .new_head{
@@ -249,15 +254,15 @@ h4{
 }
 
 .full_head h1{
-	margin:0 20px 0 0; 
+	margin:0 20px 0 0;
 	display:inline;
 }
 
-.new_head small, .full_head small{ 
+.new_head small, .full_head small{
 	font-size: 10px;
-	margin-right: 20px; 
-	color:#ccc; 
-	font-weight:normal; 
+	margin-right: 20px;
+	color:#ccc;
+	font-weight:normal;
 	font-family: 'Roboto Slab', serif;
 }
 
@@ -306,14 +311,94 @@ h4{
 .hidden_li:hover ul{
 	display: block;
 	position: absolute;
-	background: #740000;
-	width: 110px;
-	height: 130px;
+	background: #660A0A;
+	width: 109px;
+	height: 150px;
 	text-align: center;
 	list-style: none;
 	padding: 0;
-	margin-left: 10px;
-	-webkit-transition: ease 1s all;
+	margin-left: -5px;
+	-webkit-transition: ease 2s all;
 }
 
+.secondary-img{
+	float: left;
+	width: 64px;
+	height: 64px;
+	margin-right: 15px;
+}
 
+.divider{
+	text-align:center;
+	border-bottom: 5px solid #A42C2B;
+}
+
+.section_name{
+	font-size: 14px;
+}
+
+.section_name span{
+	color: #A42C2B;
+	font-weight: bold;
+}
+
+.misc h2{
+	margin-top:5px;
+}
+
+.news-group{
+	margin-bottom: 20px;
+}
+
+.environ > span {
+	background: #00A95D;
+	padding:3px;
+	font-weight: bold;
+	color:white;
+	text-align:center;
+	width:100%;
+	display:block;
+}
+
+.environ{border-bottom:3px solid #00A95D;}
+
+.dept-tab span, .divider span, .especials-tab span, .media-tab span{
+	background: #A42C2B;
+	padding: 10px 30px;
+	line-height: 32px;
+	color:white;
+	font-weight: bold;
+	margin-right: 40px;
+}
+
+.dept-tab span:after, .especials-tab span:after, .media-tab span:after{
+	border: 35px solid transparent;
+	content: " ";
+	height:0;
+	width:0;
+	position:absolute;
+	margin-left:-5px;
+	margin-top:-38px;
+	border-bottom-color:#A42C2B;
+}
+
+.especials-tab {border-bottom: 5px solid #067AA3;}
+.especials-tab span{background: #067AA3;}
+.especials-tab span:after{border-bottom-color:#067AA3;}
+
+.media-tab {border-bottom: 5px solid #737278;}
+.media-tab span{background: #737278;}
+.media-tab span:after{border-bottom-color:#737278;}
+
+
+.dept{
+	border: 5px solid #A42C2B;
+	margin-bottom:20px;
+}
+
+.dept > div {
+	padding:0 10px !important;
+}
+
+.fat-menu ul{padding:0; list-style: none;}
+.fat-menu a{color: #A42C2B;}

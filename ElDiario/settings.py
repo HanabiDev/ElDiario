@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 import socket
 if socket.gethostname().startswith('MacBook'):
     DEVEL = True
-else: 
+else:
     DEVEL = False
 
 if DEVEL:
@@ -27,7 +27,7 @@ if DEVEL:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
-    
+
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static"),
         os.path.join(BASE_DIR, "media/uploads/ads/pos7/images/"),
@@ -42,7 +42,7 @@ else:
             'PASSWORD': 'cotpbmcg',
         }
     }
-    
+
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
@@ -77,7 +77,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'admin',
     'content',
-    'photogallery',
+    #'photogallery',
     'auth',
     'ads',
     'frontend',
@@ -133,7 +133,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 MAX_UPLOAD_SIZE = 20971520  # 20MB
-CONTENT_TYPES = ['application/pdf', 'image/jpeg', 'image/png']  
+CONTENT_TYPES = ['application/pdf', 'image/jpeg', 'image/png']
 
 
 REDACTOR_OPTIONS = {'lang': 'es'}
@@ -154,7 +154,3 @@ TEMPLATE_DIRS = (
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 ADS_MEDIA_ROOT = os.path.join(MEDIA_ROOT, "uploads/ads"),
-
-
-
-
