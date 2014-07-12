@@ -643,7 +643,12 @@
 								<span>MULTIMEDIA</span>
 							</div>
 							<div style="background:#737278; padding:20px;">
+								<div class="col-xs-5">
 
+								</div>
+								<div class="col-xs-5">
+
+								</div>
 							</div>
 						</div>
 						<div class="row-fluid fat-menu">
@@ -651,16 +656,32 @@
 								<h5 style="display: inline-block; width:7%"><b>Secciones</b></h5>
 								<hr style="display: inline-block; width:92%; margin:0 0 4px 0; border-top-color: #ccc;">
 								<div class="row">
-									{% for cat in categories %}
-									<div class="col-xs-2">
-										<h4>{{cat.title}}</h4>
-										<ul>
-											{% for subcat in cat.parent_cat.all%}
-											<li><a href="#">{{subcat.title}}</a></li>
-											{% endfor %}
-										</ul>
+									<div class="col-xs-8">
+										{% for cat in categories %}
+										<div class="col-xs-2">
+											<h4>{{cat.title}}</h4>
+											<ul>
+												{% for subcat in cat.parent_cat.all%}
+												<li><a href="#">{{subcat.title}}</a></li>
+												{% endfor %}
+											</ul>
+										</div>
+										{% endfor %}
 									</div>
-									{% endfor %}
+									<div class="col-xs-4 text-center">
+										<p>
+											Centro Comercial Centro Norte No. 47A-40 Of. 146, Segundo Piso.
+										</p>
+										<p>
+											Tunja, Boyacá - Colombia
+										</p>
+										<p>
+											Tel.: (8) 744-9452 Cel.: 321-410-5471
+										</p>
+										<p>
+											Escríbanos a: <a href="#">gerencia@periodicoeldiario.com</a>
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
