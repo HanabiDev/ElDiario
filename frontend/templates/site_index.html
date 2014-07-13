@@ -11,6 +11,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title>{% block title %}Periódico El Diario - Inicio{% endblock %}</title>
+
+		{% block metadata %}
+		{% endblock %}
+
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="description" content="Administración del sitio web de El Diario">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,18 +32,18 @@
 		 			 rel="stylesheet" type="text/css">
 
 		<style>
-		body, html{
-			height: 100%;
-			padding: 0;
-			margin: 0;
-			width: 100%;
-			overflow-x: hidden;
-			background: #ddd;
-		}
-		body{
-			margin-top: 0px;
-			height: 100%;
-		}
+			body, html{
+				height: 100%;
+				padding: 0;
+				margin: 0;
+				width: 100%;
+				overflow-x: hidden;
+				background: #ddd;
+			}
+			body{
+				margin-top: 0px;
+				height: 100%;
+			}
 		</style>
 
 		<script src="{% static "js/jquery.js" %}"></script>
@@ -88,21 +92,7 @@
 				<div class="container-fluid" style="padding: 0 8px;">
 
 					{% block indicators %}
-						<div class="row indicators text-right" style="line-height:30px; background:#363636; color:white;">
-							<div class="col-xs-2" style="width:11%;"><b><span class="fa fa-database"></span> Indicadores</b></div>
-							<div class="col-xs-10">
-								<div id="bgBody" class="bgCarouselH">
-									<script type="text/javascript">
-									  // <![CDATA[
-									  var bgHost = "http://www.applab.in/";
-									  var bgType = "CO-19288-1";
-									  var bgIndi = "1|2|3|4|5|6|7|8|9|10";
-									  (function(d){ var f = bgHost+ "apps/indicators/"+bgType+"/"+bgIndi+"/functions.js"; d.write(unescape("%3Cscript src='"+f+"' type='text/javascript'%3E%3C/script%3E")); })(document);
-									  // ]]>
-									</script>
-								</div>
-							</div>
-						</div>
+						{% include 'main/indicators.html' %}
 					{% endblock %}
 
 					<div class="row ad ad_4">
@@ -115,23 +105,25 @@
 							<div class="panel panel-default">
 							  	<div class="panel-body">
 							  		<div class="full_head">
-										<h1>{{full_width_article.title}}</h1>
+										<h1><a href="/articulos/{{full_width_article.slug}}">{{full_width_article.title}}</a></h1>
 
 										<small>
-											<span class="fa fa-user"></span> Por: {{full_width_article.author.first_name}} {{full_width_article.author.last_name}}
+											<span class="fa fa-user"></span>
+											Por: {{full_width_article.author.first_name}} {{full_width_article.author.last_name}}
 										</small>
 										<small>
-											<span class="glyphicon glyphicon-calendar"></span> {{ full_width_article.creation_date|date:"d \d\e F \d\e\l Y" }}
+											<span class="glyphicon glyphicon-calendar"></span>
+											{{ full_width_article.creation_date|date:"d \d\e F \d\e\l Y" }}
 										</small>
 									</div>
 									<hr style="margin-top:10px; margin-bottom:15px;">
 									{{ full_width_article.abstract | safe }}
-									{{ full_width_article.content | safe }}
 								</div>
 							</div>
 						</div>
 						{% endif %}
 					{% endblock %}
+
 
 					<div class="row" style="background:white; padding:10px 10px 0 0;">
 
@@ -146,15 +138,13 @@
 								<div class="panel panel-default">
 								  	<div class="panel-body">
 										<div class="row-fluid">
-											{% with articles|first as first_art %}
-												<h2> <a href="articulos/{{first_art.slug}}">{{first_art.title}}</a></h2>
+												<h2> <a href="articulos/{{first_art.slug}}">{{main_art.title}}</a></h2>
 												<hr>
 												<a href="articulos/{{first_art.slug}}">
 													<p>
-														{{first_art.abstract | safe}}
+														{{main_art.abstract | safe}}
 													</p>
 												</a>
-											{% endwith %}
 										</div>
 									</div>
 								</div>
@@ -168,39 +158,24 @@
 											<div class="row-fluid">
 
 												<div class="col-xs-7" style="padding:0 10px 0 0">
-													<h2>Ejemplo de artículo</h2>
+													{% with articles.first as first_art %}
+													<h2><a href="articulos/{{first_art.slug}}">{{first_art.title}}</a></h2>
 													<hr>
-													<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-													tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-													quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-													consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-													cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-													proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-													</p>
+													{{first_art.abstract | safe}}
+													{% endwith %}
 												</div>
-												<div class="col-xs-5" style="border-left:1px solid #ddd">
-													<div class="row-fluid">
-														<h4>Noticia principal de ejemplo</h4>
-														<img class="secondary-img" src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-														<p>
-															Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-															tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-															quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-															consequat.
-														</p>
-													</div>
-													<hr>
-													<div class="row-fluid">
-														<h4>Noticia principal de ejemplo</h4>
-														<img class="secondary-img" src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-														<p>
-															Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-															tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-															quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-															consequat.
-														</p>
-													</div>
+												<div class="col-xs-5 other" style="border-left:1px solid #ddd">
+													{% with articles.first as first_art %}
+														{% for article in articles %}
+															{% if not article == first_art %}
+																<div class="row-fluid">
+																	<h4><a href="/articulos/{{article.slug}}">{{article.title}}</a></h4>
+																	{{article.abstract | safe}}
+																</div>
+																<hr>
+															{% endif %}
+														{% endfor %}
+													{% endwith %}
 												</div>
 											</div>
 									</div>
@@ -413,11 +388,6 @@
 							{% endblock %}
 						</div>
 						<!--End Main Content-->
-
-
-
-
-
 
 
 						{% block right_col %}
@@ -739,6 +709,7 @@
 	    	}
 			);
 
+			$(".fb-comments").attr("data-href", window.location.href);
 		});
 	</script>
 

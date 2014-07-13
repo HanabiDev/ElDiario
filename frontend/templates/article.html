@@ -41,8 +41,7 @@
 							        body: "Encontré este artículo en Periodico El Diario. Sigue este link: \n${link}"
 							    }
 							};
-							a2a_config.track_links = 'bitly';
-							a2a_config.track_links_key = 'addtoany|R_cc6a4017b0274d1d86f2397771b70136';
+							a2a_config.track_links = 'googl';
 					</script>
 
 				</div>
@@ -70,7 +69,16 @@
 					{{article.content | safe}}
 			</div>
 		</div>
-
+		<hr>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.0";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+		<div class="fb-comments" data-href="" data-numposts="5" data-colorscheme="light"></div>
 	</div>
 	{% block other_news%}{%endblock%}
 	{% block dept %}{% endblock %}

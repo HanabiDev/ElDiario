@@ -26,7 +26,7 @@ class Article(models.Model):
 	title = models.CharField(max_length=100, verbose_name=u'Título', unique=True)
 	abstract = RedactorField(verbose_name=u'Resumen')
 	content = RedactorField(verbose_name=u'Contenido')
-	creation_date = models.DateField(default=date.now)
+	creation_date = models.DateTimeField(default=date.now)
 	author = models.ForeignKey(User, verbose_name=u'Autor')
 	category = models.ForeignKey(Category, verbose_name=u'Categoría', null=True, blank=True)
 	published = models.BooleanField(default=True, verbose_name=u'Publicado')
