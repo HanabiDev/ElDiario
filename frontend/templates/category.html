@@ -3,29 +3,29 @@
 {% block indicators %}{% endblock %}
 
 {% block main_content %}
-	<div class="new_extended">
-		<div class="new_head">
-			<a href="/categorias/{{article.category.slug}}"><span class="cat-label">{{article.category}}</a></span>
-			<small>
-				<span class="glyphicon glyphicon-calendar"></span> {{ article.creation_date|date:"d \d\e F \d\e\l Y" }}
-			</small>
-			<small>
-				<span class="fa fa-user"></span> Redactado por: {{article.author.first_name}} {{article.author.last_name}}
-			</small>
-			<h2>{{article.title}}</h2>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="col-xs-2">
-				
-			</div>
-			<div class="col-xs-10">
-					{{article.abstract | safe}}
-					{{article.content | safe}}
-			</div>
+
+		<div class="cat-tab">
+			<h4><span>{{category.title}}</span></h4> {{category.article_set.all.count}} artículos
 		</div>
 
-	</div>
+		{% for article in articles %}
+		<div class="row">
+			<div class="col-xs-2 text-center">
+				<h2>{{article.hits}} <small>vistas</small></h2>
+				{{ article.creation_date|date:"d/M/Y" }}
+			</div>
+			<div class="col-xs-10 cat-art-abs">
+					<h3 class="art-title"><a href="/articulos/{{article.slug}}">{{article.title}}</a></h3>
+					{{article.abstract | safe}}
+			</div>
+		</div>
+		<hr>
+		{% empty %}
+		<div class="text-center">
+				<h4>No se encontraron artículos para esta categoría</h4>
+		</div>
+		{% endfor %}
+
 	{% block other_news%}{%endblock%}
 	{% block dept %}{% endblock %}
 	{% block misc %}{% endblock %}

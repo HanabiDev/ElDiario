@@ -16,15 +16,24 @@ def home(request):
 		pass
 
 	all_articles = Article.objects.exclude(full_width=True).order_by('-creation_date')
-	
-	return render_to_response(TEMPLATE_DIR+'site_index.html', 
-		{'full_width_article': full_width_article, 'articles':all_articles, 'categories': categories}, 
+
+	return render_to_response(TEMPLATE_DIR+'site_index.html',
+		{'full_width_article': full_width_article, 'articles':all_articles, 'categories': categories},
 		context_instance=RequestContext(request)
 	)
 
 def serve_article(request, slug):
 	article = get_object_or_404(Article, slug=slug)
-
+	article.hits = article.hits + 1
+	article.save()
+	categories = Category.objects.filter(parent=None)
 	print article
 
-	return render_to_response(TEMPLATE_DIR+'article.html', {'article':article})
+	return render_to_response(TEMPLATE_DIR+'article.html', {'article':article, 'categories':categories})
+
+def serve_category(request, slug):
+	category = get_object_or_404(Category, slug=slug)
+	articles = Article.objects.filter(category=category)
+	categories = Category.objects.filter(parent=None)
+
+	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'category':category, 'categories':categories})

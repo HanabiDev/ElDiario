@@ -229,7 +229,7 @@ h4{
 
 .indicators{background: #f8f8f8;}
 
-.ad{position: relative; z-index: 0; height: auto;margin-bottom: 10px; border:1px solid #ddd;display: block;}
+.ad{position: relative; z-index: 0; height: auto;margin-bottom: 10px; border:1px solid #ddd;display: none;}
 
 #bgBody{padding-bottom: 25px !important;}
 #bgUl li a{color:white !important;}
@@ -259,9 +259,9 @@ h4{
 }
 
 .new_head small, .full_head small{
-	font-size: 10px;
+	font-size: 12px;
 	margin-right: 20px;
-	color:#ccc;
+	color:#aaa;
 	font-weight:normal;
 	font-family: 'Roboto Slab', serif;
 }
@@ -270,7 +270,7 @@ h4{
 	border-right: 1px solid #ddd;
 }
 
-.new_head small span{font-size: 10px !important;margin-right: 5px;}
+.new_head small span{font-size: 12px !important;margin-right: 5px;}
 
 
 .new_extended p{
@@ -278,8 +278,14 @@ h4{
 	font-size: 16px !important;
 }
 
-.new_extended p span, .new_extended p i{
+.new_extended p span, .new_extended p i, .new_extended p b{
 	font-family: 'Open Sans';
+}
+
+.new_extended{
+	padding: 10px 0 20px;
+	border-bottom: 1px solid #ddd;
+	margin: 20px;
 }
 
 .main_news a{
@@ -292,7 +298,7 @@ h4{
 	text-decoration: none;
 }
 
-.main_news h2 a:hover{
+.main_news h2 a:hover, .art-title a:hover{
 	color: #aa1717;
 }
 
@@ -362,7 +368,7 @@ h4{
 
 .environ{border-bottom:3px solid #00A95D;}
 
-.dept-tab span, .divider span, .especials-tab span, .media-tab span{
+.dept-tab span, .divider span, .especials-tab span, .media-tab span, .cat-tab span{
 	background: #A42C2B;
 	padding: 10px 30px;
 	line-height: 32px;
@@ -371,7 +377,10 @@ h4{
 	margin-right: 40px;
 }
 
-.dept-tab span:after, .especials-tab span:after, .media-tab span:after{
+.dept-tab span:after, .especials-tab
+span:after, .media-tab span:after,
+.cat-tab span:after
+{
 	border: 35px solid transparent;
 	content: " ";
 	height:0;
@@ -381,6 +390,10 @@ h4{
 	margin-top:-38px;
 	border-bottom-color:#A42C2B;
 }
+
+.cat-tab{border-bottom: 5px solid #A42C2B; margin-bottom:20px; margin-top:10px;}
+.cat-tab span:after{margin-top:-49px; margin-left: -13px;border: 43px solid transparent;border-bottom-color:#A42C2B;}
+.cat-tab h4{margin-bottom:0; display:inline}
 
 .especials-tab {border-bottom: 5px solid #067AA3;}
 .especials-tab span{background: #067AA3;}
@@ -402,3 +415,7 @@ h4{
 
 .fat-menu ul{padding:0; list-style: none;}
 .fat-menu a{color: #A42C2B;}
+
+.cat-label{padding:5px 10px; font-weight:bold; margin-right:20px; font-size: 12px; color:white; background: #A42C2B;}
+
+.cat-art-abs img{float:left; width: 180px; clear: both; margin-right:20px; }

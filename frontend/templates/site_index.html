@@ -638,6 +638,7 @@
 					</div>
 
 					<div class="row" style="padding: 0;">
+						{% block media %}
 						<div class="row-fluid" style="padding: 0; background:white;">
 							<div class="media-tab">
 								<span>MULTIMEDIA</span>
@@ -651,6 +652,7 @@
 								</div>
 							</div>
 						</div>
+						{% endblock %}
 						<div class="row-fluid fat-menu">
 							<div style="background:#F0F0F0; padding:20px;">
 								<h5 style="display: inline-block; width:7%"><b>Secciones</b></h5>
@@ -727,6 +729,15 @@
 			$("#hide-ads").click(function(){
 				$(".ad").slideUp();
 			});
+
+	    $('ul.nav li.dropdown').hover(
+				function() {
+	      	$(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(200);
+	    	},
+				function() {
+	      	$(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+	    	}
+			);  
 
 		});
 	</script>
@@ -874,6 +885,8 @@ T();
 	$(document).ready(function(){
 		window.setTimeout(function(){$("#world").fadeOut(function(){$(this).detach();})}, 10);
 	});
+
+
 
 
 
