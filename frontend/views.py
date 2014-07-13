@@ -6,17 +6,19 @@ from content.models import *
 TEMPLATE_DIR = 'frontend/../'
 def home(request):
 
-	full_width_article = None
+	data = {}
 	try:
 		categories = Category.objects.filter(parent=None)
 		full_width_article = Article.objects.get(full_width=True)
 		main_art = Article.objects.exclude(full_width=True).order_by('-creation_date')[0]
 		all_articles = Article.objects.exclude(full_width=True).order_by('-creation_date')[1:5]
+
+		data = {'full_width_article': full_width_article, 'articles':all_articles, 'categories': categories, 'main_art':main_art}
 	except Exception, e:
 		pass
 
 	return render_to_response(TEMPLATE_DIR+'site_index.html',
-		{'full_width_article': full_width_article, 'articles':all_articles, 'categories': categories, 'main_art':main_art},
+		data,
 		context_instance=RequestContext(request)
 	)
 
