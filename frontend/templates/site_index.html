@@ -92,7 +92,7 @@
 				<div class="container-fluid" style="padding: 0 8px;">
 
 					{% block indicators %}
-						{% include 'main/indicators.html' %}
+						{ include 'main/indicators.html' }
 					{% endblock %}
 
 					<div class="row ad ad_4">
@@ -137,16 +137,16 @@
 								{% block main_content %}
 								<div class="panel panel-default">
 								  	<div class="panel-body">
-										<div class="row-fluid">
-												<h2> <a href="articulos/{{first_art.slug}}">{{main_art.title}}</a></h2>
-												<hr>
-												<a href="articulos/{{first_art.slug}}">
-													<p>
-														{{main_art.abstract | safe}}
-													</p>
-												</a>
+											<div class="row-fluid">
+													<h2> <a href="articulos/{{first_art.slug}}">{{main_art.title}}</a></h2>
+													<hr>
+													<a href="articulos/{{first_art.slug}}">
+														<p>
+															{{main_art.abstract | safe}}
+														</p>
+													</a>
+											</div>
 										</div>
-									</div>
 								</div>
 								{% endblock %}
 							</div>
@@ -717,150 +717,27 @@
 	<script type="text/javascript" src="http://www.applab.in/Scripts/js/jquery.carouFredSel-5.5.0-packed.js"></script>
 
 	<script type="text/javascript" language="javascript">
-    	$(function() {
-	        $("#bgUl").carouFredSel({
-	            auto: {
-	                items           : 5, // número de item a mostrar
-	                duration        : 8500, // velocidad
-	                easing          : "linear",
-	                pauseDuration   : 0,
-	                pauseOnHover    : "immediate"
-	            }
-	        });
-	    });
+	$(function() {
+		$("#bgUl").carouFredSel({
+			auto: {
+				items           : 5, // número de item a mostrar
+				duration        : 8500, // velocidad
+				easing          : "linear",
+				pauseDuration   : 0,
+				pauseOnHover    : "immediate"
+			}
+		});
+	});
 	</script>
 
-
+	<script type="text/javascript" src="{% static "js/main/confetti.js" %}"></script>
 	<script type="text/javascript">
-
-var T = function() {
-  var COLORS, Confetti, NUM_CONFETTI, PI_2, canvas, confetti, context, drawCircle, i, range, resizeWindow, xpos;
-
-  NUM_CONFETTI = 350;
-
-  COLORS = [[85, 71, 106], [174, 61, 99], [219, 56, 83], [244, 92, 68], [248, 182, 70]];
-
-  PI_2 = 2 * Math.PI;
-
-  canvas = document.getElementById("world");
-
-  context = canvas.getContext("2d");
-
-  window.w = 0;
-
-  window.h = 0;
-
-  resizeWindow = function() {
-    window.w = canvas.width = window.innerWidth;
-    return window.h = canvas.height = window.innerHeight;
-  };
-
-  window.addEventListener('resize', resizeWindow, false);
-
-  window.onload = function() {
-    return setTimeout(resizeWindow, 0);
-  };
-
-  range = function(a, b) {
-    return (b - a) * Math.random() + a;
-  };
-
-  drawCircle = function(x, y, r, style) {
-    context.beginPath();
-    context.arc(x, y, r, 0, PI_2, false);
-    context.fillStyle = style;
-    return context.fill();
-  };
-
-  xpos = 0.5;
-
-  document.onmousemove = function(e) {
-    return xpos = e.pageX / w;
-  };
-
-  window.requestAnimationFrame = (function() {
-    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) {
-      return window.setTimeout(callback, 1000 / 60);
-    };
-  })();
-
-  Confetti = (function() {
-    function Confetti() {
-      this.style = COLORS[~~range(0, 5)];
-      this.rgb = "rgba(" + this.style[0] + "," + this.style[1] + "," + this.style[2];
-      this.r = ~~range(2, 6);
-      this.r2 = 2 * this.r;
-      this.replace();
-    }
-
-    Confetti.prototype.replace = function() {
-      this.opacity = 0;
-      this.dop = 0.03 * range(1, 4);
-      this.x = range(-this.r2, w - this.r2);
-      this.y = range(-20, h - this.r2);
-      this.xmax = w - this.r;
-      this.ymax = h - this.r;
-      this.vx = range(0, 2) + 8 * xpos - 5;
-      return this.vy = 0.7 * this.r + range(-1, 1);
-    };
-
-    Confetti.prototype.draw = function() {
-      var _ref;
-      this.x += this.vx;
-      this.y += this.vy;
-      this.opacity += this.dop;
-      if (this.opacity > 1) {
-        this.opacity = 1;
-        this.dop *= -1;
-      }
-      if (this.opacity < 0 || this.y > this.ymax) {
-        this.replace();
-      }
-      if (!((0 < (_ref = this.x) && _ref < this.xmax))) {
-        this.x = (this.x + this.xmax) % this.xmax;
-      }
-      return drawCircle(~~this.x, ~~this.y, this.r, "" + this.rgb + "," + this.opacity + ")");
-    };
-
-    return Confetti;
-
-  })();
-
-  confetti = (function() {
-    var _i, _results;
-    _results = [];
-    for (i = _i = 1; 1 <= NUM_CONFETTI ? _i <= NUM_CONFETTI : _i >= NUM_CONFETTI; i = 1 <= NUM_CONFETTI ? ++_i : --_i) {
-      _results.push(new Confetti);
-    }
-    return _results;
-  })();
-
-  window.step = function() {
-    var c, _i, _len, _results;
-    requestAnimationFrame(step);
-    context.clearRect(0, 0, w, h);
-    _results = [];
-    for (_i = 0, _len = confetti.length; _i < _len; _i++) {
-      c = confetti[_i];
-      _results.push(c.draw());
-    }
-    return _results;
-  };
-
-  step();
-};
-
-T();
+		T();
 
 
-	$(document).ready(function(){
-		window.setTimeout(function(){$("#world").fadeOut(function(){$(this).detach();})}, 10);
-	});
-
-
-
-
-
-</script>
+		$(document).ready(function(){
+			window.setTimeout(function(){$("#world").fadeOut(function(){$(this).detach();})}, 10);
+		});
+	</script>
 
 </html>

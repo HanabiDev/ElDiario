@@ -1,0 +1,166 @@
+@import url(font-awesome.min.css);
+
+*{
+  font-family: 'Open Sans Condensed', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+p{
+  font-family: 'Open Sans';
+  font-weight: 400;
+}
+
+.app_link{
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.2);
+  margin-right: 10px;
+  position: relative;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.redactor_box{
+  max-width: 100% !important;
+}
+
+.app_link:before{
+  content: "";
+  display: block;
+  padding-top: 115%; 	/* initial ratio of 1:1*/
+}
+
+.app_link_content{
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  color: #525252;
+  text-decoration: none;
+}
+
+.app_link_content:hover{
+  text-decoration: none;
+}
+
+.app_link_content span{
+  font-size: 60px;
+  display: block;
+  line-height: 1.7em;
+}
+
+span.help-inline ul{
+  display: inline-block;
+  list-style: none;
+  padding-left: 10px;
+}
+
+span.help-inline ul li{
+  font-size: 12px;
+  font-style: italic;
+}
+
+.panel-heading .btn-group .fa,
+.panel-heading .btn-group .glyphicon{
+  display: block;
+  font-size: 1.4em;
+}
+
+.input-group {
+  width: 100%;
+}
+
+.panel-title {
+  font-size: 18px;
+}
+
+.pic_manager{
+  max-height:300px; overflow:auto;
+}
+
+.pic_manager img{
+  max-width: 150px;
+  min-height: 120px;
+  max-height: 120px;
+  margin: 5px;
+  border: 1px solid #ddd;
+}
+
+.pic_manager span input{
+  display: none;
+}
+
+.pic_manager img.selected{
+  box-shadow: 0 0 7px rgb(123, 196, 250);
+}
+
+.chosen-choices{
+  padding: 6px !important;
+}
+
+td img.img-thumbnail {
+  max-height: 40px;
+}
+
+#current_images td:not(:nth-child(2)){
+  padding-top: 17px;
+}
+
+img{max-width: 100%;}
+
+.carousel-inner .item{
+  background: #ddd;
+  max-height: 400px;
+  min-height: 400px;
+}
+
+.carousel-inner .item img{
+  margin: auto;
+  min-height: 100%;
+  max-height: 100%;
+  width: auto;
+}
+
+.carousel-indicators{
+  bottom:0 !important;
+  padding: 5px;
+  width: auto;
+  right: 0;
+  left: inherit;
+  margin-bottom: 0;
+}
+
+.carousel-caption {
+  left: 0%;
+  right: 0%;
+  bottom: 0;
+  padding: 10px 10px 10px 25px !important;
+  text-align: left;
+  padding-left: 10px;
+  background: rgba(0,0,0,0.3);
+}
+
+.carousel-caption h3{
+  font-size: 18px;
+  margin: 0;
+  line-height: 24px;
+}
+
+.carousel-caption small {
+  color: white;
+  margin-left: 5px;
+  font-size: 13px;
+}
+
+div.tab-content {
+  border: 1px solid #ddd;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+td input[type=checkbox], th input[type=checkbox]{
+  width: auto;
+  height: auto;
+  line-height: 0px;
+}

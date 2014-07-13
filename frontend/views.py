@@ -14,9 +14,13 @@ def home(request):
 		pass
 
 	categories = Category.objects.filter(parent=None)
-	main_art = Article.objects.exclude(full_width=True).order_by('-creation_date')[0]
-	all_articles = Article.objects.exclude(full_width=True).order_by('-creation_date')[1:5]
-	
+	if Article.objects.exclude(full_width=True).count() > 0:
+		main_art = Article.objects.exclude(full_width=True).order_by('-creation_date')[0]
+		all_articles = Article.objects.exclude(full_width=True).order_by('-creation_date')[1:5]
+	else:
+		main_art = None
+		all_articles = None
+
 	return render_to_response(TEMPLATE_DIR+'site_index.html',
 		{'full_width_article': full_width_article, 'articles':all_articles, 'categories': categories, 'main_art':main_art},
 		context_instance=RequestContext(request)
