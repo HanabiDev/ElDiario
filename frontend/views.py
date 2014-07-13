@@ -14,6 +14,9 @@ def home(request):
 		all_articles = Article.objects.exclude(full_width=True).order_by('-creation_date')[1:5]
 
 		data = {'full_width_article': full_width_article, 'articles':all_articles, 'categories': categories, 'main_art':main_art}
+
+		print data
+		
 	except Exception, e:
 		pass
 
