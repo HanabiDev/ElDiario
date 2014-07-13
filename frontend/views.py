@@ -33,7 +33,7 @@ def serve_article(request, slug):
 
 def serve_category(request, slug):
 	category = get_object_or_404(Category, slug=slug)
-	articles = Article.objects.filter(category=category)
+	articles = Article.objects.filter(category=category).order_by('-creation_date')
 	categories = Category.objects.filter(parent=None)
 
 	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'category':category, 'categories':categories})

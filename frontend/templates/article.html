@@ -1,10 +1,12 @@
 {% extends "site_index.html" %}
 
+{% block title %}{{article.title}} - Periódico El Diario{% endblock %}
+
 {% block indicators %}{% endblock %}
 
 {% block main_content %}
-	<div class="new_extended">
-		<div class="new_head">
+	<div class="new_extended" style="padding:0;">
+		<div class="new_head" style="padding:0;	">
 			<a href="/categorias/{{article.category.slug}}"><span class="cat-label">{{article.category}}</a></span>
 			<small>
 				<span class="glyphicon glyphicon-calendar"></span> {{ article.creation_date|date:"d \d\e F \d\e\l Y" }}
@@ -16,8 +18,52 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div class="col-xs-2">
-				
+			<div class="col-xs-2" style="padding-right:0">
+				<h5><b>Compartir artículo en </b></h5>
+				<!-- AddToAny BEGIN -->
+				<div class="a2a_kit a2a_default_style">
+					<a class="a2a_button_facebook"></a>
+					<a class="a2a_button_twitter"></a>
+					<a class="a2a_button_google_plus"></a>
+					<a class="a2a_button_linkedin"></a>
+					<br>
+					<a class="a2a_dd" href="http://www.addtoany.com/share_save">Más Opciones</a>
+
+					<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+
+					<script type="text/javascript">
+							var a2a_config = a2a_config || {};
+
+							a2a_config.templates = {
+									twitter: "Leyendo: ${title} En ${link} @ELDIARIOBOYACA",
+									email: {
+							        subject: "Mira este artículo: ${title}",
+							        body: "Encontré este artículo en Periodico El Diario. Sigue este link: \n${link}"
+							    }
+							};
+							a2a_config.track_links = 'bitly';
+							a2a_config.track_links_key = 'addtoany|R_cc6a4017b0274d1d86f2397771b70136';
+					</script>
+
+				</div>
+				<hr>
+				<h5><b>Artículos relacionados</b></h5>
+				<ul class="art-related">
+					{% for rel in article.related_articles.all %}
+						<li><a href="/articulos/{{rel.slug}}">{{rel.title}}</a></li>
+
+					{% empty %}
+						{% for rel in article.related.all %}
+							<li><a href="/articulos/{{rel.slug}}">{{rel.title}}</a></li>
+				</ul>
+						{% empty %}
+							No hay artículos relacionados
+						{% endfor %}
+					{% endfor %}
+
+
+
+				<!-- AddToAny END -->
 			</div>
 			<div class="col-xs-10">
 					{{article.abstract | safe}}
