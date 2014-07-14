@@ -11,10 +11,5 @@ class Poll(models.Model):
 
 class Option(models.Model):
 	question_text = models.CharField(max_length=100, verbose_name=u'Texto de la opción')
-	order = models.IntegerField()
-	poll = models.ForeignKey(Poll, verbose_name=u'Encuesta')
-
-class Vote(models.Model):
 	poll = models.ForeignKey(Poll)
-	option = models.ForeignKey(Option)
-	hits = models.IntegerField()
+	hits = models.IntegerField(default=0)

@@ -27,7 +27,23 @@
 			<div class="col-xs-2" style="padding-right:0">
 				<h5><b>Compartir artículo en </b></h5>
 				<div class="addthis_sharing_toolbox"></div>
+				<hr>
+				<h5><b>Artículos relacionados:</b></h5>
+				<div>
+					<ul class="art-related">
+						{% for relA in article.related_articles.all %}
+						<li><a href="articulos/{{relA.slug}}">{{relA.title}}</a></li>
+						{% empty %}
+							{% for relA in article.related.all%}
+							<li><a href="articulos/{{relA.slug}}">{{relA.title}}</a></li>
+							{% empty %}
+							No se encontraron artículos
+							{% endfor %}
+						{% endfor %}
+					</ul>
 
+
+				</div>
 			</div>
 			<div class="col-xs-10">
 					{{article.abstract | safe}}

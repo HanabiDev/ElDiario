@@ -1,17 +1,23 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from content.models import *
+from polls.models import *
 # Create your views here.
 
 TEMPLATE_DIR = 'frontend/../'
 def home(request):
 
 	full_width_article = None
+	poll = None
 	try:
 		full_width_article = Article.objects.get(full_width=True)
+		poll = Poll.objects.get(closed=False)
 
 	except Exception, e:
 		pass
+
+
+	print dir(poll)
 
 	categories = Category.objects.filter(parent=None)
 	if Article.objects.exclude(full_width=True).count() > 0:
@@ -22,7 +28,7 @@ def home(request):
 		all_articles = None
 
 	return render_to_response(TEMPLATE_DIR+'site_index.html',
-		{'full_width_article': full_width_article, 'articles':all_articles, 'categories': categories, 'main_art':main_art},
+		{'full_width_article': full_width_article, 'poll':poll, 'articles':all_articles, 'categories': categories, 'main_art':main_art},
 		context_instance=RequestContext(request)
 	)
 

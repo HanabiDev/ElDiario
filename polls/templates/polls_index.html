@@ -23,12 +23,6 @@
 						<a href="nueva/" class="btn btn-success">
 							<span class="fa fa-plus"></span> <span class="hidden-xs"> Nuevo Encuesta</span>
 						</a>
-						<a href="publicar/" class="btn btn-primary toggle_publish disabled">
-							<span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-xs">Activar</span>
-						</a>
-						<a href="despublicar/" class="btn btn-warning toggle_publish disabled">
-							<span class="glyphicon glyphicon-eye-close"></span> <span class="hidden-xs">Desactivar</span>
-						</a>
 						<a href="eliminar/" class="btn btn-danger delete disabled">
 							<span class="glyphicon glyphicon-fire"></span> <span class="hidden-xs">Eliminar</span>
 						</a>
@@ -37,7 +31,7 @@
 				  <div class="panel-body" style="padding:0">
 
 				  	<form id="all_objects" method="POST">{% csrf_token %}</form>
-				    
+
 				    <table class="table table-striped">
 				      <thead>
 				        <tr class="active">
@@ -66,7 +60,7 @@
 				        		<a href="publicar/{{poll.id}}">
 				        			<span class="glyphicon glyphicon-eye-close text-warning"></span>
 				        		{% endif %}
-				        		</a> 
+				        		</a>
 				        	</td>
 				        	<td class="text-center">{{poll.votes}}</td>
 				        </tr>
@@ -76,7 +70,7 @@
 				        		<div class="alert alert-info">No has creado encuestas
 				        			<br><br>
 				        			<b>
-				        				<a href="nueva/"> 
+				        				<a href="nueva/">
 				        					<span class="fa fa-plus"></span> Crear una Encuesta
 				        				</a>
 				        			</b>
@@ -94,7 +88,7 @@
 
 	<script type="text/javascript">
 	$(".delete").confirm({
-		text: "Vas a eliminar uno o más encuestas, esta acción no se puede deshacer. ¿Aún deseas continuar?",
+		text: "Vas a eliminar una o más encuestas, esta acción no se puede deshacer. ¿Aún deseas continuar?",
 	    title: "Procede con cuidado!",
 	    confirm: function(button) {
 	        $("#all_objects").attr("action", button.attr("href"));
@@ -111,4 +105,3 @@
 
 
 {% endblock %}
-
