@@ -1,0 +1,94 @@
+{% extends "site_index.html" %}
+{% load static %}
+
+{% block title %}Solicitar suscripción - Periódico El Diario{% endblock %}
+
+
+{% block indicators %}{% endblock %}
+
+{% block full_news %}
+      <div class="row" style="padding:5px; margin-bottom:0;background:white;">
+        <img src="{% static "images/imghead.jpg" %}" alt="" />
+      </div>
+      <div class="row" style="padding:5px; margin-bottom:0;background:white;">
+        <div class="col-xs-8" style="padding:0">
+            <img src="{% static "images/imgprecio.png" %}" alt="" />
+        </div>
+        <div class="col-xs-4" style="padding:0">
+            <a class="btn btn-lg btn-danger" href="#formulario"
+            style="background:#B70A04;border:none;font-size:22px;width:100%;border-radius:0;margin-top:13px;outline:none;">
+              <b>Solicitar Suscripción</b>
+            </a>
+        </div>
+      </div>
+      <div class="row" id="formulario" style="background:white;">
+
+        <div class="col-xs-1"></div>
+        <div class="col-xs-10">
+          {% if done %}
+            <div class="alert alert-success" style="margin-top:30px;padding-top:25px;">
+              <h4>
+                <span class="fa fa-thumbs-up"></span>
+                Tu solicitud ha sido registrada, nos contactaremos contigo en el menor tiempo posible para confirmar
+                la suscripción.
+              </h4>
+            </div>
+          {% else %}
+          <div class="dept-tab" style="border-bottom:5px solid #A42C2B;margin-top:70px; margin-bottom:30px;">
+            <span>Nueva Suscripción</span> Formulario de Solicitud
+          </div>
+          <form role="form" action="./#formulario" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{user}}" />
+            {% for field in form %}
+              {% if field.name == "embed_code"%}
+              <div class="form-group {% if field.errors %} has-error{% endif %}" style="display:none;">
+              {% else %}
+              <div class="form-group {% if field.errors %} has-error{% endif %}">
+              {% endif %}
+                {% if not form.this_is_the_login_form.errors %}
+                <label class="control-label required" for="{{field.field.id}}">
+                  {{field.label}}:
+                </label>
+                {% endif %}
+
+                {% if field.errors %}
+                  <span class="help-inline text-danger">
+                    {{field.errors}}
+                  </span>
+                {% endif %}
+
+                <p class="field">
+                  {{ field }}
+                </p>
+              </div>
+            {% endfor %}
+            <div class="form-group" style="text-align:right;">
+              <button type="submit" class="add_susc btn btn-success">
+                {% if editing %} Guardar cambios
+                  {% else %} Crear Suscripción {% endif %}
+                </button>
+            </div>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+
+      <script charset="utf-8">
+      $(document).ready(function(){
+        $("input").addClass('form-control')
+        $(".form-group:nth(10), .form-group:nth(9), .form-group:nth(11  )").detach()
+
+        $(".susc").click(function(){
+          alert();
+          $(".form-group input:nth(1)").focus();
+        });
+      });
+      </script>
+
+{% endblock %}
+
+{% block main %}{% endblock %}
+{% block right_col %}{% endblock %}
+
+{% block media %}{% endblock %}

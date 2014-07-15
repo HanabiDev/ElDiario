@@ -1,4 +1,4 @@
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
 aria-labelledby="PicManager" aria-hidden="true">
 
 	<div class="modal-dialog modal-lg">
@@ -27,11 +27,11 @@ aria-labelledby="PicManager" aria-hidden="true">
 								<div class="well pic_manager">
 									{% for av_img in available_images %}
 									<img class="img-thumbnail" img_id="{{av_img.id}}" img_title="{{av_img.image_title}}"
-									img_author="{{av_img.author}}" img_description="{{av_img.description}}" 
-									img_date="{{av_img.capture_datetime|date:"d \d\e M \d\e\l Y \a \l\a\s H:i"}}" 
-									src="{{MEDIA_URL}}{{av_img.image}}"/>
+									img_author="{{av_img.author}}" img_description="{{av_img.description}}"
+									img_date="{{av_img.capture_datetime|date:"d \d\e M \d\e\l Y \a \l\a\s H:i"}}"
+									src="/media/{{av_img.image}}"/>
 									{% empty %}
-									No has subido imágenes
+									<span class="empty-msg">No has subido imágenes</span>
 									{% endfor %}
 								</div>
 
@@ -39,13 +39,15 @@ aria-labelledby="PicManager" aria-hidden="true">
 						</div>
 					</div>
 
+
 					<div class="tab-pane fade" id="upload">
 
 						<div class="container">
 							<h3>Subir una imagen</h3>
 							<div class="col-md-8">
 
-								<form role="form" id="uploadForm" enctype="multipart/form-data" action="{% url "photogallery.views.upload" %}" method="POST">
+								<form role="form" id="uploadForm" enctype="multipart/form-data"
+								action="{% url "photogallery.views.upload" %}" method="POST">
 									{% csrf_token %}
 
 									{% for field in image_form %}
@@ -81,7 +83,7 @@ aria-labelledby="PicManager" aria-hidden="true">
 										<button type="submit" id="send_form" class="btn btn-success">
 											Subir Imagen
 										</button>
-									</div>	
+									</div>
 								</form>
 							</div>
 						</div>
@@ -97,5 +99,5 @@ aria-labelledby="PicManager" aria-hidden="true">
 			</div>
 		</div>
 	</div>
-	
+
 </div>

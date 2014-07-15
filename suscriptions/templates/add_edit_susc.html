@@ -17,7 +17,7 @@
 		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
 		<li><a href="/backend/suscripciones"><i class="fa fa-bullhorn"></i> Suscripciones</a></li>
 		<li>
-			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i> 
+			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i>
 			{% if editing %} Editar Suscripción ({{title}}) {% else %} Nueva Suscripción {% endif %}
 		</li>
 	</ul>
@@ -30,20 +30,25 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 				    	<h2 class="panel-title">
-				    		{% if editing %} <span class="fa fa-edit"></span> Editar Suscripción ({{title}}) 
+				    		{% if editing %} <span class="fa fa-edit"></span> Editar Suscripción ({{title}})
 				    		{% else %} <span class="fa fa-plus"></span> Nueva Suscripción  {% endif %}
-				    		 
+
 				    	</h2>
 				  	</div>
 				  	<div class="panel-body">
 				  		<div class="row">
 				  			<div class="col-md-1"></div>
 				  			<div class="col-xs-12 col-md-10">
+
+									<div class="susc-tab">
+										<span>DEPARTAMENTO</span> Últimas Noticias
+									</div>
+
 				  				<form role="form" action="." method="POST" enctype="multipart/form-data">
 									{% csrf_token %}
 
 									<input type="hidden" name="user_id" value="{{user}}" />
-									
+
 									{% for field in form %}
 										{% if field.name == "embed_code"%}
 										<div class="form-group {% if field.errors %} has-error{% endif %}" style="display:none;">
@@ -71,7 +76,7 @@
 
 
 
-											
+
 										</div>
 									{% endfor %}
 
@@ -84,7 +89,7 @@
 											{% if editing %} Guardar cambios
 				    						{% else %} Crear Suscripción {% endif %}
 				    					</button>
-									</div>	
+									</div>
 								</form>
 				  			</div>
 				  		</div>
@@ -101,7 +106,7 @@
 
 		#id_ad_type li label{
 			line-height: 42px;
-		}		
+		}
 
 		#id_ad_type li .form-control{
 			display: inline; margin-right: 5px; width: auto;
@@ -135,4 +140,3 @@
 		});
 	</script>
 {% endblock %}
-

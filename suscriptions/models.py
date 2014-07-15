@@ -14,6 +14,6 @@ class Suscription(models.Model):
 	email = models.EmailField(verbose_name=u'Correo Electrónico')
 	address = models.CharField(verbose_name=u'Dirección', max_length=50)
 	city = models.CharField(verbose_name=u'Ciudad', max_length=30)
-	suscription_date = models.DateField(verbose_name=u'Fecha de suscripción')
-	suscription_end_date = models.DateField(verbose_name=u'Fin de la suscripción')
+	suscription_date = models.DateField(verbose_name=u'Fecha de suscripción', blank=True, null=True)
+	suscription_end_date = models.DateField(verbose_name=u'Fin de la suscripción', blank=True, null=True)
 	status = models.BooleanField(verbose_name=u'Suscripción activa', default=False)

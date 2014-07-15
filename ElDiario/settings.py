@@ -77,12 +77,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'admin',
     'content',
-    #'photogallery',
+    'photogallery',
     'auth',
     'ads',
     'frontend',
     'polls',
     'suscriptions',
+    'main_page',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -148,6 +149,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'suscriptions', 'templates'),
     os.path.join(BASE_DIR, 'frontend', 'templates'),
     os.path.join(BASE_DIR, 'session_security', 'templates'),
+    os.path.join(BASE_DIR, 'main_page', 'templates'),
     os.path.join(MEDIA_ROOT, 'uploads/ads'),
 )
 

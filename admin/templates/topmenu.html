@@ -21,6 +21,11 @@
 
 			<ul class="nav navbar-nav navbar-right">
 				<li>
+					<a href="/backend/suscripciones/">
+						<i class="glyphicon glyphicon-send"></i> Nuevas suscipciones <span class="badge">{{new_susc}}</span>
+					</a>
+				</li>
+				<li>
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Buscar">
@@ -63,13 +68,13 @@
 								</li>
 
 								<li>
-									<a href="/backend/nuevo_password/">		
+									<a href="/backend/nuevo_password/">
 										<span class="glyphicon glyphicon-lock"></span>
 										Cambiar contraseña
 									</a>
 								</li>
-								
-								
+
+
 								{% url 'logout' as logout_url %}
 								<li>
 									<a href="{% if logout_url %}{{ logout_url }}{% else %}{{ homeurl }}logout/{% endif %}">
@@ -77,7 +82,7 @@
 										Cerrar sesión
 									</a>
 								</li>
-								
+
 							{% endblock %}
 						</ul>
 				</li>

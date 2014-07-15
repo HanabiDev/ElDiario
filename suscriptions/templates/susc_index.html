@@ -37,7 +37,7 @@
 				  <div class="panel-body" style="padding:0">
 
 				  	<form id="all_objects" method="POST">{% csrf_token %}</form>
-				    
+
 				    <table class="table table-striped">
 				      <thead>
 				        <tr class="active">
@@ -75,7 +75,7 @@
 				        	<td class="text-center hidden-xs">{{suscription.email}}</td>
 							<td class="text-center hidden-xs">{{suscription.address}}</td>
 							<td class="text-center hidden-xs">{{suscription.city}}</td>
-				        	
+
 				        	<td class="text-center hidden-xs">
 
 				        		{% if suscription.status %}
@@ -88,9 +88,13 @@
 				        		</a>
 				        		{% endif %}
 				        	</td>
-				        	
-				        	<td class="text-center hidden-xs">{{suscription.suscription_date}}</td>
-				        	<td class="text-center hidden-xs">{{suscription.suscription_end_date}}</td>
+
+				        	<td class="text-center hidden-xs">
+										{% if suscription.suscription_date %}{{suscription.phone}}{% else %}---{%endif%}
+									</td>
+				        	<td class="text-center hidden-xs">
+										{% if suscription.suscription_end_date %}{{suscription.phone}}{% else %}---{%endif%}
+									</td>
 				        </tr>
 				        {% empty %}
 				        <tr>
@@ -98,7 +102,7 @@
 				        		<div class="alert alert-info">No has creado suscripciones
 				        			<br><br>
 				        			<b>
-				        				<a href="nueva/"> 
+				        				<a href="nueva/">
 				        					<span class="fa fa-plus"></span> Crear Suscripción
 				        				</a>
 				        			</b>
@@ -133,4 +137,3 @@
 
 
 {% endblock %}
-

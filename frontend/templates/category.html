@@ -7,7 +7,10 @@
 {% block main_content %}
 
 		<div class="cat-tab">
-			<h4><span>{{category.title}}</span></h4> {{category.article_set.all.count}} artículos
+			<h4>
+				<span>{% if category %}{{category.title}}{% else %} GENERAL {% endif %}</span>
+			</h4>
+			{% if category %} {{category.article_set.all.count}} artículos {% else %} {{ articles.count }} artículos {% endif %}
 		</div>
 
 		{% for article in articles %}

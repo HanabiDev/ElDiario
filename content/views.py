@@ -21,9 +21,9 @@ Category views
 def list_categories(request):
 	categories = Category.objects.all()
 
-	
+
 	for category in categories:
-		
+
 
 
 		articles = category.article_set.all().count()
@@ -41,12 +41,19 @@ def add_category(request):
 		form = CategoryForm()
 		return render_to_response(TEMPLATE_DIR+'categories/add_edit.html',
 							  {'form':form}, context_instance=RequestContext(request))
-	
+
 	elif request.method == 'POST':
 		form = CategoryForm(request.POST)
         if form.is_valid():
-            new_category = form.save()
-            return HttpResponseRedirect('/backend/contenido/categorias')
+					new_category = form.save()
+					category_pos = new_category.main_page_position
+
+					Category.objects.filter(main_page_position=new_category.main_page_position).update(main_page_position=None)
+
+					new_category.main_page_position = category_pos
+					new_category.save()
+
+					return HttpResponseRedirect('/backend/contenido/categorias')
         else:
         	return render_to_response(TEMPLATE_DIR+'categories/add_edit.html',
 							  {'form':form}, context_instance=RequestContext(request))
@@ -60,16 +67,22 @@ def edit_category(request, id):
 	if request.method == 'GET':
 		form = CategoryForm(instance=category)
 		return render_to_response(TEMPLATE_DIR+'categories/add_edit.html',
-							  {'form':form, 'editing':True, 'title':category.title}, context_instance=RequestContext(request))
-	
+		{'form':form, 'editing':True, 'title':category.title}, context_instance=RequestContext(request))
+
 	elif request.method == 'POST':
 		form = CategoryForm(request.POST, instance=category)
-        if form.is_valid():
-            new_category = form.save()
-            return HttpResponseRedirect('/backend/contenido/categorias')
-        else:
-        	return render_to_response(TEMPLATE_DIR+'categories/add_edit.html',
-							  {'form':form, 'editing':True, 'title':category.title}, context_instance=RequestContext(request))
+		if form.is_valid():
+			new_category = form.save()
+			category_pos = new_category.main_page_position
+
+			Category.objects.filter(main_page_position=new_category.main_page_position).update(main_page_position=None)
+
+			new_category.main_page_position = category_pos
+			new_category.save()
+			return HttpResponseRedirect('/backend/contenido/categorias')
+		else:
+			return render_to_response(TEMPLATE_DIR+'categories/add_edit.html',
+			{'form':form, 'editing':True, 'title':category.title}, context_instance=RequestContext(request))
 
 @login_required(login_url='login')
 @permission_required('content.change_category', login_url='/backend/permisos_insuficientes/')
@@ -129,7 +142,7 @@ def add_article(request):
 		form = ArticleForm()
 		return render_to_response(TEMPLATE_DIR+'articles/add_edit.html',
 							  {'form':form}, context_instance=RequestContext(request))
-	
+
 	elif request.method == 'POST':
 		form = ArticleForm(request.POST)
 		if form.is_valid():
@@ -156,7 +169,7 @@ def edit_article(request, id):
 		form = ArticleForm(instance=article)
 		return render_to_response(TEMPLATE_DIR+'articles/add_edit.html',
 							  {'form':form, 'editing':True, 'title':article.title}, context_instance=RequestContext(request))
-	
+
 	elif request.method == 'POST':
 		form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
@@ -164,7 +177,7 @@ def edit_article(request, id):
 
             if new_article.full_width:
 				Article.objects.filter(full_width=True).exclude(id=new_article.id).update(full_width=False)
-            
+
             return HttpResponseRedirect('/backend/contenido/articulos')
         else:
         	return render_to_response(TEMPLATE_DIR+'articles/add_edit.html',
@@ -236,6 +249,3 @@ def delete_article(request):
 		article = Article.objects.get(id=int(art_id))
 		article.delete()
 	return HttpResponseRedirect('/backend/contenido/articulos')
-
-
-

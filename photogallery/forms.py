@@ -3,12 +3,13 @@ from models import *
 
 
 class GalleryForm(ModelForm):
-	
+
 	class Meta:
 		model = Gallery
 		exclude = ('hits',)
 
 class ImageForm(ModelForm):
-	
+
 	class Meta:
 		model = Image
+		exclude = ['media_type', 'url', 'code']

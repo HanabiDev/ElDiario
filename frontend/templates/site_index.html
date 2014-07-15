@@ -1,4 +1,5 @@
 {% load static %}
+{% load front_tags %}
 {% load i18n %}
 <!DOCTYPE html>
 
@@ -127,7 +128,7 @@
 						{% endif %}
 					{% endblock %}
 
-
+					{% block main %}
 					<div class="row" style="background:white; padding:10px 10px 0 0;">
 
 						<!--Main Content-->
@@ -135,9 +136,9 @@
 							<div class="row-fluid ad ad_5">
 								{% include "pos5/template_index.html" %}
 							</div>
-
+							{% block main_content %}
 							<div class="row-fluid main_news">
-								{% block main_content %}
+								{% if main_art %}
 								<div class="panel panel-default">
 								  	<div class="panel-body">
 											<div class="row-fluid">
@@ -151,10 +152,13 @@
 											</div>
 										</div>
 								</div>
-								{% endblock %}
+								{% endif %}
+
 							</div>
+							{% endblock %}
 
 							{% block other_news %}
+							{% if articles %}
 							<div class="row-fluid main_news">
 								<div class="panel panel-default">
 								  	<div class="panel-body">
@@ -183,44 +187,39 @@
 											</div>
 									</div>
 								</div>
+
 							</div>
+							{%endif%}
 							{% endblock %}
 
-							{% block dept %}
-								<div class="row-fluid">
+							{% if "S"|get_position_article %}
+								{% block dept %}
+									<div class="row-fluid">
 
-									<div class="dept-tab">
-										<span>DEPARTAMENTO</span> Últimas Noticias
-									</div>
+										{% with "S"|get_position_article as articles %}
+										<div class="dept-tab">
+											<span>
+												{% with articles|first as first %}
+													{{first.category.title}}
+												{% endwith %}
+											</span>
+											Últimas Noticias
+										</div>
 
-									<div class="col-xs-12 dept">
-										<div class="col-xs-6" style="padding:0 10px 0 0">
-											<h2>Ejemplo de artículo</h2>
-											<hr>
-											<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-											</p>
+										<div class="col-xs-12 dept">
+
+												{% for article in articles %}
+												<div class="col-xs-6" style="padding:0 10px 0 0">
+													<h2>{{article.title}}</h2>
+													<hr>
+													{{ article.abstract|safe }}
+												</div>
+												{% endfor %}
 										</div>
-										<div class="col-xs-6" style="padding:0 10px 0 0">
-											<h2>Ejemplo de artículo</h2>
-											<hr>
-											<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-											</p>
-										</div>
+										{% endwith %}
 									</div>
-								</div>
-							{% endblock %}
+								{% endblock %}
+							{% endif %}
 
 							<div class="col-xs-12 ad ad_6">
 								{% include "pos6/template_index.html" %}
@@ -232,161 +231,122 @@
 								<p class="divider">
 									<span>OTRAS NOTICIAS</span>
 								</p>
-								<div class="col-xs-12 news-group">
+								{% if "A"|get_position_article %}
 									<div class="col-xs-7" style="padding:0 10px 0 0">
-										<small class="section_name"><span>TUNJA</span> 03 de Mar</small>
-										<h2>Ejemplo de artículo</h2>
-										<hr>
-										<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-										</p>
+											{% with "A"|get_position_article as article %}
+												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+												<h2>{{article.title}}</h2>
+												<hr>
+												{{ article.abstract|safe }}
+											{% endwith %}
 									</div>
+								{% endif %}
+								{% if "B"|get_position_article %}
 									<div class="col-xs-5">
 										<div class="row-fluid">
-											<small class="section_name"><span>CULTURA</span> 03 de Mar</small>
-											<h2>Ejemplo de artículo</h2>
-											<hr>
-											<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-											</p>
+											{% with "B"|get_position_article as article %}
+												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+												<h2>{{article.title}}</h2>
+												<hr>
+												{{ article.abstract|safe }}
+											{% endwith %}
 										</div>
 									</div>
-								</div>
+								{% endif %}
 
-								<div class="col-xs-12 news-group">
-
+								{% if "C"|get_position_article %}
 									<div class="col-xs-7" style="padding:0 10px 0 0">
-										<small class="section_name"><span>POLÍTICA</span> 03 de Mar</small>
-										<h2>Ejemplo de artículo</h2>
-										<hr>
-										<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-										</p>
+										{% with "C"|get_position_article as article %}
+											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+											<h2>{{article.title}}</h2>
+											<hr>
+											{{ article.abstract|safe }}
+										{% endwith %}
 									</div>
+								{% endif %}
+								{% if "D"|get_position_article %}
 									<div class="col-xs-5">
 										<div class="row-fluid">
-											<small class="section_name"><span>DEPORTES</span> 03 de Mar</small>
-											<h2>Ejemplo de artículo</h2>
-											<hr>
-											<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-											</p>
+											{% with "D"|get_position_article as article %}
+												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+												<h2>{{article.title}}</h2>
+												<hr>
+												{{ article.abstract|safe }}
+											{% endwith %}
 										</div>
 									</div>
-								</div>
+								{% endif %}
 
-								<div class="col-xs-12 news-group">
+								{% if "E"|get_position_article %}
 									<div class="col-xs-7" style="padding:0 10px 0 0">
-										<small class="section_name"><span>NACIÓN</span> 03 de Mar</small>
-										<h2>Ejemplo de artículo</h2>
-										<hr>
-										<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-										</p>
+										{% with "E"|get_position_article as article %}
+											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+											<h2>{{article.title}}</h2>
+											<hr>
+											{{ article.abstract|safe }}
+										{% endwith %}
 									</div>
+								{% endif %}
+								{% if "F"|get_position_article %}
 									<div class="col-xs-5">
 										<div class="row-fluid environ">
-											<span>MEDIO AMBIENTE</span>
-											<h2>Ejemplo de artículo</h2>
-											<hr>
-											<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-											</p>
+											{% with "F"|get_position_article as article %}
+												<span>{{article.category.title}}</span>
+												<h2>{{article.title}}</h2>
+												</span> {{article.creation_date}}</small>
+												<hr>
+												{{ article.abstract|safe }}
+											{% endwith %}
 										</div>
 									</div>
-								</div>
+								{% endif %}
 
-								<div class="col-xs-12 news-group">
+								{% if "G"|get_position_article %}
 									<div class="col-xs-7" style="padding:0 10px 0 0">
-										<small class="section_name"><span>ECONOMÍA</span> 03 de Mar</small>
-										<h2>Ejemplo de artículo</h2>
-										<hr>
-										<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-										</p>
+										{% with "G"|get_position_article as article %}
+											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+											<h2>{{article.title}}</h2>
+											<hr>
+											{{ article.abstract|safe }}
+										{% endwith %}
 									</div>
+								{% endif %}
+
+								{% if "H"|get_position_article %}
 									<div class="col-xs-5">
 										<div class="row-fluid">
-											<small class="section_name"><span>TECNOLOGÍA</span> 03 de Mar</small>
-											<h2>Ejemplo de artículo</h2>
-											<hr>
-											<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-											</p>
+											{% with "H"|get_position_article as article %}
+												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+												<h2>{{article.title}}</h2>
+												<hr>
+												{{ article.abstract|safe }}
+											{% endwith %}
 										</div>
 									</div>
-								</div>
+								{% endif %}
 
-								<div class="col-xs-12 news-group">
+								{% if "I"|get_position_article %}
 									<div class="col-xs-7" style="padding:0 10px 0 0">
-										<small class="section_name"><span>ACADEMIA</span> 03 de Mar</small>
-										<h2>Ejemplo de artículo</h2>
-										<hr>
-										<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-										</p>
+										{% with "I"|get_position_article as article %}
+											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+											<h2>{{article.title}}</h2>
+											<hr>
+											{{ article.abstract|safe }}
+										{% endwith %}
 									</div>
+								{% endif %}
+								{% if "J"|get_position_article %}
 									<div class="col-xs-5">
 										<div class="row-fluid">
-											<small class="section_name"><span>SALUD</span> 03 de Mar</small>
-											<h2>Ejemplo de artículo</h2>
-											<hr>
-											<img src="http://periodicoeldiario.com/images/stories/presidenciales2014/zuluagatunja.jpg">
-											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-											proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-											</p>
+											{% with "J"|get_position_article as article %}
+												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+												<h2>{{article.title}}</h2>
+												<hr>
+												{{ article.abstract|safe }}
+											{% endwith %}
 										</div>
 									</div>
-								</div>
+								{% endif %}
 							</div>
 							{% endblock %}
 						</div>
@@ -430,29 +390,20 @@
 
 							<div class="row alt-news text-justify">
 								{% block alt_news %}
-								<div class="panel panel-default">
-								  <div class="panel-body">
-								    <div class="container-fluid">
-											<h4><b>Noticia de ejemplo</b></h4>
-											<img src="http://periodicoeldiario.com/images/stories/FotosAGUA/EspecialAgua/aguespeciala1.jpg">
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-												et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-												aliquip ex ea commodo consequat.
-											</p>
-								    </div>
-										<hr>
-										<div class="container-fluid">
-											<h4><b>Noticia de ejemplo</b></h4>
-											<img src="http://periodicoeldiario.com/images/stories/FotosAGUA/EspecialAgua/aguespeciala1.jpg">
-											<p>
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-												et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-												aliquip ex ea commodo consequat.
-											</p>
-										</div>
-								  </div>
-								</div>
+									{% if "R"|get_position_article %}
+										{% with "R"|get_position_article as article %}
+											<div class="panel panel-default">
+												<div class="panel-body">
+													<div class="container-fluid">
+														<h4><b>{{article.title}}</b></h4>
+														{{ article.abstract|safe }}
+													</div>
+												</div>
+											</div>
+										{% endwith %}
+									{% endif %}
+
+
 								{% endblock %}
 							</div>
 
@@ -636,6 +587,8 @@
 						<!--End Left Col-->
 
 					</div>
+					{% endblock %}
+
 
 					<div class="row" style="padding: 0;">
 						{% block media %}

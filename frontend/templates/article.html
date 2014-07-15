@@ -11,7 +11,9 @@
 {% block main_content %}
 	<div class="new_extended">
 		<div class="new_head" style="padding:0;	">
-			<a href="/categorias/{{article.category.slug}}"><span class="cat-label">{{article.category}}</span></a>
+			<a href="/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
+				<span class="cat-label">{% if article.category %}{{article.category.slug}}{% else %} GENERAL {% endif %}</span>
+			</a>
 			<small>
 				<span class="glyphicon glyphicon-calendar"></span> {{ article.creation_date|date:"d \d\e F \d\e\l Y" }}
 			</small>

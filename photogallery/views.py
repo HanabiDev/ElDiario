@@ -13,7 +13,7 @@ def home(request):
 		images = gallery.images.all().count()
 		gallery.images_count = images
 
-	return render_to_response(TEMPLATE_DIR+'index_gallery.html', {'galleries':galleries}, 
+	return render_to_response(TEMPLATE_DIR+'index_gallery.html', {'galleries':galleries},
 								context_instance=RequestContext(request))
 
 def add_gallery(request):
@@ -24,17 +24,17 @@ def add_gallery(request):
 		available_images = Image.objects.all()
 
 		return render_to_response(TEMPLATE_DIR+'add_edit_gallery.html',
-							  {'form':form, 'image_form':image_form, 'available_images':available_images}, 
+							  {'form':form, 'image_form':image_form, 'available_images':available_images},
 							  context_instance=RequestContext(request))
-	
+
 	elif request.method == 'POST':
 		form = GalleryForm(request.POST)
-        if form.is_valid():
-            new_galery = form.save()
-            return HttpResponseRedirect('/backend/fotogalerias')
-        else:
-        	return render_to_response(TEMPLATE_DIR+'add_edit_gallery.html',
-							  {'form':form}, context_instance=RequestContext(request))
+		if form.is_valid():
+			new_galery = form.save()
+			return HttpResponseRedirect('/backend/fotogalerias/editar/'+str(new_galery.id))
+		else:
+			return render_to_response(TEMPLATE_DIR+'add_edit_gallery.html',
+					  {'form':form}, context_instance=RequestContext(request))
 
 def edit_gallery(request, id):
 
@@ -51,11 +51,11 @@ def edit_gallery(request, id):
 			print img
 
 		return render_to_response(TEMPLATE_DIR+'add_edit_gallery.html',
-							  {'form':form, 'editing':True, 'title':gallery.title, 
+							  {'form':form, 'editing':True, 'title':gallery.title,
 							   'image_form': image_form, 'g_images':gallery_images,
-							   'available_images': available_images}, 
+							   'available_images': available_images},
 							  context_instance=RequestContext(request))
-	
+
 	elif request.method == 'POST':
 		form = GalleryForm(request.POST, instance=gallery)
         if form.is_valid():
@@ -142,6 +142,4 @@ def upload(request):
 	response_data['status'] = "error"
 	response_data['result'] = "We're sorry, but something went wrong. Please be sure that your file respects the upload conditions."
 
-	return HttpResponse(response_data) #json.dumps(response_data), content_type='application/json'
-
-
+	return HttpResponse(json.dumps(response_data), content_type='application/json')

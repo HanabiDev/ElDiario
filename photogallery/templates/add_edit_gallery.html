@@ -12,7 +12,7 @@
 		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
 		<li><a href="/backend/fotogalerias"><i class="fa fa-camera"></i> Galerías</a></li>
 		<li>
-			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i> 
+			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i>
 			{% if editing %} Editar Galería ({{title}}) {% else %} Nueva Galería {% endif %}
 		</li>
 	</ul>
@@ -25,9 +25,9 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 				    	<h2 class="panel-title">
-				    		{% if editing %} <span class="fa fa-edit"></span> Editar Galería ({{title}}) 
+				    		{% if editing %} <span class="fa fa-edit"></span> Editar Galería ({{title}})
 				    		{% else %} <span class="fa fa-plus"></span> Nueva Galería  {% endif %}
-				    		 
+
 				    	</h2>
 				  	</div>
 				  	<div class="panel-body">
@@ -38,7 +38,7 @@
 									{% csrf_token %}
 
 									<input type="hidden" name="user_id" value="{{user}}" />
-									
+
 									{% for field in form %}
 
 										<div class="form-group {% if field.errors %} has-error{% endif %}">
@@ -78,9 +78,11 @@
 											{% if editing %} Guardar cambios
 				    						{% else %} Crear Galería {% endif %}
 				    					</button>
-									</div>	
+									</div>
 								</form>
 				  			</div>
+
+								{% if editing %}
 				  			<div class="col-xs-12 col-md-5">
 				  				<div class="panel panel-default">
 								  <div class="panel-body">
@@ -113,7 +115,7 @@
 									      </thead>
 									      <tbody>
 
-									      	{% for g_image in g_images%}
+									      	{% for g_image in gallery.gallery %}
 									        <tr>
 									        	<td class="text-left">
 									        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{g_image.id}}"/>
@@ -147,7 +149,8 @@
 								    <hr style="margin-top:0;">
 								  </div>
 								</div>
-				  			</div>
+				  			{%endif%}
+								</div>
 				  		</div>
 				  	</div>
 				</div>
@@ -166,7 +169,7 @@
 					<div id="gallery-prev" class="carousel slide" data-ride="carousel">
 						<ol class="carousel-indicators">
 							<li class="play-btn"><span "glyphicon glyphicon-play"></span></li>
-							
+
 						</ol>
 						<div class="carousel-inner">
 							<div class="item active">
@@ -199,7 +202,7 @@
         var options = {
             url: '/backend/fotogalerias/upload/',
             error: function(response) {
-            	alert(response.result)
+            	alert("Error de subida "+response.result)
                 message = '<span class="error">We\'re sorry, but something went wrong. Retry.</span>';
                 $('.upload-message').html(message);
                 $('fileInput').val('');
@@ -209,8 +212,9 @@
                 $('#image_tabs a:first').tab('show');
                 $(".pic_manager").append(
                 	'<img class="img-thumbnail" img_id="'+response.id+'" img_title="'+response.title+'"\
-										img_author="'+response.author+'" src="{{MEDIA_URL}}'+response.fileLink+'"/>')
-                $("#id_images").append('<option value="'+response.id+'" id="img_'+response.id+'">'+response.fileLink+'<option/>')
+										img_author="'+response.author+'" src="/media/'+response.fileLink+'"/>')
+                $("#id_images").append('<option value="'+response.id+'" id="img_'+response.id+'">'+response.fileLink+'<option/>');
+								$(".empty-msg").detach();
             }
         };
 
@@ -298,8 +302,7 @@
         		});
         	});
 
-        });   
+        });
     </script>
 
 {% endblock %}
-

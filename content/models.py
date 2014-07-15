@@ -5,6 +5,21 @@ from redactor.fields import RedactorField
 from django.template.defaultfilters import slugify
 from datetime import datetime as date
 
+MAIN_PAGE_POSITIONS = (
+	('S','Secundarias destacado'),
+	('A','Otras A'),
+	('B','Otras B'),
+	('C','Otras C'),
+	('D','Otras D'),
+	('E','Otras E'),
+	('F','Otras F'),
+	('G','Otras G'),
+	('H','Otras H'),
+	('I','Otras I'),
+	('J','Otras J'),
+	('R','Derecha'),
+)
+
 class Category(models.Model):
 	slug = models.SlugField(unique=True, blank=True)
 	title = models.CharField(max_length=50, verbose_name=u'Título', unique=True)
@@ -13,6 +28,10 @@ class Category(models.Model):
 	author = models.ForeignKey(User, verbose_name=u'Autor')
 	published = models.BooleanField(default=True, verbose_name=u'Publicada')
 	parent = models.ForeignKey('Category',verbose_name='Padre', related_name='parent_cat', null=True, blank=True)
+	main_page_position = models.CharField(
+		max_length=1, null=True, blank=True,
+		verbose_name=u'Posición en la página de inicio', choices=MAIN_PAGE_POSITIONS
+	)
 
 	def __unicode__(self):
 		return self.title

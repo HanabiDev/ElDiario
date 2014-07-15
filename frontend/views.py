@@ -9,6 +9,8 @@ def home(request):
 
 	full_width_article = None
 	poll = None
+	new_suscriptions = None
+
 	try:
 		full_width_article = Article.objects.get(full_width=True)
 		poll = Poll.objects.get(closed=False)
@@ -16,19 +18,18 @@ def home(request):
 	except Exception, e:
 		pass
 
-
-	print dir(poll)
-
 	categories = Category.objects.filter(parent=None)
-	if Article.objects.exclude(full_width=True).count() > 0:
-		main_art = Article.objects.exclude(full_width=True).order_by('-creation_date')[0]
-		all_articles = Article.objects.exclude(full_width=True).order_by('-creation_date')[1:5]
+	count = Article.objects.filter(full_width=False).count()
+	if count > 0:
+		main_art = Article.objects.filter(full_width=False).order_by('-creation_date')[0]
+		all_articles = Article.objects.filter(full_width=False).order_by('-creation_date')[1:5]
 	else:
 		main_art = None
 		all_articles = None
 
 	return render_to_response(TEMPLATE_DIR+'site_index.html',
-		{'full_width_article': full_width_article, 'poll':poll, 'articles':all_articles, 'categories': categories, 'main_art':main_art},
+		{'full_width_article': full_width_article, 'poll':poll, 'articles':all_articles,
+		 'categories': categories, 'main_art':main_art},
 		context_instance=RequestContext(request)
 	)
 
@@ -42,7 +43,11 @@ def serve_article(request, slug):
 	return render_to_response(TEMPLATE_DIR+'article.html', {'article':article, 'categories':categories})
 
 def serve_category(request, slug):
-	category = get_object_or_404(Category, slug=slug)
+	if slug == "general":
+		category = None
+	else:
+		category = get_object_or_404(Category, slug=slug)
+
 	articles = Article.objects.filter(category=category).order_by('-creation_date')
 	categories = Category.objects.filter(parent=None)
 

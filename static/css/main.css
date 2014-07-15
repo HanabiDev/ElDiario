@@ -346,6 +346,7 @@ h2 a:hover, h1 a:hover{
 .section_name span{
 	color: #A42C2B;
 	font-weight: bold;
+	text-transform: uppercase;
 }
 
 .misc h2{
@@ -368,7 +369,8 @@ h2 a:hover, h1 a:hover{
 
 .environ{border-bottom:3px solid #00A95D;}
 
-.dept-tab span, .divider span, .especials-tab span, .media-tab span, .cat-tab span{
+.dept-tab span, .divider span, .especials-tab span,
+.media-tab span, .cat-tab span{
 	background: #A42C2B;
 	padding: 10px 30px;
 	line-height: 32px;
@@ -423,3 +425,7 @@ span:after, .media-tab span:after,
 .art-related{list-style: square; padding:0 0 0 15px; color: #A42C2B;}
 
 .other img{float:left; width: 70px; height:60px; clear: both; margin-right:10px;}
+
+.layout{color:white}
+.other_div{height: 50px;margin-bottom:10px; background:#737278; }
+.b{background:#4E4E4E}

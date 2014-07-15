@@ -1,5 +1,3 @@
-from django.shortcuts import render
-
 # Create your views here.
 #encoding: utf-8
 from django.shortcuts import render_to_response, HttpResponseRedirect, redirect
@@ -7,6 +5,7 @@ from django.template import RequestContext
 from models import *
 from forms import *
 from django.contrib.auth.decorators import permission_required, login_required
+from content.models import Category
 # Create your views here.
 
 TEMPLATE_DIR = 'suscriptions/../'
@@ -27,7 +26,7 @@ def add_suscription(request):
 		form = SuscriptionForm()
 		return render_to_response(TEMPLATE_DIR+'add_edit_susc.html',
 							  {'form':form}, context_instance=RequestContext(request))
-	
+
 	elif request.method == 'POST':
 		form = SuscriptionForm(request.POST)
         if form.is_valid():
@@ -47,7 +46,7 @@ def edit_suscription(request, id):
 		form = SuscriptionForm(instance=suscription)
 		return render_to_response(TEMPLATE_DIR+'add_edit_susc.html',
 							  {'form':form, 'editing': True, 'title': full_name}, context_instance=RequestContext(request))
-	
+
 	elif request.method == 'POST':
 		form = SuscriptionForm(request.POST, instance=suscription)
         if form.is_valid():
@@ -92,7 +91,7 @@ def toggle_publish(request, id):
 	suscription.save()
 	return HttpResponseRedirect('/backend/suscripciones')
 
-        
+
 @login_required(login_url='login')
 @permission_required('suscriptions.delete_suscription', login_url='/backend/permisos_insuficientes/')
 def delete_suscription(request):
@@ -105,3 +104,20 @@ def delete_suscription(request):
 
 	return HttpResponseRedirect('/backend/suscripciones')
 
+def frontend_suscription(request):
+
+	if request.method == 'GET':
+		form = SuscriptionForm()
+		categories = Category.objects.filter(parent=None)
+		return render_to_response('frontend/../add_susc.html',
+								{'form':form, 'categories': categories}, context_instance=RequestContext(request))
+
+	elif request.method == 'POST':
+		form = SuscriptionForm(request.POST)
+		if form.is_valid():
+			new_suscription = form.save()
+			return render_to_response('frontend/../add_susc.html',
+									{'done':True}, context_instance=RequestContext(request))
+		else:
+			return render_to_response('frontend/../add_susc.html',
+			{'form':form}, context_instance=RequestContext(request))

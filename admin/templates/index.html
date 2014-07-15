@@ -6,7 +6,7 @@
 	<script src='{% static "js/oocharts.min.js" %}'></script>
 	<script src="https://www.google.com/jsapi"></script>
 	<script>
-		
+
         window.onload = function(){
 
             oo.setAPIKey("cf691005659d07762ba947e6368d45138336d0ac");
@@ -50,7 +50,7 @@
 				    </div>
 				    <div id="collapseOne" class="panel-collapse collapse">
 				      <div class="panel-body">
-				        	
+
 							<div class="row-fluid hidden-phone">
 								<div id='chart'></div>
 							</div>
@@ -101,6 +101,12 @@
 				    <div id="collapseTwo" class="panel-collapse collapse in">
 				      <div class="panel-body">
 				        <div class="app_link col-xs-5 col-sm-3 col-md-2">
+							<a href="pagina_principal" class="section app_link_content">
+								<span class="fa fa-star"></span>
+								<b>Página principal</b>
+							</a>
+						</div>
+						<div class="app_link col-xs-5 col-sm-3 col-md-2">
 							<a href="contenido/categorias" class="section app_link_content">
 								<span class="fa fa-inbox"></span>
 								<b>Categorías</b>
@@ -158,7 +164,7 @@
 				<div class="well well-open">
 					<h3 class="filter-title">Acciones recientes</h3>
 					<ul class="nav nav-list">
-						
+
 							{% if not admin_log %}
 								<li>
 									<p class="tip">No se han registrado acciones</p>
@@ -194,4 +200,3 @@
 		</div>
 	</div>
 {% endblock %}
-
