@@ -12,17 +12,17 @@ def get_position_article(position_label):
 
   try:
     art_excluded = Article.objects.filter(full_width=False, published=True).order_by('-creation_date').values('id')
-    art_excluded = art_excluded[:6]
+    art_excluded = art_excluded
     article = Article.objects.filter(category=category, published=True).exclude(full_width=False,id__in=art_excluded).order_by('-creation_date')
   except Exception as e:
     return article
 
   if position_label == "S":
     if len(article)>=2:
-      article = article[:2]
+      article = article
   else:
     if len(article)>=1:
-      article = article[0]
+      article = article
 
   return article
 

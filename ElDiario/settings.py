@@ -20,6 +20,8 @@ if socket.gethostname().startswith('MacBook-Pro-de-Diana-Riscanevo.local'):
 else:
     DEVEL = False
 
+DEVEL = True
+
 if DEVEL:
     DATABASES = {
         'default': {
