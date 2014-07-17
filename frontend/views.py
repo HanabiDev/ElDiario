@@ -1,12 +1,19 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from content.models import *
 from polls.models import *
 from photogallery.models import *
 # Create your views here.
+from datetime import datetime
 
 TEMPLATE_DIR = 'frontend/../'
 def home(request):
+
+	if request.GET.get('launched')=='True':
+		request.session["launch"]=True
+		return redirect('/')
+
+
 
 	full_width_article = None
 	poll = None

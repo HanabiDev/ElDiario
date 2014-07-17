@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free coming soon template with jQuery countdown">
+    <meta name="author" content="http://bootstraptaste.com">
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <title>Períodico El Diario</title>
+
+    <!-- siimple style -->
+    <link href="{% static "css/style.css"%}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+	<div id="wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-12 col-lg-12" style="text-shadow:1px 1px 10px black;">
+          <img class="img-rounded" src="https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpf1/t1.0-9/734113_389386964485689_331498768_n.jpg"
+          style="width:200px;box-shadow:1px 1px 10px black;"/>
+					<h1>El nuevo sitio web de EL DIARIO esta cerca</h1>
+					<h2 class="subtitle">
+            Trabajamos para ofrecerte un nuevo y mejor portal
+            y estamos cerca de su lanzamiento oficial en aproximadamente:</h2>
+					<div id="countdown"></div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<script src="{% static "js/jquery.countdown.min.js"%}"></script>
+	<script type="text/javascript">
+  $('#countdown').countdown('2014/07/17 16:41:00', function(event) {
+    $(this).html(event.strftime('%d d, %H hrs, %M min y %S seg'));
+  }).on('finish.countdown', function(event) {
+      document.location.href='?launched=True';
+  });
+
+</script>
+  </body>
+</html>
