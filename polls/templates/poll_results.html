@@ -1,8 +1,12 @@
 {% load poll_tags %}
+{% if request.session.voted %}
 <div class="alert alert-success">
   <span class="fa fa-thumbs-up"></span>
+
   Ya has votado esta encuesta, gracias por tu voto.
+
 </div>
+{% endif %}
 <h4>Resultados de la encuesta</h4>
 <p>
   {{poll.poll_question}}

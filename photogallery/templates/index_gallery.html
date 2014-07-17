@@ -37,7 +37,7 @@
 				  <div class="panel-body" style="padding:0">
 
 				  	<form id="all_objects" method="POST">{% csrf_token %}</form>
-				    
+
 				    <table class="table table-striped">
 				      <thead>
 				        <tr class="active">
@@ -72,7 +72,7 @@
 				        		<a href="publicar/{{gallery.id}}">
 				        			<span class="glyphicon glyphicon-eye-close text-warning"></span>
 				        		{% endif %}
-				        		</a> 
+				        		</a>
 				        	</td>
 				        	<td class="text-center">{{gallery.hits}}</td>
 				        </tr>
@@ -82,7 +82,7 @@
 				        		<div class="alert alert-info">No has creado galerías
 				        			<br><br>
 				        			<b>
-				        				<a href="nueva/"> 
+				        				<a href="nueva/">
 				        					<span class="fa fa-plus"></span> Crear una Galería
 				        				</a>
 				        			</b>
@@ -97,5 +97,21 @@
 			</div>
 		</div>
 	</div>
-{% endblock %}
 
+	<script type="text/javascript">
+	$(".delete").confirm({
+		text: "Vas a eliminar una o más galerías, esta acción no se puede deshacer. ¿Aún deseas continuar?",
+			title: "Procede con cuidado!",
+			confirm: function(button) {
+					$("#all_objects").attr("action", button.attr("href"));
+			$("#all_objects").submit();
+			},
+			cancel: function(button) {
+					return false;
+			},
+			confirmButton: "Lo entiendo, deseo continuar",
+			cancelButton: "No",
+			post: false
+	});
+	</script>
+{% endblock %}

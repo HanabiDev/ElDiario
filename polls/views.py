@@ -102,6 +102,4 @@ def get_results(request, id):
 		votes += opt.hits
 	poll.votes = votes
 
-	print request.session['voted']
-
 	return render_to_response('poll_results.html', {'poll':poll})

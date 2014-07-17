@@ -1,0 +1,24 @@
+{% extends "site_index.html" %}
+{% load static %}
+
+{% block title %}Solicitar suscripción - Periódico El Diario{% endblock %}
+
+
+{% block indicators %}{% endblock %}
+
+{% block full_news %}
+      <div class="row text-right" style="padding:20px; margin-bottom:0;background:white;overflow:hidden">
+        <a href="http://issuu.com/periodicoeldiario.com">
+          <b>Ver publicaciones en ISSUU</b>
+          <span class="fa fa-location-arrow"></span>
+        </a>
+      </div>
+      <div class="row" style="padding:0px; margin-bottom:0;background:white;overflow:hidden">
+        <iframe style="margin-top:-370px;" id="pub_frame" width="102%" height="1500" frameborder="no" src="https://issuu.com/periodicoeldiario"></iframe>
+      </div>
+{% endblock %}
+
+{% block main %}{% endblock %}
+{% block right_col %}{% endblock %}
+
+{% block media %}{% endblock %}

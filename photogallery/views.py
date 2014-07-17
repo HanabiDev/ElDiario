@@ -44,11 +44,8 @@ def edit_gallery(request, id):
 		image_form = ImageForm()
 		form = GalleryForm(instance=gallery)
 		gallery_images = gallery.images.all()
-		available_images = Image.objects.exclude(id__in=gallery_images.values_list('id'))
+		available_images = Image.objects.exclude(gallery=gallery)
 
-
-		for img in available_images:
-			print img
 
 		return render_to_response(TEMPLATE_DIR+'add_edit_gallery.html',
 							  {'form':form, 'editing':True, 'title':gallery.title,
@@ -90,6 +87,9 @@ def toggle_publish(request, id):
 def delete_gallery(request):
 	ids = request.POST.getlist('id')
 	for gallery_id in ids:
+
+		print 'x', gallery_id
+
 		gallery = Gallery.objects.get(id=int(gallery_id))
 		gallery.delete()
 	return HttpResponseRedirect('/backend/fotogalerias')
@@ -113,29 +113,36 @@ def upload(request):
 
 		form = ImageForm(request.POST, request.FILES)
 
-		print request.POST
-		print request.FILES
-
 		if form.is_valid():
 
-			upload = Image(
-				image=request.FILES['image']
+			upload = None
+			Image(
+				image=None
 			)
 
+			if request.FILES:
+				upload = Image(
+					image=request.FILES['image']
+				)
+			else:
+				upload = Image(
+					image=None
+				)
+
 			upload.image_title = request.POST.get('image_title')
+			upload.url = request.POST.get('url')
+			upload.code = request.POST.get('code')
 			upload.author = request.POST.get('author')
 			upload.description = request.POST.get('description')
 
 			upload.save()
 
-			response_data['status'] = "success"
-			response_data['fileLink'] = "/%s" % upload.image
-			response_data['id'] = upload.id
-			response_data['author'] = upload.author
-			response_data['title'] = upload.image_title
+			images = Image.objects.all()
 
-			return HttpResponse(json.dumps(response_data), content_type="application/json")
+			return render_to_response(TEMPLATE_DIR+'browse.html',
+						{'available_images':images}, context_instance=RequestContext(request))
 		else:
+			print form.errors
 			return HttpResponse("error")
 
 
@@ -143,3 +150,20 @@ def upload(request):
 	response_data['result'] = "We're sorry, but something went wrong. Please be sure that your file respects the upload conditions."
 
 	return HttpResponse(json.dumps(response_data), content_type='application/json')
+
+
+
+def get_preview(request):
+	image_ids = request.GET.getlist('images')
+
+	images = []
+
+	for id in image_ids:
+		images.append(Image.objects.get(id=int(id)))
+
+	order = range(0,len(images))
+
+	print order
+
+	return render_to_response(TEMPLATE_DIR+'carrousel.html',
+				{'images':images, 'title':'jejeje', 'order':order}, context_instance=RequestContext(request))

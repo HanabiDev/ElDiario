@@ -90,7 +90,7 @@ span.help-inline ul li{
 	display: none;
 }
 
-.pic_manager img.selected{
+.pic_manager .selected{
 	box-shadow: 0 0 7px rgb(123, 196, 250);
 }
 
@@ -429,3 +429,22 @@ span:after, .media-tab span:after,
 .layout{color:white}
 .other_div{height: 50px;margin-bottom:10px; background:#737278; }
 .b{background:#4E4E4E}
+
+#id_media_type li{display: inline; margin-right:30px;}
+#id_media_type{padding:0;}
+#id_media_type input[type=radio]{width: auto;line-height: 46px;height: auto;margin-right: 10px;}
+
+.video_thumb{max-width: 150px;min-height: 130px;max-height: 150px;margin: 5px;border: 1px solid #DDD;cursor:pointer;}
+
+.video_thumb object, .video_thumb object embed, .video_thumb iframe{
+	max-width: 100%;
+	max-height: 72%;
+	min-width: 100%;
+	min-height: 72%;
+}
+
+.item.active{text-align:center;}
+.item object, .item object embed, .item iframe{
+	min-height: 100%;
+	max-height: 100%;
+}

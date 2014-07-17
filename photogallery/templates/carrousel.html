@@ -1,0 +1,51 @@
+{% if images %}
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    {% for index in order %}
+      {% if index == order|first %}
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+      {% else %}
+      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+
+    {% for image in images %}
+      {% if image == images|first %}
+      <div class="item active">
+      {% else %}
+      <div class="item">
+      {% endif %}
+        {% if image.code %}
+          {{ image.code|safe }}
+        {% else %}
+        <img {% if image.image %}src="/media/{{image.image}}"{% else %}src="{{image.url}}"{% endif %} alt="...">
+        <div class="carousel-caption">
+          <h3>{{image.image_title}} <small>(Por {{image.author}}, el {{image.capture_datetime|date:"d \d\e M \d\e\l Y"}})</small></h3>
+					<p>{{image.description}}</p>
+        </div>
+        {% endif %}
+      </div>
+
+    {% endfor %}
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+{% else %}
+<div class="alert alert-info">
+  <p>
+    Al parecer no has seleccionado imágenes para previsualizar.
+  </p>
+</div>
+{% endif %}

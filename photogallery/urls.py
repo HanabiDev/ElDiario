@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 	url(r'^/despublicar/(?P<id>\d+)/$', 'photogallery.views.toggle_publish', name='toggle_publish'),
 	url(r'^/eliminar/$', 'photogallery.views.delete_gallery', name='delete_gallery'),
 	url(r'^/upload/$', 'photogallery.views.upload'),
+	url(r'^/get_preview/$', 'photogallery.views.get_preview'),
 )

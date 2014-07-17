@@ -1,0 +1,76 @@
+{% extends "site_index.html" %}
+{% load static %}
+{% block title %}{{gallery.title}} - Periódico El Diario{% endblock %}
+
+{% block extrahead%}
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52f06b8440ed79f8"></script>
+{% endblock %}
+
+{% block indicators %}{% endblock %}
+
+{% block full_news %}
+
+      <div class="row" id="formulario" style="background:white;padding:20px;">
+        <div class="col-xs-2">
+          <h5><b>Compartir esto en </b></h5>
+          <div class="addthis_sharing_toolbox"></div>
+          <hr>
+          <h5><b>Artículos relacionados:</b></h5>
+          <div>
+            <ul class="art-related">
+              {% for relA in article.related_articles.all %}
+              <li><a href="articulos/{{relA.slug}}">{{relA.title}}</a></li>
+              {% empty %}
+                {% for relA in article.related.all%}
+                <li><a href="articulos/{{relA.slug}}">{{relA.title}}</a></li>
+                {% empty %}
+                No se encontraron artículos
+                {% endfor %}
+              {% endfor %}
+            </ul>
+
+
+          </div>
+        </div>
+        <div class="col-xs-10">
+          <div class="row" style="padding:20px;background:white;">
+            <div class="new_head" style="padding:0;	">
+              <a href="/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
+                <span class="cat-label">{% if gallery.category %}{{gallery.category.slug}}{% else %} GENERAL {% endif %}</span>
+              </a>
+              <small>
+                <span class="glyphicon glyphicon-calendar"></span> {{ gallery.creation_date|date:"d \d\e F \d\e\l Y" }}
+              </small>
+              <small>
+                <span class="fa fa-user"></span> Redactado por: {{gallery.author.first_name}} {{gallery.author.last_name}}
+              </small>
+              <h2>{{gallery.title}}</h2>
+            </div>
+            <hr>
+          </div>
+          {% include "carrousel.html"%}
+        </div>
+      </div>
+
+      <div class="row" style="background:white;padding:30px;">
+        <hr>
+        <div class="col-xs-2">
+
+        </div>
+        <div id="fb-root" style="width:80%;"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+        <div class="fb-comments" data-href="" data-numposts="5" data-colorscheme="light"></div>
+      </div>
+
+{% endblock %}
+
+{% block main %}{% endblock %}
+{% block right_col %}{% endblock %}
+
+{% block media %}{% endblock %}

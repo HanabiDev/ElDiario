@@ -54,34 +54,6 @@
 							<div class="row-fluid hidden-phone">
 								<div id='chart'></div>
 							</div>
-							{%comment%}
-							<div class="row-fluid grey-degrade analytics-sum-wrapper add-bottom hidden-phone">
-								<div class="span2 analytics-sum"><strong>{% trans 'Total visits' %}:</strong><br/>{{ga_data.summed.visits}}</div>
-								<div class="span2 analytics-sum"><strong>{% trans 'Visitors' %}:</strong><br/>{{ga_data.summed.visitors}}</div>
-								<div class="span2 analytics-sum"><strong>{% trans 'Pageviews' %}:</strong><br/>{{ga_data.summed.pageviews}}</div>
-								<div class="span2 analytics-sum"><strong>{% trans 'Avg. visit time' %}:</strong><br/>{{ga_data.summed.avg_time}}</div>
-								<div class="span2 analytics-sum"><strong>{% trans 'Bounce rate' %}:</strong><br/>{{ga_data.summed.bounce_rate}}%</div>
-								<div class="span2 analytics-sum"><strong>{% trans 'New visits' %}:</strong><br/>{{ga_data.summed.new_visits}}%</div>
-							</div>
-							{% else %}
-							<div class="row-fluid hidden-phone">
-								<div class="span12 alert">
-									<strong>{% trans 'Atención!' %}</strong>
-									No se ha podido generar información de Google Analytics:
-									{% if ga_data.error = 'refresh' %}
-									{% trans 'The key has expired.' %}
-									{% elif ga_data.error = 'authentication' %}
-										No has vinculado una cuenta de Google Analytics. Puedes conectar un usuario <a href="{% url 'admin:analytics' %}"> aquí</a>.
-									{% else %}
-									Codigo de error: <strong>{{ga_data.error}}</strong>.{% endif %}
-								</div>
-							</div>
-							{% endif %}
-						{% endif %}
-
-						{%endcomment%}
-
-
 				      </div>
 				    </div>
 				  </div>
@@ -100,12 +72,12 @@
 				    </div>
 				    <div id="collapseTwo" class="panel-collapse collapse in">
 				      <div class="panel-body">
-				        <div class="app_link col-xs-5 col-sm-3 col-md-2">
+				        <!--div class="app_link col-xs-5 col-sm-3 col-md-2">
 							<a href="pagina_principal" class="section app_link_content">
 								<span class="fa fa-star"></span>
 								<b>Página principal</b>
 							</a>
-						</div>
+						</div-->
 						<div class="app_link col-xs-5 col-sm-3 col-md-2">
 							<a href="contenido/categorias" class="section app_link_content">
 								<span class="fa fa-inbox"></span>
@@ -148,12 +120,12 @@
 								<b>Suscripciones</b>
 							</a>
 						</div>
-						<div class="app_link col-xs-5 col-sm-3 col-md-2">
+						<!--div class="app_link col-xs-5 col-sm-3 col-md-2">
 							<a href="plugins" class="section app_link_content">
 								<span class="fa fa-sliders"></span>
 								<b>Plugins</b>
 							</a>
-						</div>
+						</div-->
 				      </div>
 				    </div>
 				  </div>

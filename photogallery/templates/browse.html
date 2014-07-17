@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="col-md-8">
+    <h3>Seleccionar imágenes existentes</h3>
+
+    <div class="well pic_manager">
+      {% for av_img in available_images %}
+        {% if av_img.code %}
+          <div img_id="{{av_img.id}}" img_title="{{av_img.image_title}}"
+          img_author="{{av_img.author}}" img_description="{{av_img.description}}"
+          img_date="{{av_img.capture_datetime|date:"d \d\e M \d\e\l Y"}}"
+          img_id="{{av_img.id}}" class="video_thumb img-thumbnail text-center">
+              {{ av_img.code|safe }}
+              <span class="fa fa-plus"></span> Agregar
+          </div>
+
+        {% else %}
+          <img class="img-thumbnail" img_id="{{av_img.id}}" img_title="{{av_img.image_title}}"
+          img_author="{{av_img.author}}" img_description="{{av_img.description}}"
+          img_date="{{av_img.capture_datetime|date:"d \d\e M \d\e\l Y"}}"
+          {% if av_img.url %}src="{{av_img.url}}"{% else %}src="/media/{{av_img.image}}"{%endif%}/>
+        {% endif%}
+      {% empty %}
+      <span class="empty-msg">No has subido imágenes</span>
+      {% endfor %}
+    </div>
+
+  </div>

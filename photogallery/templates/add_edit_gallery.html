@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 {% load url from future %}
-{% block title %} {% if editing %} Editando el galería: {{title}} {% else %} Nueva Galería {% endif %} {% endblock %}
+{% block title %} {% if editing %} Editando la galería: {{title}} {% else %} Nueva Galería {% endif %} {% endblock %}
 
 {% block extrahead %}
 	<script src="{% static "js/jquery.form.js"%}"></script>
@@ -81,7 +81,6 @@
 									</div>
 								</form>
 				  			</div>
-
 								{% if editing %}
 				  			<div class="col-xs-12 col-md-5">
 				  				<div class="panel panel-default">
@@ -97,7 +96,7 @@
 										<button type="button" id="drop_img" class="btn btn-default delete disabled">
 											<span class="glyphicon glyphicon-fire"></span> Eliminar
 										</button>
-										<button type="button" class="btn btn-default preview" data-toggle="modal" data-target="#carousel-prev-modal">
+										<button type="button" class="btn btn-default preview">
 											<span class="glyphicon glyphicon-fullscreen"></span> Vista
 										</button>
 									</div>
@@ -111,18 +110,26 @@
 									        	<th class="text-left" class="hidden-xs">Imagen</th>
 									        	<th class="text-left">Título</th>
 									        	<th class="text-center" class="hidden-xs">Fotógtrafo</th>
+														<th class="text-center" class="hidden-xs">Fecha</th>
+														<th class="text-center" class="hidden-xs">Descr.</th>
 									        </tr>
 									      </thead>
 									      <tbody>
 
-									      	{% for g_image in gallery.gallery %}
+									      	{% for g_image in g_images %}
 									        <tr>
 									        	<td class="text-left">
 									        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{g_image.id}}"/>
 									        	</td>
 									        	<td class="text-left">
 									        		<a href="#">
-									        			<img class="img-thumbnail" src="{{MEDIA_URL}}{{g_image.image}}">
+																{% if g_image.code%}
+																	<span class="fa fa-video-camera video" data-embed="{{ g_image.code }}"></span> Ver Video
+																{% else %}
+									        			<img class="img-thumbnail"
+																	{%if g_image.image%}src="/media/{{g_image.image}}"
+																	{%else%}src="{{g_image.url}}"{%endif%}>
+																{% endif %}
 									        		</a>
 									        	</td>
 									        	<td class="text-left">{{g_image.image_title}}</td>
@@ -131,8 +138,8 @@
 									        	<td class="text-left">{{g_image.description}}</td>
 									        </tr>
 									        {% empty %}
-									        <tr>
-									        	<td colspan="4">
+									        <tr class="empty-mess">
+									        	<td colspan="6">
 									        		<div class="alert alert-info">
 														No has agregado imágenes a esta galería <br>
 														<a href="" data-toggle="modal" data-target=".bs-example-modal-lg">
@@ -158,40 +165,23 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="carousel-prev-modal" tabindex="-1" role="dialog" aria-labelledby="CarouselPrev" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="CarouselPrev">Modal title</h4>
-				</div>
-				<div class="modal-body">
-					<div id="gallery-prev" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-							<li class="play-btn"><span "glyphicon glyphicon-play"></span></li>
+<div class="modal fade" id="carousel-prev-modal" tabindex="-1" role="dialog" aria-labelledby="CarouselPrev" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="CarouselPrev">Vista previa Fotogalería: {{title}}</h4>
+			</div>
+			<div class="modal-body carousel-full">
+				{% include 'carrousel.html'%}
+			</div>
 
-						</ol>
-						<div class="carousel-inner">
-							<div class="item active">
-					          <img data-src="holder.js/900x500/auto/#777:#777" alt="900x500" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzc3NyIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNzc3O2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjU2cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+OTAweDUwMDwvdGV4dD48L3N2Zz4=">
-					        </div>
-						</div>
-						<a class="left carousel-control" href="#gallery-prev" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left"></span>
-						</a>
-						<a class="right carousel-control" href="#gallery-prev" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right"></span>
-						</a>
-					</div>
-				</div>
-
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>
-
+</div>
 
 	{% include 'img_preview.html'%}
 
@@ -208,12 +198,15 @@
                 $('fileInput').val('');
             },
             success: function(response) {
-                $("#uploadForm input, #uploadForm textarea").val('');
-                $('#image_tabs a:first').tab('show');
-                $(".pic_manager").append(
-                	'<img class="img-thumbnail" img_id="'+response.id+'" img_title="'+response.title+'"\
-										img_author="'+response.author+'" src="/media/'+response.fileLink+'"/>')
-                $("#id_images").append('<option value="'+response.id+'" id="img_'+response.id+'">'+response.fileLink+'<option/>');
+                $("#uploadForm input:not(input[type=hidden]), #uploadForm textarea").val('');
+                $("#choose").html(response);
+								$('#image_tabs a:first').tab('show');
+
+								$("#id_images").html("");
+								$("#choose .img-thumbnail").each(function(){
+									alert($(this).attr("img_id"));
+									$("#id_images").append('<option value="'+$(this).attr("img_id")+'" id="img_'+$(this).attr("img_id")+'">'+$(this).attr("img_title")+'</option>');
+								});
 								$(".empty-msg").detach();
             }
         };
@@ -223,29 +216,62 @@
         	$('#uploadForm').ajaxSubmit(options);
         });
 
-        $(".pic_manager").on("click","img", function(){
-        	$(this).toggleClass("selected");
+        $("#choose").on("click",".img-thumbnail", function(){
+					if($(this).hasClass("selected")){
+							$(this).removeClass("selected");
+					}else{
+							$(this).addClass("selected");
+					}
+
         	$("#img_"+$(this).attr('img_id')).attr('selected', true);
-
-        	$("#current_images tbody").append(
-        		'<tr>\
-		        	<td class="text-left">\
-		        		<input type="checkbox" class="check" name="id" form="all_objects" value="'+$(this).attr('img_id')+'"/>\
-		        	</td>\
-		        	<td class="text-left">\
-		        		<a href="#"><img class="img-thumbnail" src="'+$(this).attr('src')+'"></a>\
-		        	</td>\
-		        	<td class="text-left">'+$(this).attr('img_title')+'</td>\
-		        	<td class="text-center">'+$(this).attr('img_author')+'</td>\
-		        	<td class="text-left">'+$(this).attr('img_date')+'</td>\
-		        	<td class="text-left">'+$(this).attr('img_description')+'</td>\
-		        </tr>'
-        	);
-
-
         });
 
+				$('#confirm_images').click(function(){
+
+					if($('#choose .selected').length>0){$(".empty-mess").hide();}
+
+					$('#choose .selected').each(function(){
+						if($(this).hasClass("video_thumb")){
+							$("#current_images tbody").append(
+								'<tr>\
+									<td class="text-left">\
+										<input type="checkbox" class="check" name="id" form="all_objects" value="'+$(this).attr('img_id')+'"/>\
+									</td>\
+									<td class="text-left">\
+										<a href="#"><span class="fa fa-video-camera"></span> Ver video</a>\
+									</td>\
+									<td class="text-left">'+$(this).attr('img_title')+'</td>\
+									<td class="text-center">'+$(this).attr('img_author')+'</td>\
+									<td class="text-left">'+$(this).attr('img_date')+'</td>\
+									<td class="text-left">'+$(this).attr('img_description')+'</td>\
+								</tr>'
+							);
+						}else{
+								$("#current_images tbody").append(
+									'<tr>\
+										<td class="text-left">\
+											<input type="checkbox" class="check" name="id" form="all_objects" value="'+$(this).attr('img_id')+'"/>\
+										</td>\
+										<td class="text-left">\
+											<a href="#"><img class="img-thumbnail" src="'+$(this).attr('src')+'"></a>\
+										</td>\
+										<td class="text-left">'+$(this).attr('img_title')+'</td>\
+										<td class="text-center">'+$(this).attr('img_author')+'</td>\
+										<td class="text-left">'+$(this).attr('img_date')+'</td>\
+										<td class="text-left">'+$(this).attr('img_description')+'</td>\
+									</tr>'
+								);
+						}
+
+						$(this).detach();
+
+						$(".bs-example-modal-lg").modal('hide')
+					});
+				});
+
         $(document).ready(function(){
+
+					$("#id_images").hide();
 
         	$("#id_images option").each(function(){
         		$(this).attr('id', 'img_'+$(this).attr('value'));
@@ -258,8 +284,7 @@
         		});
         	});
 
-        	$("#current_images").delegate("tr td img", "click", function(){
-        		alert();
+        	$("#current_images").delegate("tr td a", "click", function(){
 
         		$('.image-prev-modal').modal('show');
 
@@ -267,39 +292,28 @@
         		$('.image-prev-modal .img_prev_title').html($(data[0]).html());
         		$('.image-prev-modal .author').html($(data[1]).html());
 
-        		$('.image-prev-modal img').attr('src', $(this).attr('src'));
+						if($(this).find('span').hasClass('video')){
+							data = $(this).find('span').attr('data-embed');
+							alert(data);
+							$('.vid_prev').html(data);
+							return false;
+						}
+
+        		$('.image-prev-modal img').attr('src', $(this).find('img').attr('src'));
         	});
 
         	$(".preview").click(function(){
-        		$("#gallery-prev .carousel-inner").html("");
-        		$("#gallery-prev .carousel-indicators").html("");
 
-        		var slide_index=0;
-        		$("#current_images img").each(function(){
+        		$.ajax({
+						  url: '/backend/fotogalerias/get_preview/',
 
-        			data = $(this).parents('td').siblings(':not(:first)');
-        			//alert(data[0]+' '+data[1]);
+						  data: $("#id_images").serialize(),
 
-        			$("#gallery-prev .carousel-indicators").append(
-        				'<li data-target="#carousel-prev" data-slide-to="'+slide_index+'" class=""></li>'
-        			);
-        			active = ""
-        			if(slide_index===0){
-        				active = "active";
-        			}
-
-        			$("#gallery-prev .carousel-inner").append(
-        				'<div class="item '+active+'">\
-							<img src="'+$(this).attr('src')+'" alt="...">\
-							<div class="carousel-caption">\
-								<h3>'+$(data[0]).html()+' <small>(Por '+$(data[1]).html()+', el '+$(data[2]).html()+')</small></h3>\
-								<p>'+$(data[3]).html()+'</p>\
-							</div>\
-						</div>'
-        			);
-
-        			slide_index += 1;
-        		});
+						  success: function(response){
+								$(".carousel-full").html(response);
+								$("#carousel-prev-modal").modal('show');
+							},
+						});
         	});
 
         });
