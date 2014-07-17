@@ -21,7 +21,7 @@ MAIN_PAGE_POSITIONS = (
 )
 
 class Category(models.Model):
-	slug = models.SlugField(unique=True, blank=True)
+	slug = models.SlugField(unique=True, blank=True, max_length=150)
 	title = models.CharField(max_length=50, verbose_name=u'Título', unique=True)
 	description = RedactorField(verbose_name=u'Descripción', blank=True)
 	creation_date = models.DateField(auto_now=True)
