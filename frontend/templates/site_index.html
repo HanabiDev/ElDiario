@@ -72,15 +72,8 @@
 	</head>
 
 	<body>
-		<canvas id="world" style="z-index:3;position:absolute; top:0; left:0; width:100%; height:100%"></canvas>
-		{% if not request.session.launch %}
-		<div id="full" style="width:100%; height:100%;position:absolute;top:0; left:0;z-index:10;">
-			{%include "counter.html"%}
-		</div>
-		<div class="big container-fluid text-justify hide" style="padding:0 0 30px 0;">
-		{% else %}
+
 		<div class="container-fluid text-justify" style="padding:0 0 30px 0;">
-		{% endif %}
 			<div class="col-xs-1" style="padding-right:20px">
 				<div class="row ad ad2">
 					{% include "pos2/template_index.html"%}
@@ -366,30 +359,33 @@
 							{% block social_links %}
 								<div class="row">
 									<div class="btn-group" id="social_buttons">
-									  <span class="btn btn-default disabled">
-									  	<b>Síguenos en: </b>
-									  </span>
-									  <a class="btn btn-default" href="https://www.facebook.com/periodicoeldiario" class="btn btn-default">
-										<span class="fa fa-facebook"></span>
-									  </a>
-									  <a class="btn btn-default" href="https://twitter.com/eldiarioboyaca">
-										<span class="fa fa-twitter"></span>
-									  </a>
-									  <a class="btn btn-default" href="https://plus.google.com/115531395616996043693/posts">
-										<span class="fa fa-google-plus"></span>
-									  </a>
-									  <a class="btn btn-default" href="http://www.youtube.com/channel/UCC8r9OquHiDaI2IydAYqOZw?feature=watch">
-										<span class="fa fa-youtube-play"></span>
-									  </a>
-									  <a class="btn btn-default" href="https://pinterest.com/ElDiarioBoyaca/">
-										<span class="fa fa-pinterest"></span>
-									  </a>
-									  <a class="btn btn-default" href="https://www.linkedin.com/reg/join?session_redirect=http%3A%2F%2Fwww.linkedin.com%2FpostLogin%3Fsession_rikey%3DoZtL5JSaGZ4Zom0IZAdGh4L-ZpzcKH01Pf-zI53EI6y-AyXFbCOx-AqYnubdoToNl8mhoOblcXwAlpo-AC70-5ddI3Pxomkv8Ar%26l%3Dhttp%253A%252F%252Fwww%252Elinkedin%252Ecom%252Fsearch%26id%3D0%26b%3D315bbd1e-5163-4b92-8878-bcb96237ffd2%26h%3D5AaA%26m%3DGET">
-										<span class="fa fa-linkedin"></span>
-									  </a>
-									  <a class="btn btn-default" href="https://soundcloud.com/periodicoeldiario">
-										<span class="fa fa-soundcloud"></span>
-									  </a>
+										<div style="padding:5px 10px;">
+											<b>Síguenos en: </b>
+										</div>
+
+										<div style="font-size:23px;">
+										  <a class="btn btn-default" href="https://www.facebook.com/periodicoeldiario" class="btn btn-default">
+											<span class="fa fa-facebook"></span>
+										  </a>
+										  <a class="btn btn-default" href="https://twitter.com/eldiarioboyaca">
+											<span class="fa fa-twitter"></span>
+										  </a>
+										  <a class="btn btn-default" href="https://plus.google.com/115531395616996043693/posts">
+											<span class="fa fa-google-plus"></span>
+										  </a>
+										  <a class="btn btn-default" href="http://www.youtube.com/channel/UCC8r9OquHiDaI2IydAYqOZw?feature=watch">
+											<span class="fa fa-youtube-play"></span>
+										  </a>
+										  <a class="btn btn-default" href="https://pinterest.com/ElDiarioBoyaca/">
+											<span class="fa fa-pinterest"></span>
+										  </a>
+										  <a class="btn btn-default" href="https://www.linkedin.com/reg/join?session_redirect=http%3A%2F%2Fwww.linkedin.com%2FpostLogin%3Fsession_rikey%3DoZtL5JSaGZ4Zom0IZAdGh4L-ZpzcKH01Pf-zI53EI6y-AyXFbCOx-AqYnubdoToNl8mhoOblcXwAlpo-AC70-5ddI3Pxomkv8Ar%26l%3Dhttp%253A%252F%252Fwww%252Elinkedin%252Ecom%252Fsearch%26id%3D0%26b%3D315bbd1e-5163-4b92-8878-bcb96237ffd2%26h%3D5AaA%26m%3DGET">
+											<span class="fa fa-linkedin"></span>
+										  </a>
+										  <a class="btn btn-default" href="https://soundcloud.com/periodicoeldiario">
+											<span class="fa fa-soundcloud"></span>
+										  </a>
+										</div>
 									</div>
 								</div>
 							{% endblock %}
@@ -556,28 +552,6 @@
 									</script>
 
 
-								{% endblock %}
-							</div>
-
-							<div class="row fb_widget">
-								{% block facebook_plugin %}
-								<div id="fb-root"></div>
-								<div class="panel panel-default">
-								  	<div class="panel-body">
-										<script>(function(d, s, id) {
-										  var js, fjs = d.getElementsByTagName(s)[0];
-										  if (d.getElementById(id)) return;
-										  js = d.createElement(s); js.id = id;
-										  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.0";
-										  fjs.parentNode.insertBefore(js, fjs);
-										}(document, 'script', 'facebook-jssdk'));</script>
-
-										<div class="fb-like-box" data-href="https://www.facebook.com/periodicoeldiario"
-											 data-height="450px" data-colorscheme="light" data-show-faces="true"
-											 data-header="true" data-stream="false" data-show-border="true">
-										</div>
-									</div>
-								</div>
 								{% endblock %}
 							</div>
 
@@ -752,17 +726,6 @@
 			}
 		});
 	});
-	</script>
-
-	<script type="text/javascript" src="{% static "js/main/confetti.js" %}"></script>
-	<script type="text/javascript">
-		MakeItFall();
-
-
-			$(document).ready(function(){
-				window.setTimeout(function(){$("#world").fadeOut(function(){$(this).detach();})}, 20);
-			});
-
 	</script>
 
 </html>

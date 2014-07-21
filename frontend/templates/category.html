@@ -1,6 +1,15 @@
 {% extends "site_index.html" %}
 
-{% block title %}{{category.title}} - Periódico El Diario{% endblock %}
+{% block title %}
+	{% if all_arts %}
+		Todos los artículos - - Periódico El Diario
+	{% else %}
+		{% if category %}{{category.title}} - Periódico El Diario
+		{% else %} Generales - Periódico El Diario {% endif %}
+	{% endif %}
+
+
+{% endblock %}
 
 {% block indicators %}{% endblock %}
 
@@ -8,7 +17,11 @@
 
 		<div class="cat-tab">
 			<h4>
+				{% if all_arts %}
+				<span>TODOS LOA ARTÍCULOS</span>
+				{% else %}
 				<span>{% if category %}{{category.title}}{% else %} GENERAL {% endif %}</span>
+				{% endif %}
 			</h4>
 			{% if category %} {{category.article_set.all.count}} artículos {% else %} {{ articles.count }} artículos {% endif %}
 		</div>

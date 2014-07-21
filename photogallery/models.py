@@ -13,7 +13,7 @@ media_types = (
 )
 
 class Gallery(models.Model):
-	slug = models.SlugField(unique=True, blank=True)
+	slug = models.SlugField(unique=True, blank=True, max_length=150)
 	title = models.CharField(verbose_name=u'Título', max_length=100, unique=True)
 	description = RedactorField(verbose_name=u'Descripción', blank=True)
 	creation_date = models.DateField(auto_now=True)

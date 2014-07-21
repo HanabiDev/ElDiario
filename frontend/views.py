@@ -80,3 +80,13 @@ def serve_gallery(request, slug):
 def impressed(request):
 	categories = Category.objects.filter(parent=None, published=True)
 	return render_to_response(TEMPLATE_DIR+'impressed.html', {'categories':categories})
+
+def all_articles(request):
+
+	articles = Article.objects.filter(published=True).order_by('-creation_date')
+	categories = Category.objects.filter(parent=None, published=True)
+
+	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'all_arts':True, 'categories':categories})
+
+def all_cats(request):
+	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'all_arts':True, 'categories':categories})

@@ -34,10 +34,10 @@
 				<div>
 					<ul class="art-related">
 						{% for relA in article.related_articles.all %}
-						<li><a href="articulos/{{relA.slug}}">{{relA.title}}</a></li>
+						<li><a href="/articulos/{{relA.slug}}">{{relA.title}}</a></li>
 						{% empty %}
-							{% for relA in article.related.all%}
-							<li><a href="articulos/{{relA.slug}}">{{relA.title}}</a></li>
+							{% for relB in article.related.all%}
+							<li><a href="/articulos/{{relB.slug}}">{{relB.title}}</a></li>
 							{% empty %}
 							No se encontraron artículos
 							{% endfor %}
