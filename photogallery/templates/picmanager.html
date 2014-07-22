@@ -71,9 +71,6 @@ aria-labelledby="PicManager" aria-hidden="true">
 							</div>
 						</div>
 					</div>
-
-					<div class="tab-pane fade" id="link">...</div>
-					<div class="tab-pane fade" id="video">...</div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -87,6 +84,9 @@ aria-labelledby="PicManager" aria-hidden="true">
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		clear_fields();
+	});
+	var clear_fields = function(){
 		$("#id_media_type li:first").detach()
 
 		$("#id_media_type li :radio:first").attr("checked", "checked");
@@ -111,7 +111,5 @@ aria-labelledby="PicManager" aria-hidden="true">
 				});
 			}
 		})
-
-
-	});
+	}
 </script>

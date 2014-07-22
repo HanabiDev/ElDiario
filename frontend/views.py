@@ -89,4 +89,5 @@ def all_articles(request):
 	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'all_arts':True, 'categories':categories})
 
 def all_cats(request):
-	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'all_arts':True, 'categories':categories})
+	categories = Category.objects.filter(parent=None, published=True)
+	return render_to_response(TEMPLATE_DIR+'categories.html', {'all_arts':True, 'categories':categories})

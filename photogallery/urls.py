@@ -13,4 +13,5 @@ urlpatterns = patterns('',
 	url(r'^/eliminar/$', 'photogallery.views.delete_gallery', name='delete_gallery'),
 	url(r'^/upload/$', 'photogallery.views.upload'),
 	url(r'^/get_preview/$', 'photogallery.views.get_preview'),
+	url(r'^/edit_image/(?P<id>\d+)/$', 'photogallery.views.edit_image'),
 )

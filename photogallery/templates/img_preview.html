@@ -1,20 +1,74 @@
 <div class="modal fade image-prev-modal" tabindex="-1" role="dialog"
 	 aria-labelledby="ImagePrev" aria-hidden="true">
 
-	<div class="modal-dialog">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="ImagePrev">
-					Imagen: <span class="img_prev_title"></span>
+					Imagen: {{image.image_title}}
 				</h4>
 			</div>
-			<div class="modal-body text-center">
-				<img src="" class="img-thumbnail">
-				<div class="vid_prev">
+			<div class="modal-body">
 
+				<div class="row">
+						<div class="col-xs-12 col-sd-10 col-md-8">
+
+								<div class="container-fluid">
+									<div class="col-md-12">
+
+										<form role="form" id="uploadForm" enctype="multipart/form-data"
+										action="{% url "photogallery.views.upload" %}" method="POST">
+											{% csrf_token %}
+
+											{% for field in form %}
+
+											<div class="form-group {% if field.errors %} has-error{% endif %}">
+
+												{% if not form.this_is_the_login_form.errors %}
+												<label class="control-label required" for="{{field.field.id}}">
+													{{field.label}}:
+												</label>
+												{% endif %}
+
+												{% if field.errors %}
+												<span class="help-inline text-danger">
+													{{field.errors}}
+												</span>
+												{% endif %}
+
+												<div class="input-group">
+													<span class="input-group-addon">
+														<span class="glyphicon glyphicon-asterisk"></span>
+													</span>
+													{{ field }}
+												</div>
+											</div>
+
+											{% endfor %}
+
+											<div class="form-group" style="text-align:right;">
+												<a href="{% if editing %}../../{% else %}../{% endif %}" class="btn btn-danger">
+													Cancelar
+												</a>
+												<button type="submit" id="send_form" class="btn btn-success">
+													Subir Imagen
+												</button>
+											</div>
+										</form>
+									</div>
+								</div>
+						</div>
+
+						<div class="col-xs-12 col-sd-2 col-md-4">
+								<img src="{{image.url}}" class="img-thumbnail">
+								<div class="vid_prev">
+
+								</div>
+						</div>
 				</div>
-				<p style="padding:10px;"><b>Fotógrafo: </b><span class="author"></span></p>
+
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

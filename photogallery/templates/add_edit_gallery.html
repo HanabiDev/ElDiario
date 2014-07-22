@@ -3,7 +3,12 @@
 {% load url from future %}
 {% block title %} {% if editing %} Editando la galería: {{title}} {% else %} Nueva Galería {% endif %} {% endblock %}
 
+{% block extrastyle %}
+		<link rel="stylesheet" href="{% static "css/chosen.min.css"%}"></link>
+{% endblock %}
+
 {% block extrahead %}
+	<script src="{% static "js/chosen.jquery.min.js"%}"></script>
 	<script src="{% static "js/jquery.form.js"%}"></script>
 {% endblock %}
 
@@ -122,7 +127,7 @@
 									        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{g_image.id}}"/>
 									        	</td>
 									        	<td class="text-left">
-									        		<a href="#">
+									        		<a href="#" attr-id="{{g_image.id}}">
 																{% if g_image.code%}
 																	<span class="fa fa-video-camera video" data-embed="{{ g_image.code }}"></span> Ver Video
 																{% else %}
@@ -134,7 +139,7 @@
 									        	</td>
 									        	<td class="text-left">{{g_image.image_title}}</td>
 									        	<td class="text-center">{{g_image.author}}</td>
-									        	<td class="text-left">{{g_image.capture_datetime|date:"d \d\e M \d\e\l Y \a \l\a\s H:i"}}</td>
+									        	<td class="text-left">{{g_image.capture_datetime|date:"d \d\e M \d\e\l Y"}}</td>
 									        	<td class="text-left">{{g_image.description}}</td>
 									        </tr>
 									        {% empty %}
@@ -286,19 +291,19 @@
 
         	$("#current_images").delegate("tr td a", "click", function(){
 
-        		$('.image-prev-modal').modal('show');
+        		//$('.image-prev-modal').modal('show');
 
-        		data = $(this).parents('td').siblings(':not(:first)');
-        		$('.image-prev-modal .img_prev_title').html($(data[0]).html());
-        		$('.image-prev-modal .author').html($(data[1]).html());
+						$.ajax({
+							url: '/backend/fotogalerias/edit_image/'+$(this).attr('attr-id'),
 
-						if($(this).find('span').hasClass('video')){
-							data = $(this).find('span').attr('data-embed');
-							$('.vid_prev').html(data);
-							return false;
-						}
+							success: function(response){
+								alert(response);
 
-        		$('.image-prev-modal img').attr('src', $(this).find('img').attr('src'));
+								$(".image-prev-modal").html(response);
+								clear_fields();
+								$(".image-prev-modal").modal('show');
+							},
+						});
         	});
 
         	$(".preview").click(function(){
@@ -316,6 +321,8 @@
         	});
 
         });
+
+				$("#id_article_related").chosen({placeholder_text_multiple:'Escribe para buscar...',width: "100%"});
     </script>
 
 {% endblock %}

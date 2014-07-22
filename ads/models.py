@@ -10,7 +10,7 @@ import zipfile
 import shutil
 
 class Ad(models.Model):
-	
+
 	POSITION_INDEXES = (
 		('1','1: Pre Encabezado (1080x160)'),
 		('2','2: Externa Izquierda (134x660)'),
@@ -35,10 +35,10 @@ class Ad(models.Model):
 	position = models.CharField(verbose_name=u'Posición', choices=POSITION_INDEXES, max_length=30)
 	creation_date = models.DateField(auto_now=True)
 	published = models.BooleanField(default=True, verbose_name=u'Publicado')
-	
+
 
 	def save(self, *args, **kwargs):
-		
+
 
 		if not self.id:
 			super(Ad, self).save(*args, **kwargs)
@@ -79,7 +79,7 @@ def unzip_pkg(pos, pkg, ad_type):
 			path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos)
 			template = open(path+'/template_index.html', 'w+')
 
-			image = '<img src="'+settings.MEDIA_URL+pkg.name+'"/>'
+			image = '<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/><img src="'+settings.MEDIA_URL+pkg.name+'"/>'
 			template.write(image)
 			template.flush()
 			template.close()
@@ -90,24 +90,24 @@ def unzip_pkg(pos, pkg, ad_type):
 			unzip_path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos)
 			#File to unzip
 			zfile = zipfile.ZipFile(pkg)
-			
+
 			#Delete target directory
 			shutil.rmtree(unzip_path)
-			
+
 			#Make target directory
 			os.makedirs(unzip_path)
 			#Unzip
 			zfile.extractall(unzip_path)
 
 			#open uploaded edgePreload.js and modify to include static urls
-			
+
 
 			preload_file = codecs.open(glob.glob(unzip_path+'/*edgePreload.js')[0], encoding='utf-8')
-			
+
 			s=preload_file.read()
 			s=re.sub(r'edge_includes', '/static/js/edge_includes', s)
 			s=re.sub(r'"([\w.-]{0,}js)"', r'"/media/uploads/ads/pos'+pos+r'/\1"', s)
-			
+
 			f=open(glob.glob(unzip_path+'/*edgePreload.js')[0], 'w')
 			f.write(s)
 			f.flush()
@@ -115,19 +115,19 @@ def unzip_pkg(pos, pkg, ad_type):
 
 
 			preload_file = codecs.open(glob.glob(unzip_path+'/*_edge.js')[0], encoding='utf-8')
-			
+
 			s=preload_file.read()
 			s=re.sub(r'(images\/)', r'/media/uploads/ads/pos'+pos+r'/\1', s)
-			
+
 			f=open(glob.glob(unzip_path+'/*_edge.js')[0], 'w')
 			f.write(s)
 			f.flush()
 			f.close()
 
-			
+
 
 			preload_file = codecs.open(glob.glob(unzip_path+'/*.html')[0], encoding='utf-8')
-			
+
 			s=preload_file.read()
 
 
@@ -135,7 +135,7 @@ def unzip_pkg(pos, pkg, ad_type):
 
 			#Open *.html and replace imported library paths
 			f=codecs.open(glob.glob(unzip_path+'/*.html')[0], encoding='utf-8', mode='w+')
-			
+
 			f.write(s)
 			f.flush()
 			f.close()
@@ -144,7 +144,7 @@ def unzip_pkg(pos, pkg, ad_type):
 			path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos)
 			template = open(path+'/template_index.html', 'w+')
 
-			include = '{% include "pos'+pos+'/index.html" %}'
+			include = '<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/>{% include "pos'+pos+'/index.html" %}'
 			template.write(include)
 			template.flush()
 			template.close()
@@ -152,14 +152,14 @@ def unzip_pkg(pos, pkg, ad_type):
 			path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos)
 			template = open(path+'/template_index.html', 'w+')
 
-			template.write(pkg)
+			template.write('<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/>'+pkg)
 			template.flush()
 			template.close()
 
 def clean_files(pos):
 	#Path to unzip contents
 	files_path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos+'/')
-	
+
 	#Delete target directory
 	shutil.rmtree(files_path)
 	os.makedirs(files_path)
@@ -178,7 +178,3 @@ def publish_files(ad):
 			unzip_pkg(ad.position, ad.pkg_file, ad.ad_type)
 	else:
 		clean_files(ad.position)
-
-	
-
-		

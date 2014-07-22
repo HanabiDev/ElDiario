@@ -12,7 +12,7 @@
 	<div class="new_extended">
 		<div class="new_head" style="padding:0;	">
 			<a href="/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
-				<span class="cat-label">{% if article.category %}{{article.category.slug}}{% else %} GENERAL {% endif %}</span>
+				<span class="cat-label">{% if article.category %}{{article.category.title}}{% else %} GENERAL {% endif %}</span>
 			</a>
 			<small>
 				<span class="glyphicon glyphicon-calendar"></span> {{ article.creation_date|date:"d \d\e F \d\e\l Y" }}
@@ -50,6 +50,17 @@
 			<div class="col-xs-10">
 					{{article.abstract | safe}}
 					{{article.content | safe}}
+
+					{% if not article.gallery_set.count == 0 %}
+						<hr>
+						<p><b>Galerías relacionadas:</b></p>
+						<ul class="related_gallery">
+								{% for gallery in article.gallery_set.all %}
+									<li><a href="/fotogalerias/{{gallery.slug}}">{{gallery.title}}</a></li>
+								{% endfor %}
+						</ul>
+
+					{% endif %}
 			</div>
 		</div>
 

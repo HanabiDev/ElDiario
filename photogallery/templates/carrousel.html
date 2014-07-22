@@ -4,9 +4,9 @@
   <ol class="carousel-indicators">
     {% for index in order %}
       {% if index == order|first %}
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="{{index}}" class="active"></li>
       {% else %}
-      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="{{index}}"></li>
       {% endif %}
     {% endfor %}
   </ol>

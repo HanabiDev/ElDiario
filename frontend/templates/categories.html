@@ -1,15 +1,6 @@
 {% extends "site_index.html" %}
 
-{% block title %}
-	{% if all_arts %}
-		Todos los artículos - Periódico El Diario
-	{% else %}
-		{% if category %}{{category.title}} - Periódico El Diario
-		{% else %} Generales - Periódico El Diario {% endif %}
-	{% endif %}
-
-
-{% endblock %}
+{% block title %}	Todas las categorías - Periódico El Diario {% endblock %}
 
 {% block indicators %}{% endblock %}
 
@@ -17,24 +8,20 @@
 
 		<div class="cat-tab">
 			<h4>
-				{% if all_arts %}
-				<span>TODOS LOS ARTÍCULOS</span>
-				{% else %}
-				<span>{% if category %}{{category.title}}{% else %} GENERAL {% endif %}</span>
-				{% endif %}
+				<span>TODOS LAS CATEGORÍAS</span>
 			</h4>
-			{% if category %} {{category.article_set.all.count}} artículos {% else %} {{ articles.count }} artículos {% endif %}
+			{{categories.count}} Categorías
 		</div>
 
-		{% for article in articles %}
+		{% for category in categories %}
 		<div class="row">
 			<div class="col-xs-2 text-center">
-				<h2>{{article.hits}} <small>vistas</small></h2>
-				{{ article.creation_date|date:"d/M/Y" }}
+				<h2>{{category.article_set.all.count}} <small>Artículos</small></h2>
+				{{ category.creation_date|date:"d/M/Y" }}
 			</div>
 			<div class="col-xs-10 cat-art-abs">
-					<h3 class="art-title"><a href="/articulos/{{article.slug}}">{{article.title}}</a></h3>
-					{{article.abstract | safe}}
+					<h3 class="art-title"><a href="/categorias/{{category.slug}}">{{category.title}}</a></h3>
+					{{category.description | safe}}
 			</div>
 		</div>
 		<hr>

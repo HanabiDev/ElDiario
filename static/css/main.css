@@ -241,6 +241,8 @@ h4{
 	min-height: 98%;
 }
 
+.ad{text-align:center;background:#BBB}
+
 .ad_1{max-height: 150px;}
 .ad_2, .ad_3 {max-height: 660px;}
 .ad_4, .ad_8{max-height: 90px;}
@@ -449,4 +451,8 @@ span:after, .media-tab span:after,
 	max-height: 100%;
 }
 
+.pre_gallery .carousel-inner .item{max-height:270px; min-height:270px;}
+
 .art-related a{color:inherit;font-family:'Open Sans', sans-serif;}
+.related_gallery{list-style:square;color: #A42C2B;}
+.related_gallery a{font-family:'Open Sans', sans-serif;color: #A42C2B;}

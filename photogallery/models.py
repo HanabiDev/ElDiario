@@ -1,7 +1,7 @@
 #encoding: utf-8
 from django.db import models
 from django.contrib.auth.models import User
-from content.models import Category
+from content.models import Category, Article
 from redactor.fields import RedactorField
 from django.template.defaultfilters import slugify
 # Create your models here.
@@ -22,6 +22,7 @@ class Gallery(models.Model):
 	category = models.ForeignKey(Category, verbose_name=u'Categoría', null=True, blank=True)
 	hits = models.IntegerField(default=0)
 	images = models.ManyToManyField('Image', related_name='gallery', null=True, blank=True)
+	article_related = models.ManyToManyField(Article, verbose_name=u'Artículos Relacionados')
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)

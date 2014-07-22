@@ -49,6 +49,17 @@
             <hr>
           </div>
           {% include "carrousel.html"%}
+
+          {% if gallery.article_related %}
+            <hr>
+            <p><b>Artículos relacionados:</b></p>
+            <ul class="related_gallery">
+                {% for article in gallery.article_related.all %}
+                  <li><a href="/articulos/{{article.slug}}">{{article.title}}</a></li>
+                {% endfor %}
+            </ul>
+          {% endif %}
+
         </div>
       </div>
 

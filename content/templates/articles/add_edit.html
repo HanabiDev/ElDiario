@@ -9,7 +9,6 @@
 
 {% block extrahead %}
 	<script src="{% static "js/chosen.jquery.min.js"%}"></script>
-	<script src="{% static "js/chosen.jquery.min.js"%}"></script>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -17,7 +16,7 @@
 		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
 		<li><a href="/backend/contenido/articulos"><i class="fa fa-leaf"></i> Artículos</a></li>
 		<li>
-			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i> 
+			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i>
 			{% if editing %} Editar Artículo ({{title}}) {% else %} Nuevo Artículo {% endif %}
 		</li>
 	</ul>
@@ -30,9 +29,9 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 				    	<h2 class="panel-title">
-				    		{% if editing %} <span class="fa fa-edit"></span> Editar Artículo ({{title}}) 
+				    		{% if editing %} <span class="fa fa-edit"></span> Editar Artículo ({{title}})
 				    		{% else %} <span class="fa fa-plus"></span> Nuevo Artículo  {% endif %}
-				    		 
+
 				    	</h2>
 				  	</div>
 				  	<div class="panel-body">
@@ -43,7 +42,7 @@
 									{% csrf_token %}
 
 									<input type="hidden" name="user_id" value="{{user}}" />
-									
+
 									{% for field in form %}
 										<div class="form-group {% if field.errors %} has-error{% endif %}">
 											{% if not form.this_is_the_login_form.errors %}
@@ -62,7 +61,7 @@
 											{% endif %}
 
 											{% if not user.is_superuser and field.name == "published"%}
-											
+
 											{% else %}
 												<div class="input-group">
 												<span class="input-group-addon">
@@ -74,7 +73,7 @@
 
 
 
-											
+
 										</div>
 									{% endfor %}
 
@@ -87,7 +86,7 @@
 											{% if editing %} Guardar cambios
 				    						{% else %} Crear Artículo {% endif %}
 				    					</button>
-									</div>	
+									</div>
 								</form>
 				  			</div>
 				  		</div>
@@ -99,8 +98,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#id_related_articles").chosen({placeholder_text_multiple:'Escribe para buscar...',width: "95%"});
+			$("#id_related_articles").chosen({placeholder_text_multiple:'Escribe para buscar...',width: "100%"});
 		});
 	</script>
 {% endblock %}
-

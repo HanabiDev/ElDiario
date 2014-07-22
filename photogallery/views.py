@@ -167,3 +167,12 @@ def get_preview(request):
 
 	return render_to_response(TEMPLATE_DIR+'carrousel.html',
 				{'images':images, 'title':'jejeje', 'order':order}, context_instance=RequestContext(request))
+
+def edit_image(request, id):
+	image = Image.objects.get(id=id)
+
+	form = ImageForm(instance=image)
+
+
+	return render_to_response(TEMPLATE_DIR+'img_preview.html',
+				{'form':form, 'editing':True, 'image':image}, context_instance=RequestContext(request))
