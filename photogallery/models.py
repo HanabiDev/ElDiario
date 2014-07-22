@@ -22,7 +22,7 @@ class Gallery(models.Model):
 	category = models.ForeignKey(Category, verbose_name=u'Categoría', null=True, blank=True)
 	hits = models.IntegerField(default=0)
 	images = models.ManyToManyField('Image', related_name='gallery', null=True, blank=True)
-	article_related = models.ManyToManyField(Article, verbose_name=u'Artículos Relacionados')
+	article_related = models.ManyToManyField(Article, verbose_name=u'Artículos Relacionados', blank=True, null=True)
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title)
@@ -38,5 +38,5 @@ class Image(models.Model):
 	author = models.CharField(verbose_name=u'Fotógrafo', max_length=100, blank=True)
 	capture_datetime = models.DateTimeField(verbose_name='Fecha de captura', blank=True, auto_now=True)
 
-	def __str__(self):
-		return str(self.image_title)
+	def __unicode__(self):
+			return self.image_title

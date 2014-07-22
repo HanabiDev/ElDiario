@@ -11,4 +11,5 @@ urlpatterns = patterns('',
 	url(r'^encuestas/resultados/(?P<id>[-\d]+)/$', 'polls.views.get_results', name='get_results'),
 	url(r'^suscribirse/$', 'suscriptions.views.frontend_suscription', name='frontend_suscription'),
 	url(r'^ediciones_impresas/$', 'frontend.views.impressed', name='impressed'),
+	url(r'^buscar/$', 'frontend.views.search', name='search'),
 )

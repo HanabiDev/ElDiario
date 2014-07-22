@@ -1,0 +1,115 @@
+{% extends "site_index.html" %}
+
+{% block title %}
+	{% if all_arts %}
+		Todos los artículos - Periódico El Diario
+	{% else %}
+		{% if category %}{{category.title}} - Periódico El Diario
+		{% else %} Generales - Periódico El Diario {% endif %}
+	{% endif %}
+
+
+{% endblock %}
+
+{% block indicators %}{% endblock %}
+
+{% block main_content %}
+
+		<div class="cat-tab">
+			<h4>
+				<span>ARTÍCULOS</span>
+			</h4>
+			{% if articles %} {{articles.count}} artículos {% else %} 0 artículos {% endif %}
+		</div>
+
+		{% for article in articles %}
+		<div class="row">
+			<div class="col-xs-2 text-center">
+				<h2>{{article.hits}} <small>vistas</small></h2>
+				{{ article.creation_date|date:"d/M/Y" }}
+			</div>
+			<div class="col-xs-10 cat-art-abs">
+					<h3 class="art-title"><a href="/articulos/{{article.slug}}">{{article.title}}</a></h3>
+					{{article.abstract | safe}}
+			</div>
+		</div>
+		<hr>
+		{% empty %}
+		<div class="text-center">
+				<h4>No se encontraron artículos para esta búsqueda</h4>
+		</div>
+		{% endfor %}
+
+		<div class="cat-tab">
+			<h4>
+				<span>CATEGORÍAS</span>
+			</h4>
+			{% if categories %} {{categories.count}} categorías {% else %} 0 categorías {% endif %}
+		</div>
+
+		{% for category in categories %}
+		<div class="row">
+			<div class="col-xs-2 text-center">
+				<h2>{{category.article_set.all.count}} <small>Artículos</small></h2>
+				{{ category.creation_date|date:"d/M/Y" }}
+			</div>
+			<div class="col-xs-10 cat-art-abs">
+					<h3 class="art-title"><a href="/categorias/{{category.slug}}">{{category.title}}</a></h3>
+					{{category.description | safe}}
+			</div>
+		</div>
+		<hr>
+		{% empty %}
+		<div class="text-center">
+				<h4>No se encontraron artículos para esta búsqueda</h4>
+		</div>
+		{% endfor %}
+		<div class="cat-tab">
+			<h4>
+				<span>GALERÍAS</span>
+			</h4>
+			{% if categories %} {{categories.count}} categorías {% else %} 0 categorías {% endif %}
+		</div>
+
+		{% for gallery in galleries %}
+		<div class="row">
+			<div class="col-xs-2 text-center">
+				<h2>{{gallery.hits}} <small>Vistas</small></h2>
+				{{ gallery.creation_date|date:"d/M/Y" }}
+			</div>
+			<div class="col-xs-10 cat-art-abs">
+					<h3 class="art-title"><a href="/fotogalerias/{{gallery.slug}}">{{gallery.title}}</a></h3>
+					{% with gallery.images.all|first as preview %}
+
+						{% if preview.code %}
+							{{ preview.code|safe }}
+						{% else %}
+							<img src="{% if preview.url %}{{preview.url}}{% else %}/media/{{preview.image}}{%endif%}"/>
+						{% endif %}
+					{% endwith %}
+
+					{{gallery.description | safe}}
+			</div>
+		</div>
+		<hr>
+		{% empty %}
+		<div class="text-center">
+				<h4>No se encontraron artículos para esta búsqueda</h4>
+		</div>
+		{% endfor %}
+
+	{% block other_news%}{%endblock%}
+	{% block dept %}{% endblock %}
+	{% block misc %}{% endblock %}
+{% endblock %}
+
+{% block right_col %}
+	{{block.super}}
+	{% block alt_news %}{% endblock %}
+	{% block editorial %}{% endblock %}
+	{% block twitter_plugin %}{% endblock %}
+	{% block facebook_plugin %}{% endblock %}
+	{% block weather_app %}{% endblock %}
+{% endblock %}
+
+{% block media %}{% endblock %}

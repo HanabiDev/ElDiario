@@ -1,5 +1,7 @@
+#encoding: utf-8
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
+from django.db.models import Q
 from content.models import *
 from polls.models import *
 from photogallery.models import *
@@ -9,44 +11,90 @@ from datetime import datetime
 TEMPLATE_DIR = 'frontend/../'
 def home(request):
 
-	if request.GET.get('launched')=='True':
-		request.session["launch"]=True
-		return redirect('/')
-
-
-
 	full_width_article = None
+	try:
+		full_width_article = Article.objects.filter(full_width=True, published=True)[0]
+	except Exception as e:
+		pass
+
 	poll = None
-	new_suscriptions = None
+	try:
+		poll = Poll.objects.get(closed=False)
+	except Exception as e:
+		pass
+
 	gallery = None
 	carousel_images = None
 	order = None
-
 	try:
-		full_width_article = Article.objects.get(full_width=True)
-		poll = Poll.objects.get(closed=False)
-		gallery = Gallery.objects.all().order_by('-creation_date')[0]
+		gallery = Gallery.objects.filter(published=True).order_by('-creation_date')[0]
 		carousel_images = gallery.images.all()
 		order = range(0,len(carousel_images))
-
-
-	except Exception, e:
+	except Exception as e:
 		pass
 
-	categories = Category.objects.filter(parent=None, published=True)
-	count = Article.objects.filter(full_width=False, published=True).count()
-	if count > 0:
-		main_art = Article.objects.filter(full_width=False, published=True).order_by('-creation_date')[0]
-		all_articles = Article.objects.filter(full_width=False, published=True).order_by('-creation_date')[1:5]
-	else:
-		main_art = None
-		all_articles = None
+	cartoons = None
+	orderCartoons = None
+	try:
+		cartoons = Article.objects.filter(category__title='Caricaturas', published=True)
+		orderCartoons = range(0,len(cartoons))
+
+	except Exception as e:
+		pass
+
+	try:
+		categories = Category.objects.filter(parent=None, published=True)
+	except Exception as e:
+		pass
+
+	main_art = None
+	all_articles = None
+
+	try:
+		count = Article.objects.filter(full_width=False, published=True).exclude(category__title='Caricaturas').count()
+		if count > 0:
+			main_art = Article.objects.filter(
+				full_width=False,
+				published=True
+			).exclude(category__title='Caricaturas').order_by('-creation_date')[0]
+
+			all_articles = Article.objects.filter(
+				full_width=False, published=True
+			).exclude(category__title='Caricaturas').order_by('-creation_date')[1:5]
+
+	except Exception as e:
+		pass
 
 	return render_to_response(TEMPLATE_DIR+'site_index.html',
-		{'full_width_article': full_width_article, 'poll':poll, 'articles':all_articles,
-		 'categories': categories, 'main_art':main_art, 'images':carousel_images, 'gallery':gallery, 'order':order},
+		{'full_width_article': full_width_article,
+		 'poll':poll, 'articles':all_articles,
+		 'categories': categories, 'main_art':main_art,
+		 'images':carousel_images, 'gallery':gallery, 'order':order,
+		 'cartoons':cartoons, 'orderCartoons':orderCartoons
+		},
 		context_instance=RequestContext(request)
 	)
+
+def search(request):
+
+	keyword = request.GET.get('keyword')
+
+	if keyword:
+		categories = Category.objects.filter(
+			Q(title__contains=keyword) | Q(description__contains=keyword)
+		).exclude(published=False)
+
+		articles = Article.objects.filter(
+			Q(title__contains=keyword) | Q(abstract__contains=keyword) | Q(content__contains=keyword)
+		).exclude(published=False)
+
+		galleries = Gallery.objects.filter(
+			Q(title__contains=keyword) | Q(description__contains=keyword)
+		).exclude(published=False)
+
+		return render_to_response(TEMPLATE_DIR+'search.html', {'articles':articles, 'categories':categories, 'galleries':galleries})
+	else:
+		return redirect('/')
 
 def serve_article(request, slug):
 	article = get_object_or_404(Article, slug=slug)

@@ -1,0 +1,55 @@
+{% if cartoons %}
+
+<a href="/categorias/caricaturas" style="color:white;">
+  <h4>
+    <b>Caricaturas</b></h4>
+</a>
+
+<div id="cartoon_carousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    {% for index in orderCartoons %}
+      {% if index == order|first %}
+        <li data-target="#cartoon_carousel" data-slide-to="{{index}}" class="active"></li>
+      {% else %}
+      <li data-target="#cartoon_carousel" data-slide-to="{{index}}"></li>
+      {% endif %}
+    {% endfor %}
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+
+    {% for cartoon in cartoons %}
+      {% if cartoon == cartoons|first %}
+      <div class="item active">
+      {% else %}
+      <div class="item">
+      {% endif %}
+
+        {{ cartoon.abstract|safe }}
+
+        <div class="carousel-caption">
+          <h3>{{cartoon.title}} <small>(Por {{cartoon.author}}, el {{cartoon.creation_date|date:"d \d\e M \d\e\l Y"}})</small></h3>
+        </div>
+      </div>
+
+    {% endfor %}
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#cartoon_carousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#cartoon_carousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
+<p><a style="font-family:'Open Sans';color:white;" href="/categorias/caricaturas">Ver más caricaturas</a></p>
+{% else %}
+<div class="alert alert-info">
+  <p>
+    Al parecer no has seleccionado imágenes para previsualizar.
+  </p>
+</div>
+{% endif %}
