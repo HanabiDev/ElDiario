@@ -92,7 +92,7 @@ def search(request):
 			Q(title__contains=keyword) | Q(description__contains=keyword)
 		).exclude(published=False)
 
-		return render_to_response(TEMPLATE_DIR+'search.html', {'articles':articles, 'categories':categories, 'galleries':galleries})
+		return render_to_response(TEMPLATE_DIR+'search.html', {'keyword':keyword, 'articles':articles, 'categories':categories, 'galleries':galleries})
 	else:
 		return redirect('/')
 
