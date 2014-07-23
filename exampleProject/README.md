@@ -1,0 +1,2 @@
+# exampleProject
+### a Sails application

@@ -90,10 +90,10 @@
 				        	</td>
 
 				        	<td class="text-center hidden-xs">
-										{% if suscription.suscription_date %}{{suscription.phone}}{% else %}---{%endif%}
+										{% if suscription.suscription_date %}{{suscription.suscription_date}}{% else %}---{%endif%}
 									</td>
 				        	<td class="text-center hidden-xs">
-										{% if suscription.suscription_end_date %}{{suscription.phone}}{% else %}---{%endif%}
+										{% if suscription.suscription_end_date %}{{suscription.suscription_end_date}}{% else %}---{%endif%}
 									</td>
 				        </tr>
 				        {% empty %}
