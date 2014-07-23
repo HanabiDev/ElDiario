@@ -36,7 +36,7 @@
           <div class="row" style="padding:20px;background:white;">
             <div class="new_head" style="padding:0;	">
               <a href="/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
-                <span class="cat-label">{% if gallery.category %}{{gallery.category.slug}}{% else %} GENERAL {% endif %}</span>
+                <span class="cat-label">{% if gallery.category %}{{gallery.category.title}}{% else %} GENERAL {% endif %}</span>
               </a>
               <small>
                 <span class="glyphicon glyphicon-calendar"></span> {{ gallery.creation_date|date:"d \d\e F \d\e\l Y" }}

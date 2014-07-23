@@ -141,3 +141,18 @@
 		</script>
 	</body>
 </html>
+
+
+
+
+
+CREATE TABLE `photogallery_gallery_article_related` (
+    `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `gallery_id` integer NOT NULL,
+    `article_id` integer NOT NULL,
+    UNIQUE (`gallery_id`, `article_id`)
+)
+;
+
+ALTER TABLE `photogallery_gallery_article_related` ADD CONSTRAINT `article_id_refs_id_1c0aeeaa` FOREIGN KEY (`article_id`) REFERENCES `content_article` (`id`);
+ALTER TABLE `photogallery_gallery_article_related` ADD CONSTRAINT `gallery_id_refs_id_f26411fc` FOREIGN KEY (`gallery_id`) REFERENCES `photogallery_gallery` (`id`);

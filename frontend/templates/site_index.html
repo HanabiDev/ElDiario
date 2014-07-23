@@ -592,17 +592,19 @@
 								<span>MULTIMEDIA</span>
 							</div>
 
-							<div class="col-xs-12" style="background:#737278; padding:20px;">
-								<div class="col-xs-7 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
-									<a href="/fotogalerias/{{gallery.slug}}" style="color:white;">
-										<h4><b>{{gallery.title}}</b></h4>
-									</a>
-									{% include "carrousel.html"%}
-									{{ gallery.description|safe }}
-								</div>
+							<div class="col-xs-12" style="background:#737278; padding:5px 20px;">
+								<div class="row" style="background:#3D3D3D;">
+									<div class="col-xs-7 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
+										<a href="/fotogalerias/{{gallery.slug}}" style="color:white;">
+											<h4><b>{{gallery.title}}</b></h4>
+										</a>
+										{% include "carrousel.html"%}
+										{{ gallery.description|safe }}
+									</div>
 
-								<div class="col-xs-5 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
-									{% include "cartoons.html"%}
+									<div class="col-xs-5 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
+										{% include "cartoons.html"%}
+									</div>
 								</div>
 							</div>
 						</div>
