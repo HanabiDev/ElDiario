@@ -61,14 +61,14 @@
 		<hr>
 		{% empty %}
 		<div class="text-center">
-				<h4>No se encontraron artículos para esta búsqueda</h4>
+				<h4>No se encontraron categorías para esta búsqueda</h4>
 		</div>
 		{% endfor %}
 		<div class="cat-tab">
 			<h4>
 				<span>GALERÍAS</span>
 			</h4>
-			{% if categories %} {{categories.count}} categorías {% else %} 0 categorías {% endif %}
+			{% if categories %} {{galleries.count}} galerías {% else %} 0 galerías {% endif %}
 		</div>
 
 		{% for gallery in galleries %}
@@ -94,7 +94,7 @@
 		<hr>
 		{% empty %}
 		<div class="text-center">
-				<h4>No se encontraron artículos para esta búsqueda</h4>
+				<h4>No se encontraron galerías para esta búsqueda</h4>
 		</div>
 		{% endfor %}
 
