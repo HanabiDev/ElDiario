@@ -20,9 +20,7 @@ def get_position_article(position_label):
       article = articles[0]
 
   except Exception as e:
-    print e
     return article
-
   return article
 
 register.filter('get_position_article', get_position_article)
