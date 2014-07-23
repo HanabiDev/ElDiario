@@ -78,14 +78,17 @@
 
 				$("textarea").siblings(".input-group-addon").remove();
 
-				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").siblings('.input-group-addon, input').detach();
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date, #id_capture_datetime").siblings('.input-group-addon, input').detach();
 
-				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").after(
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date, #id_capture_datetime").after(
 					'<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>'
 				);
 
-				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").parents('.input-group').addClass('date').attr('data-date-format', 'DD/MM/YYYY hh:mm:ss');
-				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date").parents('.input-group').datetimepicker({pickTime:true, language: 'es'});
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date, #id_capture_datetime")
+					.parents('.input-group').addClass('date').attr('data-date-format', 'DD/MM/YYYY hh:mm:ss');
+
+				$("#id_creation_date, #id_suscription_date, #id_suscription_end_date, #id_capture_datetime")
+					.parents('.input-group').datetimepicker({pickTime:true, language: 'es'});
 
 
 				$("input, textarea").addClass("form-control");

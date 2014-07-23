@@ -36,7 +36,7 @@ class Image(models.Model):
 	code = models.TextField(verbose_name=u'Código Embebido', default='', blank=True, null=True)
 	description = models.TextField(verbose_name=u'Descripción', blank=True)
 	author = models.CharField(verbose_name=u'Fotógrafo', max_length=100, blank=True)
-	capture_datetime = models.DateTimeField(verbose_name='Fecha de captura', blank=True, auto_now=True)
+	capture_datetime = models.DateTimeField(verbose_name='Fecha de captura')
 
 	def __unicode__(self):
 			return self.image_title
