@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% load url from future %}
-{% block title %} Administrar Galerías {% endblock %}
+{% block title %} Administrar Imágenes {% endblock %}
 
 {% block breadcrumbs %}
 	<ul class="breadcrumb">
 		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
-		<li class="active"><i class="fa fa-camera"></i> Galerías</li>
+		<li><a href="/backend/fotogalerias/"><i class="fa fa-camera"></i> Galerías</a></li>
+		<li class="active"><i class="glyphicon glyphicon-picture"></i> Imágenes</li>
 	</ul>
 {% endblock %}
 
@@ -16,24 +17,15 @@
 				<div class="panel panel-default">
 				  <div class="panel-heading">
 				    <h2 class="panel-title" style="display:inline-block; margin-right:5px">
-				    	<span class="fa fa-camera"></span> Galerías
+				    	<span class="glyphicon glyphicon-picture"></span> Imágenes
 				    </h2>
 				    <div class="hidden-xs" style="display:inline-block;width:50%;"></div>
 				    <div class="btn-group" style="display:inline-block;">
 						<a href="nueva/" class="btn btn-success">
-							<span class="fa fa-plus"></span> <span class="hidden-xs"> Nueva Galería</span>
-						</a>
-						<a href="publicar/" class="btn btn-primary toggle_publish disabled">
-							<span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-xs">Publicar</span>
-						</a>
-						<a href="despublicar/" class="btn btn-warning toggle_publish disabled">
-							<span class="glyphicon glyphicon-eye-close"></span> <span class="hidden-xs">Despublicar</span>
+							<span class="fa fa-plus"></span> <span class="hidden-xs"> Nueva Imágen</span>
 						</a>
 						<a href="eliminar/" class="btn btn-danger delete disabled">
 							<span class="glyphicon glyphicon-fire"></span> <span class="hidden-xs">Eliminar</span>
-						</a>
-						<a href="/backend/fotogalerias/imagenes" class="btn btn-info">
-							<span class="glyphicon glyphicon-picture"></span> <span class="hidden-xs">Administrar Imágenes</span>
 						</a>
 					</div>
 				  </div>
@@ -47,46 +39,29 @@
 				        	<th><input type="checkbox" id="toggle_all"/></th>
 				        	<th class="text-center hidden-xs">ID</th>
 				        	<th class="text-left">Título</th>
-				        	<th class="text-center">Imágenes</th>
-				        	<th class="text-center hidden-xs">Autor</th>
+				        	<th class="text-center hidden-xs">Fotógrafo</th>
 				        	<th class="text-center hidden-xs">Creación</th>
-				        	<th class="text-center hidden-xs">Categoría</th>
-				        	<th class="text-center">Publicado</th>
-				        	<th class="text-center">Vistas</th>
 				        </tr>
 				      </thead>
 				      <tbody>
-				      	{% for gallery in galleries%}
+				      	{% for image in images%}
 				        <tr>
 				        	<td class="text-left;">
-				        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{gallery.id}}"/>
+				        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{image.id}}"/>
 				        	</td>
-				        	<td class="text-center hidden-xs">{{gallery.id}}</td>
-				        	<td class="text-left"><a href="editar/{{gallery.id}}">{{gallery.title}}</a></td>
-				        	<td class="text-center">{{gallery.images_count}}</td>
-				        	<td class="text-center hidden-xs">{{gallery.author}}</td>
-				        	<td class="text-center hidden-xs">{{gallery.creation_date}}</td>
-				        	<td class="text-center hidden-xs">{{gallery.category}}</td>
-				        	<td class="text-center">
-				        		{% if gallery.published %}
-				        		<a href="despublicar/{{gallery.id}}">
-				        			<span class="glyphicon glyphicon-eye-open text-primary"></span>
-				        		{% else %}
-				        		<a href="publicar/{{gallery.id}}">
-				        			<span class="glyphicon glyphicon-eye-close text-warning"></span>
-				        		{% endif %}
-				        		</a>
-				        	</td>
-				        	<td class="text-center">{{gallery.hits}}</td>
+				        	<td class="text-center hidden-xs">{{image.id}}</td>
+				        	<td class="text-left"><a href="editar/{{image.id}}">{{image.image_title}}</a></td>
+				        	<td class="text-center hidden-xs">{{image.author}}</td>
+				        	<td class="text-center hidden-xs">{{image.capture_datetime|date:"d \d\e M \d\e\l Y"}}</td>
 				        </tr>
 				        {% empty %}
 				        <tr>
 				        	<td colspan="9" class="text-center">
-				        		<div class="alert alert-info">No has creado galerías
+				        		<div class="alert alert-info">No has agregado imágenes
 				        			<br><br>
 				        			<b>
 				        				<a href="nueva/">
-				        					<span class="fa fa-plus"></span> Crear una Galería
+				        					<span class="fa fa-plus"></span> Agregar una Imagen
 				        				</a>
 				        			</b>
 				        		</div>

@@ -11,18 +11,17 @@ def get_position_article(position_label):
   article = None
 
   try:
-    art_excluded = Article.objects.filter(full_width=False, published=True).order_by('-creation_date').values('id')
-    art_excluded = art_excluded
-    article = Article.objects.filter(category=category, published=True).exclude(full_width=False,id__in=art_excluded).order_by('-creation_date')
-  except Exception as e:
-    return article
+    articles = Article.objects.exclude(full_width=True, published=False)
+    articles = articles.filter(category=category)
 
-  if position_label == "S":
-    if len(article)>=2:
-      article = article
-  else:
-    if len(article)>=1:
-      article = article
+    if position_label=="S":
+      article = articles[0:2]
+    else:
+      article = articles[0]
+
+  except Exception as e:
+    print e
+    return article
 
   return article
 

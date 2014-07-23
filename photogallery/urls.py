@@ -14,4 +14,8 @@ urlpatterns = patterns('',
 	url(r'^/upload/$', 'photogallery.views.upload'),
 	url(r'^/get_preview/$', 'photogallery.views.get_preview'),
 	url(r'^/edit_image/(?P<id>\d+)/$', 'photogallery.views.edit_image'),
+	url(r'^/imagenes/$', 'photogallery.views.index_images'),
+	url(r'^/imagenes/nueva/$', 'photogallery.views.new_image'),
+	url(r'^/imagenes/editar/(?P<id>\d+)/$', 'photogallery.views.edit_image'),
+	url(r'^/imagenes/eliminar/$', 'photogallery.views.delete_image'), 
 )

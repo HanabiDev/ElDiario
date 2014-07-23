@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static i18n %}
 {% load url from future %}
-{% block title %} {% if editing %} Editando la galería: {{title}} {% else %} Nueva Galería {% endif %} {% endblock %}
+{% block title %} {% if editing %} Editando la imagen: {{title}} {% else %} Nueva Imagen {% endif %} {% endblock %}
 
 {% block extrastyle %}
 		<link rel="stylesheet" href="{% static "css/chosen.min.css"%}"></link>
@@ -16,9 +16,10 @@
 	<ul class="breadcrumb">
 		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
 		<li><a href="/backend/fotogalerias"><i class="fa fa-camera"></i> Galerías</a></li>
+		<li><a href="/backend/fotogalerias/imagenes"><i class="glyphicon glyphicon-picture"></i> Imágenes</a></li>
 		<li>
 			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i>
-			{% if editing %} Editar Galería ({{title}}) {% else %} Nueva Galería {% endif %}
+			{% if editing %} Editar Imagen ({{title}}) {% else %} Nueva Imagen {% endif %}
 		</li>
 	</ul>
 {% endblock %}
@@ -30,8 +31,8 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 				    	<h2 class="panel-title">
-				    		{% if editing %} <span class="fa fa-edit"></span> Editar Galería ({{title}})
-				    		{% else %} <span class="fa fa-plus"></span> Nueva Galería  {% endif %}
+				    		{% if editing %} <span class="fa fa-edit"></span> Editar Imagen ({{title}})
+				    		{% else %} <span class="fa fa-plus"></span> Nueva Imagen  {% endif %}
 
 				    	</h2>
 				  	</div>
@@ -39,7 +40,7 @@
 				  		<div class="row">
 				  			<div class="col-md-1 hidden-xs" style="width:4%;"></div>
 				  			<div class="col-xs-12 col-md-6">
-				  				<form role="form" action="." method="POST">
+				  				<form role="form" action="." method="POST" enctype="multipart/form-data">
 									{% csrf_token %}
 
 									<input type="hidden" name="user_id" value="{{user}}" />
@@ -81,87 +82,11 @@
 										</a>
 										<button type="submit" class="btn btn-success">
 											{% if editing %} Guardar cambios
-				    						{% else %} Crear Galería {% endif %}
+				    						{% else %} Agregar Imagen {% endif %}
 				    					</button>
 									</div>
 								</form>
 				  			</div>
-								{% if editing %}
-				  			<div class="col-xs-12 col-md-5">
-				  				<div class="panel panel-default">
-								  <div class="panel-body">
-								    <h3 style="display:inline-block; margin-right: 20px;">
-								    	<span class="glyphicon glyphicon-picture">
-								    	</span> Imágenes de la galería
-								    </h3>
-							    	<div class="btn-group" style="display:inline-block">
-										<button type="button" class="btn btn-default" data-toggle="modal" data-target=".bs-example-modal-lg">
-											<span class="fa fa-plus"></span> Agregar
-										</button>
-										<button type="button" id="drop_img" class="btn btn-default delete disabled">
-											<span class="glyphicon glyphicon-fire"></span> Quitar
-										</button>
-										<button type="button" class="btn btn-default preview">
-											<span class="glyphicon glyphicon-fullscreen"></span> Vista
-										</button>
-									</div>
-									<hr style="margin-bottom:0;">
-									<div class="text-center">
-
-										<table id="current_images" class="table table-striped" style="margin-bottom:0;">
-									      <thead>
-									        <tr class="active">
-									        	<th class="text-center"><input type="checkbox" id="toggle_all"/></th>
-									        	<th class="text-left" class="hidden-xs">Imagen</th>
-									        	<th class="text-left">Título</th>
-									        	<th class="text-center" class="hidden-xs">Fotógtrafo</th>
-														<th class="text-center" class="hidden-xs">Fecha</th>
-														<th class="text-center" class="hidden-xs">Descr.</th>
-									        </tr>
-									      </thead>
-									      <tbody>
-
-									      	{% for g_image in g_images %}
-									        <tr>
-									        	<td class="text-left">
-									        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{g_image.id}}"/>
-									        	</td>
-									        	<td class="text-left">
-									        		<a href="#" attr-id="{{g_image.id}}">
-																{% if g_image.code%}
-																	<span class="fa fa-video-camera video" data-embed="{{ g_image.code }}"></span> Ver Video
-																{% else %}
-									        			<img class="img-thumbnail"
-																	{%if g_image.image%}src="/media/{{g_image.image}}"
-																	{%else%}src="{{g_image.url}}"{%endif%}>
-																{% endif %}
-									        		</a>
-									        	</td>
-									        	<td class="text-left">{{g_image.image_title}}</td>
-									        	<td class="text-center">{{g_image.author}}</td>
-									        	<td class="text-left">{{g_image.capture_datetime|date:"d \d\e M \d\e\l Y"}}</td>
-									        	<td class="text-left">{{g_image.description}}</td>
-									        </tr>
-									        {% empty %}
-									        <tr class="empty-mess">
-									        	<td colspan="6">
-									        		<div class="alert alert-info">
-														No has agregado imágenes a esta galería <br>
-														<a href="" data-toggle="modal" data-target=".bs-example-modal-lg">
-															<b><span class="fa fa-plus">
-															</span> Agregar una imagen</b>
-														</a>
-													</div>
-									        	</td>
-									        </tr>
-									        {% endfor %}
-									      </tbody>
-									    </table>
-									</div>
-								    <hr style="margin-top:0;">
-								  </div>
-								</div>
-				  			{%endif%}
 								</div>
 				  		</div>
 				  	</div>
@@ -169,26 +94,6 @@
 			</div>
 		</div>
 	</div>
-
-<div class="modal fade" id="carousel-prev-modal" tabindex="-1" role="dialog" aria-labelledby="CarouselPrev" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="CarouselPrev">Vista previa Fotogalería: {{title}}</h4>
-			</div>
-			<div class="modal-body carousel-full">
-				{% include 'carrousel.html'%}
-			</div>
-
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-	{% include 'img_preview.html'%}
 
 	{% include 'picmanager.html' %}
 
@@ -203,13 +108,6 @@
                 $('fileInput').val('');
             },
             success: function(response) {
-								alert(response);
-								if(response==='error'){
-
-									return false;
-								}
-
-
                 $("#uploadForm input:not(input[type=hidden]), #uploadForm textarea").val('');
                 $("#choose").html(response);
 								$('#image_tabs a:first').tab('show');
@@ -223,7 +121,7 @@
             }
         };
 
-        $("body").on("click", "#send_form", function(event){
+        $("#send_form").click(function(event){
         	event.preventDefault();
         	$('#uploadForm').ajaxSubmit(options);
         });

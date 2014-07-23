@@ -1,5 +1,5 @@
 #encoding: utf-8
-from django.shortcuts import render_to_response, HttpResponseRedirect
+from django.shortcuts import render_to_response, HttpResponseRedirect, redirect
 from django.template import RequestContext
 from models import *
 from forms import *
@@ -168,11 +168,55 @@ def get_preview(request):
 	return render_to_response(TEMPLATE_DIR+'carrousel.html',
 				{'images':images, 'title':'jejeje', 'order':order}, context_instance=RequestContext(request))
 
+
+def index_images(request):
+	images = Image.objects.all()
+
+	return render_to_response(TEMPLATE_DIR+'index_images.html', {'images':images},
+								context_instance=RequestContext(request))
+
+def new_image(request):
+	if request.method == 'GET':
+		form = ImageForm()
+		return render_to_response(TEMPLATE_DIR+'add_edit_image.html',
+								{'form':form}, context_instance=RequestContext(request))
+
+	if request.method=='POST':
+
+		form = ImageForm(request.POST, request.FILES)
+
+		if form.is_valid():
+
+			form.save()
+
+			return redirect('/backend/fotogalerias/imagenes')
+		else:
+			return render_to_response(TEMPLATE_DIR+'add_edit_image.html',
+									{'form':form}, context_instance=RequestContext(request))
+
 def edit_image(request, id):
-	image = Image.objects.get(id=id)
+	if request.method == 'GET':
+		image = Image.objects.get(id=id)
+		form = ImageForm(instance=image)
+		return render_to_response(TEMPLATE_DIR+'add_edit_image.html',
+								{'form':form, 'editing':True, 'title':image.image_title}, context_instance=RequestContext(request))
 
-	form = ImageForm(instance=image)
+	if request.method=='POST':
+		image = Image.objects.get(id=id)
+		form = ImageForm(request.POST, request.FILES, instance=image)
 
+		if form.is_valid():
 
-	return render_to_response(TEMPLATE_DIR+'img_preview.html',
-				{'form':form, 'editing':True, 'image':image}, context_instance=RequestContext(request))
+			form.save()
+
+			return redirect('/backend/fotogalerias/imagenes')
+		else:
+			return render_to_response(TEMPLATE_DIR+'add_edit_image.html',
+									{'form':form, 'editing':True, 'title':image.image_title}, context_instance=RequestContext(request))
+
+def delete_image(request):
+	ids = request.POST.getlist('id')
+	for image_id in ids:
+		image = Image.objects.get(id=int(image_id))
+		image.delete()
+	return HttpResponseRedirect('/backend/fotogalerias/imagenes')

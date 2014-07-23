@@ -20,6 +20,10 @@ if socket.gethostname().startswith('MacBook-Pro-de-Diana-Riscanevo.local'):
 else:
     DEVEL = False
 
+DEBUG = DEVEL
+
+TEMPLATE_DEBUG = DEVEL
+
 if DEVEL:
     DATABASES = {
         'default': {
@@ -47,10 +51,6 @@ else:
 
 
 
-
-
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -58,11 +58,9 @@ else:
 SECRET_KEY = '!cujt6nl-)7lfqbt3j@8fq9wau_d2k3cu(fcs32#bf)*$n54kv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.periodicoeldiario.com', 'localhost:8000']
 
 
 # Application definition

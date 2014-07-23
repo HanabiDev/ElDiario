@@ -1,0 +1,59 @@
+<div class="row" style="padding:20px;">
+    <div class="col-xs-12 col-sd-10 col-md-8">
+
+        <div class="container-fluid">
+          <div class="col-md-12">
+
+            <form role="form" id="uploadForm" enctype="multipart/form-data"
+            action="{% url "photogallery.views.upload" %}" method="POST">
+              {% csrf_token %}
+
+              {% for field in image_form %}
+
+              <div class="form-group {% if field.errors %} has-error{% endif %}">
+
+                {% if not form.this_is_the_login_form.errors %}
+                <label class="control-label required" for="{{field.field.id}}">
+                  {{field.label}}:
+                </label>
+                {% endif %}
+
+                {% if field.errors %}
+                <span class="help-inline text-danger">
+                  {{field.errors}}
+                </span>
+                {% endif %}
+
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                  </span>
+                  {{ field }}
+                </div>
+              </div>
+
+              {% endfor %}
+
+              <div class="form-group" style="text-align:right;">
+                <a href="{% if editing %}../../{% else %}../{% endif %}" class="btn btn-danger">
+                  Cancelar
+                </a>
+                <button type="submit" id="send_form" class="btn btn-success">
+                  Subir Imagen
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sd-2 col-md-4">
+        <img src="{{image.url}}" class="img-thumbnail">
+        <div class="vid_prev">
+
+        </div>
+    </div>
+</div>
+
+<script charset="utf-8">
+  </script>
