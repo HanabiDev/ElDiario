@@ -241,15 +241,15 @@ h4{
 	min-height: 98%;
 }
 
-.ad{text-align:center;background:#BBB}
+.ad{text-align:center;background:#BBB;}
 
-.ad_1{max-height: 150px;}
-.ad_2, .ad_3 {max-height: 660px;}
-.ad_4, .ad_8{max-height: 90px;}
-.ad_4{margin-bottom: 0;}
-.ad_5{max-height: 150px;}
-.ad_6{max-height: 150px;}
-.ad_7{max-height: 300px;}
+.ad_1{max-height: 150px;padding:0;}
+.ad_2, .ad_3 {max-height: 660px;padding:0;}
+.ad_4, .ad_8{max-height: 90px;padding:0;}
+.ad_4{margin-bottom: 0;padding:0;}
+.ad_5{max-height: 150px;padding:0;}
+.ad_6{max-height: 150px;padding:0;}
+.ad_7{max-height: 300px;padding:0;}
 
 .new_head{
 	padding: 0 20px 0 20px;

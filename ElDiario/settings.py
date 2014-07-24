@@ -15,7 +15,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 import socket
-if not socket.gethostname().startswith('MacBook-Pro-de-Diana-Riscanevo.local'):
+if socket.gethostname().startswith('localhost'):
     DEVEL = True
 else:
     DEVEL = False
