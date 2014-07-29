@@ -11,8 +11,8 @@ def get_position_article(position_label):
   article = None
 
   try:
-    articles = Article.objects.exclude(full_width=True, published=False)
-    articles = articles.filter(category=category)
+    articles = Article.objects.exclude(full_width=True, published=False).order_by('-creation_date')
+    articles = articles.filter(category=category).order_by('-creation_date')
 
     if position_label=="S":
       article = articles[0:2]
