@@ -16,7 +16,7 @@ class Gallery(models.Model):
 	slug = models.SlugField(unique=True, blank=True, max_length=150)
 	title = models.CharField(verbose_name=u'Título', max_length=100, unique=True)
 	description = RedactorField(verbose_name=u'Descripción', blank=True)
-	creation_date = models.DateField(auto_now=True)
+	creation_date = models.DateTimeField(verbose_name=u'Fecha de creación')
 	published = models.BooleanField(verbose_name=u'Publicada', default=True)
 	author = models.ForeignKey(User, verbose_name=u'Autor')
 	category = models.ForeignKey(Category, verbose_name=u'Categoría', null=True, blank=True)

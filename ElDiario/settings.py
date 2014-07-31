@@ -81,7 +81,6 @@ INSTALLED_APPS = (
     'frontend',
     'polls',
     'suscriptions',
-    'main_page',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

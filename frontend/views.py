@@ -36,7 +36,7 @@ def home(request):
 	cartoons = None
 	orderCartoons = None
 	try:
-		cartoons = Article.objects.filter(category__title='Caricaturas', published=True)
+		cartoons = Article.objects.filter(category__title='Caricaturas', published=True).order_by('-creation_date')
 		orderCartoons = range(0,len(cartoons))
 
 	except Exception as e:
