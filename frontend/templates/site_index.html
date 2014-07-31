@@ -10,6 +10,7 @@
 
 <html lang="{{ LANGUAGE_CODE|default:"es-co" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
 	<head>
+		<meta name="google-site-verification" content="nY2VcjTvM87CaJMF1S-Jk-LLQZUTaJ0KM58I77lK8ow" />
 		<meta charset="utf-8">
 		<title>{% block title %}Periódico El Diario - Inicio{% endblock %}</title>
 
@@ -404,8 +405,8 @@
 											<div class="panel panel-default">
 												<div class="panel-body">
 													<div class="container-fluid">
-														<h4><b>{{article.title}}</b></h4>
-														{{ article.abstract|safe }}
+														<h4><a href="/articulos/{{article.slug}}">{{article.title}}</a></h4>
+{{ article.abstract|safe }}
 													</div>
 												</div>
 											</div>

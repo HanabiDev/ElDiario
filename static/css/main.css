@@ -241,7 +241,7 @@ h4{
 	min-height: 98%;
 }
 
-.ad{text-align:center;background:#BBB;}
+.ad{text-align:center;background:#BBB;margin-bottom:20px;}
 
 .ad_1{max-height: 150px;padding:0;}
 .ad_2, .ad_3 {max-height: 660px;padding:0;}
@@ -456,5 +456,5 @@ span:after, .media-tab span:after,
 .art-related a{color:inherit;font-family:'Open Sans', sans-serif;}
 .related_gallery{list-style:square;color: #A42C2B;}
 .related_gallery a{font-family:'Open Sans', sans-serif;color: #A42C2B;}
-.dept h2 a, .misc h2 a{color:black;text-decoration:none;}
-.dept h2 a:hover, .misc h2 a:hover{color:#A42C2B}
+.dept h2 a, .misc h2 a, .alt-news h4 a{color:black;text-decoration:none;}
+.dept h2 a:hover, .misc h2 a:hover, .alt-news h4 a:hover{color:#A42C2B}
