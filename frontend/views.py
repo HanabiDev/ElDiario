@@ -67,13 +67,13 @@ def home(request):
 
 	return render_to_response(TEMPLATE_DIR+'site_index.html',
 		{'full_width_article': full_width_article,
-		 'poll':poll, 'articles':all_articles,
-		 'categories': categories, 'main_art':main_art,
-		 'images':carousel_images, 'gallery':gallery, 'order':order,
-		 'cartoons':cartoons, 'orderCartoons':orderCartoons
+		'poll':poll, 'articles':all_articles,
+		'categories': categories, 'main_art':main_art,
+		'images':carousel_images, 'gallery':gallery, 'order':order,
+		'cartoons':cartoons, 'orderCartoons':orderCartoons
 		},
 		context_instance=RequestContext(request)
-	)
+		)
 
 def search(request):
 
