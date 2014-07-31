@@ -11,11 +11,7 @@ def get_position_article(position_label):
   article = None
 
   try:
-<<<<<<< HEAD
-    articles = Article.objects.exclude(full_width=True, published=False).order_by('-creaton_date')
-=======
     articles = Article.objects.exclude(full_width=True, published=False).order_by('-creation_date')
->>>>>>> 518b1fdc187ecf026c4a6b17019479adbf3756af
     articles = articles.filter(category=category).order_by('-creation_date')
 
     if position_label=="S":
