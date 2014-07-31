@@ -20,8 +20,6 @@ if socket.gethostname().startswith('localhost'):
 else:
     DEVEL = False
 
-DEVEL = True
-
 DEBUG = True
 
 TEMPLATE_DEBUG = DEVEL
