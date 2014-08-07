@@ -110,7 +110,13 @@
 							<div class="panel panel-default">
 							  	<div class="panel-body">
 							  		<div class="full_head">
-										<h1><a href="/articulos/{{full_width_article.slug}}">{{full_width_article.title}}</a></h1>
+										<h1>
+											<b>
+												<a href="/articulos/{{full_width_article.slug}}">
+													{{full_width_article.title}}
+												</a>
+											</b>
+										</h1>
 
 										<small>
 											<span class="fa fa-user"></span>
@@ -143,7 +149,7 @@
 								<div class="panel panel-default">
 								  	<div class="panel-body">
 											<div class="row-fluid">
-													<h2> <a href="articulos/{{main_art.slug}}">{{main_art.title}}</a></h2>
+													<h2><b><a href="articulos/{{main_art.slug}}">{{main_art.title}}</a></b></h2>
 													<hr>
 													<a href="articulos/{{main_art.slug}}">
 														<p>
@@ -167,7 +173,7 @@
 
 												<div class="col-xs-7" style="padding:0 10px 0 0">
 													{% with articles.first as first_art %}
-													<h2><a href="articulos/{{first_art.slug}}">{{first_art.title}}</a></h2>
+													<h2><b><a href="articulos/{{first_art.slug}}">{{first_art.title}}</a></b></h2>
 													<hr>
 													{{first_art.abstract | safe}}
 													{% endwith %}
@@ -211,7 +217,11 @@
 
 												{% for article in articles %}
 												<div class="col-xs-6" style="padding:0 10px 0 0">
-													<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+													<h2>
+														<b>
+															<a href="/articulos/{{article.slug}}">{{article.title}}</a>
+														</b>
+													</h2>
 													<hr>
 													{{ article.abstract|safe }}
 												</div>
@@ -237,7 +247,9 @@
 									<div class="col-xs-{% if "B"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
 											{% with "A"|get_position_article as article %}
 												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+												<h2>
+													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+												</h2>
 												<hr>
 												{{ article.abstract|safe }}
 											{% endwith %}
@@ -248,7 +260,9 @@
 										<div class="row-fluid">
 											{% with "B"|get_position_article as article %}
 												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+												<h2>
+													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+												</h2>
 												<hr>
 												{{ article.abstract|safe }}
 											{% endwith %}
@@ -261,7 +275,9 @@
 									<div class="col-xs-{% if "D"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
 										{% with "C"|get_position_article as article %}
 											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+											<h2>
+												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+											</h2>
 											<hr>
 											{{ article.abstract|safe }}
 										{% endwith %}
@@ -272,7 +288,9 @@
 										<div class="row-fluid">
 											{% with "D"|get_position_article as article %}
 												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+												<h2>
+													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+												</h2>
 												<hr>
 												{{ article.abstract|safe }}
 											{% endwith %}
@@ -285,7 +303,9 @@
 									<div class="col-xs-{% if "F"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
 										{% with "E"|get_position_article as article %}
 											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+											<h2>
+												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+											</h2>
 											<hr>
 											{{ article.abstract|safe }}
 										{% endwith %}
@@ -296,7 +316,9 @@
 										<div class="row-fluid environ">
 											{% with "F"|get_position_article as article %}
 												<span>{{article.category.title}}</span>
-												<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+												<h2>
+													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+												</h2>
 												</span> {{article.creation_date}}</small>
 												<hr>
 												{{ article.abstract|safe }}
@@ -310,7 +332,9 @@
 									<div class="col-xs-{% if "H"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
 										{% with "G"|get_position_article as article %}
 											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+											<h2>
+												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+											</h2>
 											<hr>
 											{{ article.abstract|safe }}
 										{% endwith %}
@@ -322,7 +346,9 @@
 										<div class="row-fluid">
 											{% with "H"|get_position_article as article %}
 												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+												<h2>
+													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+												</h2>
 												<hr>
 												{{ article.abstract|safe }}
 											{% endwith %}
@@ -335,7 +361,9 @@
 									<div class="col-xs-{% if "J"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
 										{% with "I"|get_position_article as article %}
 											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+											<h2>
+												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+											</h2>
 											<hr>
 											{{ article.abstract|safe }}
 										{% endwith %}
@@ -346,7 +374,9 @@
 										<div class="row-fluid">
 											{% with "J"|get_position_article as article %}
 												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2><a href="/articulos/{{article.slug}}">{{article.title}}</a></h2>
+												<h2>
+													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+												</h2>
 												<hr>
 												{{ article.abstract|safe }}
 											{% endwith %}
@@ -405,8 +435,10 @@
 											<div class="panel panel-default">
 												<div class="panel-body">
 													<div class="container-fluid">
-														<h4><a href="/articulos/{{article.slug}}">{{article.title}}</a></h4>
-{{ article.abstract|safe }}
+														<h4>
+															<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+														</h4>
+														{{ article.abstract|safe }}
 													</div>
 												</div>
 											</div>
@@ -443,12 +475,16 @@
 													<p>
 														<b>Editorial</b>
 													</p>
-													La indiferencia ante el cambio climático
+													<a href="http://periodicoeldiario.com/articulos/la-indiferencia-frente-al-cambio-climatico/">
+														La indiferencia ante el cambio climático
+													</a>
 													<hr style="margin:12px 0;">
 													<p>
 														<b>Pasaje Vargas</b>
 													</p>
-													Todos de Hollywood
+													<a href="http://periodicoeldiario.com/articulos/todos-de-hollywood-ed718/">
+														Todos de Hollywood
+													</a>
 												</div>
 											</div>
 											<div class="col-xs-12 text-center"
