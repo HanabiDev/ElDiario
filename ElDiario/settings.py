@@ -146,7 +146,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'suscriptions', 'templates'),
     os.path.join(BASE_DIR, 'frontend', 'templates'),
     os.path.join(BASE_DIR, 'session_security', 'templates'),
-    os.path.join(BASE_DIR, 'main_page', 'templates'),
+    os.path.join(BASE_DIR, 'mobile', 'templates'),
     os.path.join(MEDIA_ROOT, 'uploads/ads'),
 )
 

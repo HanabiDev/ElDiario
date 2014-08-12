@@ -42,6 +42,7 @@ def home(request):
 	except Exception as e:
 		pass
 
+	categories = None
 	try:
 		categories = Category.objects.filter(parent=None, published=True)
 	except Exception as e:
