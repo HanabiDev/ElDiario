@@ -114,6 +114,8 @@ def search(request):
 			Q(title__contains=keyword) | Q(abstract__contains=keyword) | Q(content__contains=keyword)
 		).exclude(published=False)
 
-		return render_to_response(TEMPLATE_DIR+'mobile_search.html', {'keyword':keyword, 'articles':articles, 'categories':categories})
+		m_categories = Category.objects.filter(parent=None, published=True)
+
+		return render_to_response(TEMPLATE_DIR+'mobile_search.html', {'keyword':keyword, 'articles':articles, 'categories':categories, 'menu':m_categories})
 	else:
 		return redirect('/')
