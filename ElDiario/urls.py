@@ -5,7 +5,7 @@ from django.conf import settings
 urlpatterns = patterns('',
     url(r'^', include('frontend.urls')),
     url(r'^backend', include('admin.urls')),
-    url(r'^mobile', include('mobile.urls')),
+    url(r'^mobile/', include('mobile.urls')),
     url(r'^redactor/', include('redactor.urls')),
 
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
