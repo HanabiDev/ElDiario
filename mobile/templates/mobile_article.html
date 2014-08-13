@@ -28,7 +28,7 @@
           <li class="text-right">
             <div class="row">
               <div class="col-xs-10">
-                <form action="/m/buscar/" method="GET">
+                <form action="/buscar/" method="GET">
                   <div class="input-group">
                     <input name="keyword" type="text" class="form-control" placeholder="Buscar">
                     <span class="input-group-btn">
@@ -49,11 +49,11 @@
           
           {% for cat in categories %}
             <li>
-              <a href="/m/categorias/{{cat.slug}}">{{cat.title}}</a>
+              <a href="/categorias/{{cat.slug}}">{{cat.title}}</a>
               {% if cat.parent_cat.all%}
                 <ul class="list-unstyled">
                 {% for subcat in cat.parent_cat.all%}
-                  <li class="sub-nav"><a href="/m/categorias/{{subcat.slug}}">{{subcat.title}} </a></li>
+                  <li class="sub-nav"><a href="/categorias/{{subcat.slug}}">{{subcat.title}} </a></li>
                 {% endfor %}
                 </ul>
               {% endif %}
@@ -82,11 +82,11 @@
         
         <div class="col-lg-12">
           <h2>
-            <b><a href="/m/articulos/{{main_art.slug}}">{{article.title}}</a></b>
+            <b><a href="/articulos/{{main_art.slug}}">{{article.title}}</a></b>
           </h2>
           <p>
             <small class="cat_label">
-              <a href="/m/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
+              <a href="/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
                 {% if article.category %}{{article.category.title}}{% else %} General {% endif %}
               </a>
             </small>
@@ -94,6 +94,7 @@
           </p>
           <hr>
           {{ article.abstract|safe }}
+          {{ article.content|safe }}
           <hr>
           <div>
             <div class="col-xs-12">
@@ -104,10 +105,10 @@
               <h5><b>Artículos relacionados:</b></h5>
               <ul class="art-related">
                 {% for relA in article.related_articles.all %}
-                <li><a href="/m/articulos/{{relA.slug}}">{{relA.title}}</a></li>
+                <li><a href="/articulos/{{relA.slug}}">{{relA.title}}</a></li>
                 {% empty %}
                   {% for relB in article.related.all%}
-                  <li><a href="/m/articulos/{{relB.slug}}">{{relB.title}}</a></li>
+                  <li><a href="/articulos/{{relB.slug}}">{{relB.title}}</a></li>
                   {% empty %}
                   No se encontraron artículos
                   {% endfor %}

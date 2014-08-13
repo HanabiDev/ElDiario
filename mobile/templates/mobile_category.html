@@ -27,7 +27,7 @@
           <li class="text-right">
             <div class="row">
               <div class="col-xs-10">
-                <form action="/m/buscar/" method="GET">
+                <form action="/buscar/" method="GET">
                   <div class="input-group">
                     <input name="keyword" type="text" class="form-control" placeholder="Buscar">
                     <span class="input-group-btn">
@@ -48,11 +48,11 @@
           
           {% for cat in categories %}
             <li>
-              <a href="/m/categorias/{{cat.slug}}">{{cat.title}}</a>
+              <a href="/categorias/{{cat.slug}}">{{cat.title}}</a>
               {% if cat.parent_cat.all%}
                 <ul class="list-unstyled">
                 {% for subcat in cat.parent_cat.all%}
-                  <li class="sub-nav"><a href="/m/categorias/{{subcat.slug}}">{{subcat.title}} </a></li>
+                  <li class="sub-nav"><a href="/categorias/{{subcat.slug}}">{{subcat.title}} </a></li>
                 {% endfor %}
                 </ul>
               {% endif %}
@@ -92,12 +92,12 @@
         {% for art in articles %}
         <div class="col-lg-12">
           <h3>
-            <b><a href="/m/articulos/{{art.slug}}">{{art.title}}</a></b>
+            <b><a href="/articulos/{{art.slug}}">{{art.title}}</a></b>
           </h3>
           {% if all_arts %}
             <p>
               <small class="cat_label">
-                <a href="/m/categorias/{% if art.category %}{{art.category.slug}}{% else %}general{% endif %}">
+                <a href="/categorias/{% if art.category %}{{art.category.slug}}{% else %}general{% endif %}">
                   {% if art.category %}{{art.category.title}}{% else %} General {% endif %}
                 </a>
               </small>
