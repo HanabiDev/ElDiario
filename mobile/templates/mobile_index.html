@@ -43,11 +43,11 @@
           
           {% for cat in categories %}
             <li>
-              <a href="/categorias/{{cat.slug}}">{{cat.title}}</a>
+              <a href="/categorias/{{cat.slug}}/">{{cat.title}}</a>
               {% if cat.parent_cat.all%}
                 <ul class="list-unstyled">
                 {% for subcat in cat.parent_cat.all%}
-                  <li class="sub-nav"><a href="/categorias/{{subcat.slug}}">{{subcat.title}} </a></li>
+                  <li class="sub-nav"><a href="/categorias/{{subcat.slug}}/">{{subcat.title}} </a></li>
                 {% endfor %}
                 </ul>
               {% endif %}
@@ -72,10 +72,10 @@
     <div class="jumbotron" style="margin-top:45px; padding: 5px 15px 5px 15px;">
       <div class="row-fluid">
         {% if full_width_article %}
-          <h2><b><a href="/articulos/{{full_width_article.slug}}">{{full_width_article.title}}</a></b></h2>
+          <h2><b><a href="/articulos/{{full_width_article.slug}}/">{{full_width_article.title}}</a></b></h2>
           <p>
             <small class="cat_label">
-              <a href="/categorias/{% if full_width_article.category %}{{full_width_article.category.slug}}{% else %}general{% endif %}">
+              <a href="/categorias/{% if full_width_article.category %}{{full_width_article.category.slug}}{% else %}general{% endif %}/">
                 {% if full_width_article.category %}{{full_width_article.category.title}}{% else %} General {% endif %}
               </a>
             </small>
@@ -96,11 +96,11 @@
         
         <div class="col-lg-12">
           <h2>
-            <b><a href="/articulos/{{main_art.slug}}">{{main_art.title}}</a></b>
+            <b><a href="/articulos/{{main_art.slug}}/">{{main_art.title}}</a></b>
           </h2>
           <p>
             <small class="cat_label">
-              <a href="/categorias/{% if main_art.category %}{{main_art.category.slug}}{% else %}general{% endif %}">
+              <a href="/categorias/{% if main_art.category %}{{main_art.category.slug}}{% else %}general{% endif %}/">
                 {% if main_art.category %}{{main_art.category.title}}{% else %} General {% endif %}
               </a>
             </small>
@@ -114,11 +114,11 @@
         {% for art in articles %}
         <div class="col-lg-12">
           <h3>
-            <b><a href="/articulos/{{art.slug}}">{{art.title}}</a></b>
+            <b><a href="/articulos/{{art.slug}}/">{{art.title}}</a></b>
           </h3>
           <p>
             <small class="cat_label">
-              <a href="/categorias/{% if art.category %}{{art.category.slug}}{% else %}general{% endif %}">
+              <a href="/categorias/{% if art.category %}{{art.category.slug}}{% else %}general{% endif %}/">
                 {% if art.category %}{{art.category.title}}{% else %} General {% endif %}
               </a>
             </small>

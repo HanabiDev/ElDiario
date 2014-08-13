@@ -27,7 +27,7 @@
           <li class="text-right">
             <div class="row">
               <div class="col-xs-10">
-                <form action="/buscar/" method="GET">
+                <form action="../buscar/" method="GET">
                   <div class="input-group">
                     <input name="keyword" type="text" class="form-control" placeholder="Buscar">
                     <span class="input-group-btn">
@@ -48,7 +48,7 @@
           
           {% for cat in categories %}
             <li>
-              <a href="m/categorias/{{cat.slug}}">{{cat.title}}</a>
+              <a href="/categorias/{{cat.slug}}">{{cat.title}}</a>
               {% if cat.parent_cat.all%}
                 <ul class="list-unstyled">
                 {% for subcat in cat.parent_cat.all%}
