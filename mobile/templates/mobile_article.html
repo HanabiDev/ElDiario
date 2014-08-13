@@ -9,6 +9,12 @@
   <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
   <link rel="stylesheet" href="{% static "mobile/css/main.css" %}">
   <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52f06b8440ed79f8"></script>
+  
+  <style type="text/css">
+    html, body{ padding: 0; margin:0; height:100%; width: 100%;}
+    body{margin-top: 50px;}
+  </style>
 
 </head>
 
@@ -69,26 +75,6 @@
     </div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" style="margin-top:45px; padding: 5px 15px 5px 15px;">
-      <div class="row-fluid">
-        {% if full_width_article %}
-          <h2><b><a href="/articulos/{{full_width_article.slug}}">{{full_width_article.title}}</a></b></h2>
-          <p>
-            <small class="cat_label">
-              <a href="/categorias/{% if full_width_article.category %}{{full_width_article.category.slug}}{% else %}general{% endif %}">
-                {% if full_width_article.category %}{{full_width_article.category.title}}{% else %} General {% endif %}
-              </a>
-            </small>
-            <small class="art_date">{{ full_width_article.creation_date|date:"d \d\e F \d\e\l Y" }}</small>
-          </p>
-          {{ full_width_article.abstract|safe }}
-          <p class="row-fluid">
-            <a class="btn btn-primary" style="width:100%" href="#">Ver noticia en detalle &raquo;</a>
-          </p>
-        {% endif %}
-        
-      </div>
-    </div>
 
     <div class="container news_list">
       <!-- Example row of columns -->
@@ -96,38 +82,40 @@
         
         <div class="col-lg-4">
           <h2>
-            <b><a href="/articulos/{{main_art.slug}}">{{main_art.title}}</a></b>
+            <b><a href="/articulos/{{main_art.slug}}">{{article.title}}</a></b>
           </h2>
           <p>
             <small class="cat_label">
-              <a href="/categorias/{% if main_art.category %}{{main_art.category.slug}}{% else %}general{% endif %}">
-                {% if main_art.category %}{{main_art.category.title}}{% else %} General {% endif %}
+              <a href="/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
+                {% if article.category %}{{article.category.title}}{% else %} General {% endif %}
               </a>
             </small>
-            <small class="art_date">{{ main_art.creation_date|date:"d \d\e F \d\e\l Y" }}</small>
+            <small class="art_date">{{ article.creation_date|date:"d \d\e F \d\e\l Y" }}</small>
           </p>
           <hr>
-          {{ main_art.abstract|safe }}
+          {{ article.abstract|safe }}
           <hr>
+          <div>
+            <div class="col-xs-12">
+              <h5><b>Compartir artículo en: </b></h5>
+              <div class="addthis_sharing_toolbox"></div>
+            </div>
+            <div class="col-xs-12" >
+              <h5><b>Artículos relacionados:</b></h5>
+              <ul class="art-related">
+                {% for relA in article.related_articles.all %}
+                <li><a href="/articulos/{{relA.slug}}">{{relA.title}}</a></li>
+                {% empty %}
+                  {% for relB in article.related.all%}
+                  <li><a href="/articulos/{{relB.slug}}">{{relB.title}}</a></li>
+                  {% empty %}
+                  No se encontraron artículos
+                  {% endfor %}
+                {% endfor %}
+              </ul>
+            </div>
+          </div> 
         </div>
-
-        {% for art in articles %}
-        <div class="col-lg-12">
-          <h3>
-            <b><a href="/articulos/{{art.slug}}">{{art.title}}</a></b>
-          </h3>
-          <p>
-            <small class="cat_label">
-              <a href="/categorias/{% if art.category %}{{art.category.slug}}{% else %}general{% endif %}">
-                {% if art.category %}{{art.category.title}}{% else %} General {% endif %}
-              </a>
-            </small>
-            <small class="art_date">{{ art.creation_date|date:"d \d\e F \d\e\l Y" }}</small>
-          </p>
-          {{ art.abstract|safe }}
-          <hr>
-        </div>
-        {% endfor %}
       </div>
     </div> <!-- /container -->
     <footer>

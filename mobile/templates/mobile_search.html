@@ -68,49 +68,42 @@
         </div>
     </div>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron" style="margin-top:45px; padding: 5px 15px 5px 15px;">
-      <div class="row-fluid">
-        {% if full_width_article %}
-          <h2><b><a href="/articulos/{{full_width_article.slug}}">{{full_width_article.title}}</a></b></h2>
-          <p>
-            <small class="cat_label">
-              <a href="/categorias/{% if full_width_article.category %}{{full_width_article.category.slug}}{% else %}general{% endif %}">
-                {% if full_width_article.category %}{{full_width_article.category.title}}{% else %} General {% endif %}
-              </a>
-            </small>
-            <small class="art_date">{{ full_width_article.creation_date|date:"d \d\e F \d\e\l Y" }}</small>
-          </p>
-          {{ full_width_article.abstract|safe }}
-          <p class="row-fluid">
-            <a class="btn btn-primary" style="width:100%" href="#">Ver noticia en detalle &raquo;</a>
-          </p>
-        {% endif %}
-        
-      </div>
-    </div>
+    <div class="container news_list" style="margin-top:50px;">
+      
 
-    <div class="container news_list">
       <!-- Example row of columns -->
+      <div class="cat-tab">
+        <h4>
+          <span>CATEGORÍAS</span>
+        </h4>
+        {{categories.count}} encontradas
+      </div>
+      
       <div class="row">
-        
-        <div class="col-lg-4">
-          <h2>
-            <b><a href="/articulos/{{main_art.slug}}">{{main_art.title}}</a></b>
-          </h2>
-          <p>
-            <small class="cat_label">
-              <a href="/categorias/{% if main_art.category %}{{main_art.category.slug}}{% else %}general{% endif %}">
-                {% if main_art.category %}{{main_art.category.title}}{% else %} General {% endif %}
-              </a>
-            </small>
-            <small class="art_date">{{ main_art.creation_date|date:"d \d\e F \d\e\l Y" }}</small>
-          </p>
-          <hr>
-          {{ main_art.abstract|safe }}
-          <hr>
+        {% for cat in categories %}
+        <div class="col-xs-12" style="border-bottom:1px solid #ddd;">
+          <div class="col-xs-3">
+            <h3>{{cat.article_set.count}} <small>artículos</small></h3>
+            <small class="cat_date">{{ cat.creation_date|date:"d/M/Y" }}</small>
+          </div>
+          <div class="col-xs-9" style="border-left:1px solid #ddd;">
+            <h3>
+              <b><a href="/categorias/{{cat.slug}}">{{cat.title}}</a></b>
+            </h3>
+            {{ cat.description|safe }}
+          </div>
         </div>
+        {% endfor %}
+      </div>
 
+      <div class="cat-tab">
+        <h4>
+          <span>ARTÍCULOS</span>
+        </h4>
+        {{articles.count}} encontrados
+      </div>
+
+      <div class="row">
         {% for art in articles %}
         <div class="col-lg-12">
           <h3>
