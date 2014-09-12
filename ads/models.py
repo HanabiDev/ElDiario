@@ -20,6 +20,7 @@ class Ad(models.Model):
 		('6','6: Post Principales (710x160)'),
 		('7','7: Derecha Arriba (275x300)'),
 		('8','8: Derecha Abajo (275x90)'),
+		('9','9: Post Twitter (275 de ancho)'),
 	)
 
 	AD_TYPES = (
@@ -58,8 +59,13 @@ class Ad(models.Model):
 
 
 	def delete(self, *args, **kwargs):
-		self.pkg_file.delete()
-		clean_files(self.position)
+		if self.position == '9':
+			clean_files(self.position, self)
+			self.pkg_file.delete()
+		else:
+			self.pkg_file.delete()
+			clean_files(self.position)
+
 
 		super(Ad, self).delete(*args, **kwargs)
 
@@ -77,7 +83,11 @@ def unzip_pkg(pos, pkg, ad_type):
 
 		if ad_type == '2':
 			path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos)
-			template = open(path+'/template_index.html', 'w+')
+			
+			if pos == '9':
+				template = open(path+'/template_index.html', 'a')
+			else: 
+				template = open(path+'/template_index.html', 'w+')
 
 			image = '<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/><img src="'+settings.MEDIA_URL+pkg.name+'"/>'
 			template.write(image)
@@ -107,8 +117,10 @@ def unzip_pkg(pos, pkg, ad_type):
 			s=preload_file.read()
 			s=re.sub(r'edge_includes', '/static/js/edge_includes', s)
 			s=re.sub(r'"([\w.-]{0,}js)"', r'"/media/uploads/ads/pos'+pos+r'/\1"', s)
-
+			
+			
 			f=open(glob.glob(unzip_path+'/*edgePreload.js')[0], 'w')
+
 			f.write(s)
 			f.flush()
 			f.close()
@@ -142,33 +154,65 @@ def unzip_pkg(pos, pkg, ad_type):
 
 
 			path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos)
-			template = open(path+'/template_index.html', 'w+')
+			if pos == '9':
+				template = open(path+'/template_index.html', 'a')
+			else:
+				template = open(path+'/template_index.html', 'w+')
 
 			include = '<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/>{% include "pos'+pos+'/index.html" %}'
 			template.write(include)
 			template.flush()
 			template.close()
+
 		else:
 			path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos)
-			template = open(path+'/template_index.html', 'w+')
+			
+			if pos == '9':
+				template = open(path+'/template_index.html', 'a')
+			else:
+				template = open(path+'/template_index.html', 'w+')
 
 			template.write('<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/>'+pkg)
 			template.flush()
 			template.close()
 
-def clean_files(pos):
+def clean_files(pos, ad=None):
 	#Path to unzip contents
 	files_path = os.path.join(settings.MEDIA_ROOT,'uploads/ads/pos'+pos+'/')
 
-	#Delete target directory
-	shutil.rmtree(files_path)
-	os.makedirs(files_path)
+	if pos == '9':
+		
+		template = open(files_path+'/template_index.html', 'r')
+		s = template.read()
+		template.close()
 
-	template = open(files_path+'/template_index.html', 'w+')
+		if ad.ad_type == '2':
 
-	template.write("")
-	template.flush()
-	template.close()
+			pkg = ad.pkg_file
+			string = '<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/><img src="'+settings.MEDIA_URL+pkg.name+'"/>'
+			s=s.replace(string, '')
+		
+		elif ad.ad_type == '3':
+
+			pkg = ad.embed_code
+			string = '<span class="fa fa-angle-down"></span> Publicidad <span class="fa fa-angle-down"></span><br/>'+pkg
+			s=s.replace(string, '')
+
+		with open(files_path+'/template_index.html', 'w+') as temp:
+			temp.write(s)
+			temp.flush()
+			temp.close()
+	
+	else:
+		#Delete target directory
+		shutil.rmtree(files_path)
+		os.makedirs(files_path)
+		
+		template = open(files_path+'/template_index.html', 'w+')
+		template.write("")
+
+		template.flush()
+		template.close()
 
 def publish_files(ad):
 	if ad.published:

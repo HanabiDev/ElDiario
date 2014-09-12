@@ -1,0 +1,34 @@
+<div class="row-fluid main_news">
+	<div class="panel panel-default">
+	  	<div class="panel-body">
+			<div class="row-fluid">
+				<div class="col-xs-7" style="padding:0 10px 0 0">
+					{% with secondary.first as first_art %}
+						<h3 class="text-left">
+							<b>
+								<a href="articulos/{{first_art.slug}}">{{first_art.title}}</a>
+							</b>
+						</h3>
+						<hr>
+						{{first_art.abstract | safe}}
+					{% endwith %}
+				</div>
+				<div class="col-xs-5 other" style="border-left:1px solid #ddd">
+					{% with secondary.first as first_art %}
+						{% for article in secondary %}
+							{% if not article == first_art %}
+								<div class="row-fluid">
+									<h4 class="text-left">
+										<a href="/articulos/{{article.slug}}">{{article.title}}</a>
+									</h4>
+									{{article.abstract | safe}}
+								</div>
+								<hr>
+							{% endif %}
+						{% endfor %}
+					{% endwith %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -5,6 +5,7 @@ from django.db.models import Q
 from content.models import *
 from polls.models import *
 from photogallery.models import *
+from conf.views import load_settings
 # Create your views here.
 from datetime import datetime
 
@@ -23,12 +24,11 @@ def home(request):
 	except Exception as e:
 		pass
 
-	gallery = None
-	carousel_images = None
+	galleries = None
 	order = None
 	try:
-		gallery = Gallery.objects.filter(published=True).order_by('-creation_date')[0]
-		carousel_images = gallery.images.all()
+		galleries = Gallery.objects.filter(published=True).order_by('-creation_date')[0:4]
+		carousel_images = galleries[0].images.all()
 		order = range(0,len(carousel_images))
 	except Exception as e:
 		pass
@@ -51,6 +51,8 @@ def home(request):
 	main_art = None
 	all_articles = None
 
+	settings = load_settings()
+
 	try:
 		count = Article.objects.filter(full_width=False, published=True).exclude(category__title='Caricaturas').count()
 		if count > 0:
@@ -59,22 +61,41 @@ def home(request):
 				published=True
 			).exclude(category__title='Caricaturas').order_by('-creation_date')[0]
 
-			all_articles = Article.objects.filter(
+			secondary = Article.objects.filter(
 				full_width=False, published=True
 			).exclude(category__title='Caricaturas').order_by('-creation_date')[1:5]
+
+			misc_news = Article.objects.filter(
+				full_width=False, published=True
+			).exclude(category__title='Caricaturas').order_by('-creation_date')[6:24]
 
 	except Exception as e:
 		pass
 
+	
+	
+	try:
+		opinion_articles = Article.objects.filter(category__parent__title='Columnistas').order_by('-creation_date')[0:8]
+		cafe_con = Article.objects.filter(category__title='Un café con').order_by('-creation_date')[0]
+		cartas_lector = Article.objects.filter(category__title='Cartas del lector').order_by('-creation_date')[0]
+	except Exception, e:
+		print e
+
 	return render_to_response(TEMPLATE_DIR+'site_index.html',
-		{'full_width_article': full_width_article,
-		'poll':poll, 'articles':all_articles,
-		'categories': categories, 'main_art':main_art,
-		'images':carousel_images, 'gallery':gallery, 'order':order,
-		'cartoons':cartoons, 'orderCartoons':orderCartoons
+		{
+			'categories': categories,
+			'full_width_article': full_width_article,
+			'main_art':main_art,
+			'secondary':secondary, 'misc_news':misc_news,
+			'poll':poll, 'galleries':galleries,
+			'cartoons':cartoons, 'orderCartoons':orderCartoons,
+			'settings':settings,
+			'opinion_news': opinion_articles,
+			'carta': cartas_lector,
+			'cafe_con': cafe_con,
 		},
 		context_instance=RequestContext(request)
-		)
+	)
 
 def search(request):
 

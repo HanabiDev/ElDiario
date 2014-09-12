@@ -1,0 +1,44 @@
+{% load static %}
+<div class="row-fluid fat-menu">
+	<div style="background:#F0F0F0; padding:20px;">
+		<h5 style="display: inline-block; width:7%"><b>Secciones</b></h5>
+		<hr style="display: inline-block; width:92%; margin:0 0 4px 0; border-top-color: #ccc;">
+		<div class="row">
+			<div class="col-xs-8">
+				{% for cat in categories %}
+				<div class="col-xs-2">
+					<h4><a href="/categorias/{{cat.slug}}">{{cat.title}}</a></h4>
+					<ul>
+						{% for subcat in cat.parent_cat.all%}
+						<li><a href="/categorias/{{subcat.slug}}">{{subcat.title}}</a></li>
+						{% endfor %}
+					</ul>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="col-xs-4 text-center">
+				<p>
+					Transversal 4 No 46 - 53
+				</p>
+				<p>
+					Tunja, Boyacá - Colombia
+				</p>
+				<p>
+					Telefax: 747-2650 Cel.: 311-500-6438
+				</p>
+				<p>
+					Escríbanos a: <a href="mailto:gerencia@periodicoeldiario.com" target="_top">gerencia@periodicoeldiario.com</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div style="background:#AF1717; padding:20px;border-radius:0 0 8px 8px;color:white;">
+		© 2014 - Periodico El Diario
+		<small style="margin-left:35px; margin-right:5px;font-size:13px">
+			sitio desarrollado por
+		</small>
+		<img src="{% static "images/logo-hanabi.png" %}" style="max-height:40px;margin-top:-10px;">
+	</div>
+</div>

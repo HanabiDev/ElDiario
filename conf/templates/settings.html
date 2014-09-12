@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% load url from future %}
+{% block title %} Configuración {% endblock %}
+
+{% block extrastyle %}
+		<link rel="stylesheet" href="{% static "css/chosen.min.css"%}"></link>
+{% endblock %}
+
+{% block extrahead %}
+	<script src="{% static "js/chosen.jquery.min.js"%}"></script>
+	<script src="{% static "js/jquery.jeditable.mini.js"%}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li>
+			<i class="fa fa-gears"></i> Configuración
+		</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+				    	<h2 class="panel-title">
+							<i class="fa fa-gears"></i> Configuración
+				    	</h2>
+				  	</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+				  			<div class="col-xs-12 col-md-6">
+				  				<form role="form" action="/backend/configuracion" method="POST">
+									{% csrf_token %}
+
+									<div class="panel panel-default">
+									  <div class="panel-body">
+									  	<h3>Edición Impresa</h3><hr>
+											{% for setting, value in settings %}
+											    <div class="form-group {% if field.errors %} has-error{% endif %}">
+													<div class="input-group">
+														<span class="input-group-addon">
+															{{setting}}
+														</span>
+														<input class="form-control" type="text" name="{{setting}}" value="{{ value }}"/>
+													</div>
+												</div>
+											{% endfor %}
+											<br>
+											<div class="form-group" style="text-align:right;">
+												<a href="../backend" class="btn btn-danger">
+													Cancelar
+												</a>
+												<button type="submit" class="btn btn-success">
+													Guardar cambios
+						    					</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#id_related_articles").chosen({placeholder_text_multiple:'Escribe para buscar...',width: "95%"});
+		});
+
+		$("body").on("click", ".add_option", function(){
+			$(".empty_msg").hide();
+			$("#current_options tbody").append(
+				"<tr>\
+					<td class='opt text-left'>\
+						<input type='text' name='options' form='poll_form' class='form-control' placeholder='Ingresa el texto de la opcion'/>\
+					</td>\
+					<td class='opt text-left'>\
+						<button class='add_option btn btn-success'><span class='glyphicon glyphicon-plus'></span></button>\
+						<button class='del_option btn btn-danger'><span class='glyphicon glyphicon-remove'></span></button>\
+					</td>\
+				</tr>"
+			);
+		});
+
+		$("body").on("click", ".del_option", function(event){
+			if($(this).parents("tbody tr").siblings().length===1){
+					$(".empty_msg").show();
+			}
+			$(this).parents("tr").detach();
+		});
+
+	</script>
+{% endblock %}

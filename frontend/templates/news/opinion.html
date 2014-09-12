@@ -1,0 +1,40 @@
+<div class="dept-tab">
+	<span>
+		OPINIÓN
+	</span>
+	Últimos Artículos
+</div>
+<div class="col-xs-12 misc dept" style="padding:0 !important;">
+	<div class="col-xs-7 text-left" style="padding:0 !important;">
+	{% for article in opinion_news %}
+		<div class="col-xs-6 opin_art" style="padding-top:10px;height:120px;">
+			<div class="col-xs-3" style="padding:0;">
+				<img class="img-circle" style="width:40px; height:40px;" src="/media/{{article.author.avatar}}"/>
+			</div>
+			<div class="col-xs-9" style="padding:0;">
+				<small class="section_name"><span>{{article.category.title}}</span></small>
+				<h5 class="text-left">
+					<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+				</h5>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+	<div class="col-xs-5 oth" style="padding:5px;">
+		<div class="row" style="padding:15px;">
+			<p class="divider text-center">
+				<span>CARTAS DEL LECTOR</span>
+				<h4><a href="{{carta.title}}"></a></h4>
+			</p>
+			<h4 class="text-left"><a href="/articulos/{{carta.slug}}">{{carta.title}}</a></h4>
+			{{carta.abstract|safe}}
+		</div>
+		<div class="row" style="padding:15px;">
+			<p class="divider text-center">
+				<span>UN CAFÉ CON...</span>
+			</p>
+			<h4 class="text-left"><a href="/articulos/{{cafe_con.slug}}">{{cafe_con.title}}</a></h4>
+			{{cafe_con.abstract|safe}}
+		</div>
+	</div>
+</div>

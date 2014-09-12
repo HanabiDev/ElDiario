@@ -82,22 +82,20 @@
 			</div>
 
 			<div class="col-xs-10">
+
 				{% block header %}
-					{% include "header.html"%}
+					{% include "top/header.html"%}
 				{% endblock %}
 
 				{% block topmenu %}
-					{% include "site_topmenu.html" %}
+					{% include "top/site_topmenu.html" %}
 				{% endblock %}
 
 
 				<div class="container-fluid" style="padding: 0 8px;">
 
 					{% block indicators %}
-						<div class="indicators">
-
-						</div>
-						{% include 'main/indicators.html' %}
+						{% include "top/indicators.html" %}
 					{% endblock %}
 
 					<div class="row ad ad_4">
@@ -106,611 +104,143 @@
 
 					{% block full_news %}
 						{% if full_width_article %}
-						<div class="row" style="padding:5px; margin-bottom:0;background:white;">
-							<div class="panel panel-default">
-							  	<div class="panel-body">
-							  		<div class="full_head">
-										<h1>
-											<b>
-												<a href="/articulos/{{full_width_article.slug}}">
-													{{full_width_article.title}}
-												</a>
-											</b>
-										</h1>
-
-										<small>
-											<span class="fa fa-user"></span>
-											Por: {{full_width_article.author.first_name}} {{full_width_article.author.last_name}}
-										</small>
-										<small>
-											<span class="glyphicon glyphicon-calendar"></span>
-											{{ full_width_article.creation_date|date:"d \d\e F \d\e\l Y" }}
-										</small>
-									</div>
-									<hr style="margin-top:10px; margin-bottom:15px;">
-									{{ full_width_article.abstract | safe }}
-								</div>
-							</div>
-						</div>
+							{% include "news/full_news.html"%}
 						{% endif %}
 					{% endblock %}
 
 					{% block main %}
-					<div class="row" style="background:white; padding:10px 10px 0 0;">
+						<div class="row" style="background:white; padding:10px 10px 0 0;">
 
-						<!--Main Content-->
-						<div class="col-xs-8">
-							<div class="row-fluid ad ad_5">
-								{% include "pos5/template_index.html" %}
-							</div>
-							{% block main_content %}
-							<div class="row-fluid main_news">
-								{% if main_art %}
-								<div class="panel panel-default">
-								  	<div class="panel-body">
-											<div class="row-fluid">
-													<h2><b><a href="articulos/{{main_art.slug}}">{{main_art.title}}</a></b></h2>
-													<hr>
-													<a href="articulos/{{main_art.slug}}">
-														<p>
-															{{main_art.abstract | safe}}
-														</p>
-													</a>
-											</div>
-										</div>
+							<!--Main Content-->
+							<div class="col-xs-8">
+								<div class="row-fluid ad ad_5">
+									{% include "pos5/template_index.html" %}
 								</div>
-								{% endif %}
-
-							</div>
-							{% endblock %}
-
-							{% block other_news %}
-							{% if articles %}
-							<div class="row-fluid main_news">
-								<div class="panel panel-default">
-								  	<div class="panel-body">
-											<div class="row-fluid">
-
-												<div class="col-xs-7" style="padding:0 10px 0 0">
-													{% with articles.first as first_art %}
-													<h2><b><a href="articulos/{{first_art.slug}}">{{first_art.title}}</a></b></h2>
-													<hr>
-													{{first_art.abstract | safe}}
-													{% endwith %}
-												</div>
-												<div class="col-xs-5 other" style="border-left:1px solid #ddd">
-													{% with articles.first as first_art %}
-														{% for article in articles %}
-															{% if not article == first_art %}
-																<div class="row-fluid">
-																	<h4><a href="/articulos/{{article.slug}}">{{article.title}}</a></h4>
-																	{{article.abstract | safe}}
-																</div>
-																<hr>
-															{% endif %}
-														{% endfor %}
-													{% endwith %}
-												</div>
-											</div>
-									</div>
-								</div>
-
-							</div>
-							{%endif%}
-							{% endblock %}
-
-							{% if "S"|get_position_article %}
-								{% block dept %}
-									<div class="row-fluid">
-
-										{% with "S"|get_position_article as articles %}
-										<div class="dept-tab">
-											<span>
-												{% with articles|first as first %}
-													{{first.category.title}}
-												{% endwith %}
-											</span>
-											Últimas Noticias
-										</div>
-
-										<div class="col-xs-12 dept">
-
-												{% for article in articles %}
-												<div class="col-xs-6" style="padding:0 10px 0 0">
-													<h2>
-														<b>
-															<a href="/articulos/{{article.slug}}">{{article.title}}</a>
-														</b>
-													</h2>
-													<hr>
-													{{ article.abstract|safe }}
-												</div>
-												{% endfor %}
-										</div>
-										{% endwith %}
-									</div>
-								{% endblock %}
-							{% endif %}
-
-							<div class="col-xs-12 ad ad_6">
-								{% include "pos6/template_index.html" %}
-							</div>
-
-							{% block misc %}
-
-							<div class="col-xs-12 misc">
-								<p class="divider">
-									<span>OTRAS NOTICIAS</span>
-								</p>
-								<div class="col-xs-12" style="margin-bottom:15px;">
-								{% if "A"|get_position_article %}
-									<div class="col-xs-{% if "B"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
-											{% with "A"|get_position_article as article %}
-												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2>
-													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-												</h2>
-												<hr>
-												{{ article.abstract|safe }}
-											{% endwith %}
-									</div>
-								{% endif %}
-								{% if "B"|get_position_article %}
-									<div class="col-xs-{% if "A"|get_position_article %}5{%else%}12{%endif%}">
-										<div class="row-fluid">
-											{% with "B"|get_position_article as article %}
-												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2>
-													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-												</h2>
-												<hr>
-												{{ article.abstract|safe }}
-											{% endwith %}
-										</div>
-									</div>
-								{% endif %}
-							</div>
-							<div class="col-xs-12" style="margin-bottom:15px;">
-								{% if "C"|get_position_article %}
-									<div class="col-xs-{% if "D"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
-										{% with "C"|get_position_article as article %}
-											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2>
-												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-											</h2>
-											<hr>
-											{{ article.abstract|safe }}
-										{% endwith %}
-									</div>
-								{% endif %}
-								{% if "D"|get_position_article %}
-									<div class="col-xs-{% if "C"|get_position_article %}5{%else%}12{%endif%}">
-										<div class="row-fluid">
-											{% with "D"|get_position_article as article %}
-												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2>
-													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-												</h2>
-												<hr>
-												{{ article.abstract|safe }}
-											{% endwith %}
-										</div>
-									</div>
-								{% endif %}
-							</div>
-							<div class="col-xs-12" style="margin-bottom:15px;">
-								{% if "E"|get_position_article %}
-									<div class="col-xs-{% if "F"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
-										{% with "E"|get_position_article as article %}
-											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2>
-												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-											</h2>
-											<hr>
-											{{ article.abstract|safe }}
-										{% endwith %}
-									</div>
-								{% endif %}
-								{% if "F"|get_position_article %}
-									<div class="col-xs-{% if "E"|get_position_article %}5{%else%}12{%endif%}">
-										<div class="row-fluid environ">
-											{% with "F"|get_position_article as article %}
-												<span>{{article.category.title}}</span>
-												<h2>
-													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-												</h2>
-												</span> {{article.creation_date}}</small>
-												<hr>
-												{{ article.abstract|safe }}
-											{% endwith %}
-										</div>
-									</div>
-								{% endif %}
-							</div>
-							<div class="col-xs-12" style="margin-bottom:15px;">
-								{% if "G"|get_position_article %}
-									<div class="col-xs-{% if "H"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
-										{% with "G"|get_position_article as article %}
-											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2>
-												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-											</h2>
-											<hr>
-											{{ article.abstract|safe }}
-										{% endwith %}
-									</div>
-								{% endif %}
-
-								{% if "H"|get_position_article %}
-									<div class="col-xs-{% if "G"|get_position_article %}5{%else%}12{%endif%}">
-										<div class="row-fluid">
-											{% with "H"|get_position_article as article %}
-												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2>
-													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-												</h2>
-												<hr>
-												{{ article.abstract|safe }}
-											{% endwith %}
-										</div>
-									</div>
-								{% endif %}
-							</div>
-							<div class="col-xs-12" style="margin-bottom:15px;">
-								{% if "I"|get_position_article %}
-									<div class="col-xs-{% if "J"|get_position_article %}7{%else%}12{%endif%}" style="padding:0 10px 0 0">
-										{% with "I"|get_position_article as article %}
-											<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-											<h2>
-												<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-											</h2>
-											<hr>
-											{{ article.abstract|safe }}
-										{% endwith %}
-									</div>
-								{% endif %}
-								{% if "J"|get_position_article %}
-									<div class="col-xs-{% if "I"|get_position_article %}5{%else%}12{%endif%}">
-										<div class="row-fluid">
-											{% with "J"|get_position_article as article %}
-												<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
-												<h2>
-													<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-												</h2>
-												<hr>
-												{{ article.abstract|safe }}
-											{% endwith %}
-										</div>
-									</div>
-								{% endif %}
-							</div>
-							</div>
-							{% endblock %}
-						</div>
-						<!--End Main Content-->
-
-
-						{% block right_col %}
-						<!--Right Col-->
-						<div class="col-xs-4">
-							{% block social_links %}
-								<div class="row">
-									<div class="btn-group" id="social_buttons">
-										<div style="padding:5px 10px;">
-											<b>Síguenos en: </b>
-										</div>
-
-										<div style="font-size:23px;">
-										  <a class="btn btn-default" href="https://www.facebook.com/periodicoeldiario" class="btn btn-default">
-											<span class="fa fa-facebook"></span>
-										  </a>
-										  <a class="btn btn-default" href="https://twitter.com/eldiarioboyaca">
-											<span class="fa fa-twitter"></span>
-										  </a>
-										  <a class="btn btn-default" href="https://plus.google.com/115531395616996043693/posts">
-											<span class="fa fa-google-plus"></span>
-										  </a>
-										  <a class="btn btn-default" href="http://www.youtube.com/channel/UCC8r9OquHiDaI2IydAYqOZw?feature=watch">
-											<span class="fa fa-youtube-play"></span>
-										  </a>
-										  <a class="btn btn-default" href="https://pinterest.com/ElDiarioBoyaca/">
-											<span class="fa fa-pinterest"></span>
-										  </a>
-										  <a class="btn btn-default" href="https://www.linkedin.com/reg/join?session_redirect=http%3A%2F%2Fwww.linkedin.com%2FpostLogin%3Fsession_rikey%3DoZtL5JSaGZ4Zom0IZAdGh4L-ZpzcKH01Pf-zI53EI6y-AyXFbCOx-AqYnubdoToNl8mhoOblcXwAlpo-AC70-5ddI3Pxomkv8Ar%26l%3Dhttp%253A%252F%252Fwww%252Elinkedin%252Ecom%252Fsearch%26id%3D0%26b%3D315bbd1e-5163-4b92-8878-bcb96237ffd2%26h%3D5AaA%26m%3DGET">
-											<span class="fa fa-linkedin"></span>
-										  </a>
-										  <a class="btn btn-default" href="https://soundcloud.com/periodicoeldiario">
-											<span class="fa fa-soundcloud"></span>
-										  </a>
-										</div>
-									</div>
-								</div>
-							{% endblock %}
-							<br>
-
-							<div class="row alt-news text-justify">
-								{% block alt_news %}
-									{% if "R"|get_position_article %}
-										{% with "R"|get_position_article as article %}
-											<div class="panel panel-default">
-												<div class="panel-body">
-													<div class="container-fluid">
-														<h4>
-															<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
-														</h4>
-														{{ article.abstract|safe }}
-													</div>
-												</div>
-											</div>
-										{% endwith %}
+								{% block main_news %}
+									{% if main_art %}
+										{% include "news/main_news.html"%}
 									{% endif %}
+								{% endblock %}
 
+								{% block secondary_news %}
+									{% if secondary %}
+										{% include "news/secondary_news.html" %}
+									{%endif%}
+								{% endblock %}
 
+								<div class="col-xs-12 ad ad_6">
+									{% include "pos6/template_index.html" %}
+								</div>
+
+								{% block misc %}
+									{% if misc_news %}
+										{% include "news/misc_news.html" %}
+									{% endif %}
+								{% endblock %}
+
+								{% block columnists %}
+									{% include "news/opinion.html" %}
 								{% endblock %}
 							</div>
+							<!--End Main Content-->
 
-							<div class="row ad ad_7">
-								{% include "pos7/template_index.html"%}
-							</div>
+							<!--Right Col-->
+							<div class="col-xs-4">
+								{% block right_col %}
+									{% block social_links %}
+										{% include "right/social.html" %}
+									{% endblock %}
+									<br>
 
-							{% block printed_ed%}
-							<div class="row printed_edition">
-								<div class="panel panel-default">
-								  	<div class="panel-body">
-											<h4><b>Edición Impresa</b></h4><hr>
-											<div class="col-xs-4" style="padding:0;">
-												<a href="http://issuu.com/periodicoeldiario/docs/719_web" target="_blank">
-													<img class="img-thumbnail" src="http://image.issuu.com/140801031853-2ae9737573f335504175c71ee4ae4394/jpg/page_1_thumb_large.jpg">
-												</a>
-											</div>
-											<div class="col-xs-8" style="line-height: 13px;">
-												<div class="row-fluid text-center">
-													<p>
-														<b>Edición No. 79</b>
-													</p>
-													1 de agosto al 7 de agosto de 2014
-													<hr style="margin:12px 0;">
-												</div>
-												<div class="row-fluid">
-													<p>
-														<b>Editorial</b>
-													</p>
-													<a href="http://periodicoeldiario.com/articulos/la-indiferencia-frente-al-cambio-climatico/">
-														La indiferencia ante el cambio climático
-													</a>
-													<hr style="margin:12px 0;">
-													<p>
-														<b>Pasaje Vargas</b>
-													</p>
-													<a href="http://periodicoeldiario.com/articulos/todos-de-hollywood-ed718/">
-														Todos de Hollywood
-													</a>
-												</div>
-											</div>
-											<div class="col-xs-12 text-center"
-												style="padding:10px; margin-top:10px; background: #A42C2B;color:white; font-weight:bold;">
-												<a href="/ediciones_impresas/" style="color:white;">VER EDICIONES ANTERIORES</a>
-											</div>
-									</div>
-								</div>
-							</div>
-							{% endblock %}
-
-							<div class="row banner">Banner</div>
-
-							{% if poll %}
-							<div class="row polls">
-								{% block polls_app %}
-
-								<div class="panel panel-default">
-								  	<div class="panel-body">
-										<h4><span class="fa fa-tasks"></span> Encuesta</h4><hr>
-
-										<div class="container-fluid poll" style="background:#eee; padding-top:20px;">
-											{% if request.session.voted %}
-												{% load poll_tags %}
-												<div class="alert alert-success">
-													<span class="fa fa-thumbs-up"></span>
-													Ya has votado esta encuesta, gracias por tu voto.
-												</div>
-												<h4>Resultados de la encuesta</h4>
-												<p>
-													{{poll.poll_question}}
-												</p>
-
-												{% for option in poll.option_set.all %}
-													<div>
-
-														<div class="col-xs-12">
-																<p>{{option.question_text}}</p>
+									<div class="row alt-news text-justify">
+										{% block alt_news %}
+											{% if "R"|get_position_article %}
+												{% with "R"|get_position_article as article %}
+													<div class="panel panel-default">
+														<div class="panel-body">
+															<div class="container-fluid">
+																<h4>
+																	<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+																</h4>
+																{{ article.abstract|safe }}
+															</div>
 														</div>
-														<div class="col-xs-8">
-																<div class="progress">
-																	<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ option|get_percent|floatformat:2 }}" aria-valuemin="0"
-																		aria-valuemax="100" style="width: {{ option|get_percent|floatformat:0 }}%">
-																		{{ option|get_percent|floatformat:2 }}%
-																	</div>
-																</div>
-														</div>
-
-														<div class="col-xs-4">
-																<p>{{option.hits}} votos</p>
-														</div>
-
 													</div>
-												{% endfor %}
-											{% else %}
-											<p>{{poll.poll_question}}</p>
-											<form role="form" id="poll_form" action="encuestas/votar/" method="POST">
-												{% csrf_token %}
-												{% for option in poll.option_set.all %}
-												<div class="form-group">
-													<input id="{{option.id}}" value="{{option.id}}" type="radio" name="vote"/>
-													<label for="{{option.id}}">{{option.question_text}}</label>
-												</div>
-												{% endfor %}
-
-												<div class="form-group text-right">
-													<a class="submit_poll btn btn-success">Votar</a>
-													<a class="get_results btn btn-primary" data-href="/encuestas/resultados/{{poll.id}}">Ver votaciones</a>
-												</div>
-											</form>
+												{% endwith %}
 											{% endif %}
+										{% endblock %}
+									</div>
+
+									<div class="row ad ad_7">
+										{% include "pos7/template_index.html"%}
+									</div>
+
+									{% block printed_ed%}
+										{% include "right/printed.html" %}
+									{% endblock %}
+									
+									<!--
+									<div class="row banner">Banner</div>
+									-->
+
+									{% block polls_app %}
+										{% if poll %}
+											{% include "right/polls.html"%}
+										{% endif %}
+									{% endblock %}
+									
+									<!--
+									<div class="row">
+										<div class="especials-tab">
+											<span>INFORMES ESPECIALES</span>
+										</div>
+
+										<div class="row-fluid">
+											<img src="{% static "images/panoramapoliticoespe.jpg"%}" alt="Informes especiales" />
 										</div>
 									</div>
-								</div>
-								{% endblock %}
-							</div>
+									-->
 
-							{% endif %}
+									<hr>
 
-							<div class="row">
-								<div class="especials-tab">
-									<span>INFORMES ESPECIALES</span>
-								</div>
-
-								<div class="row-fluid">
-									<img src="{% static "images/panoramapoliticoespe.jpg"%}" alt="Informes especiales" />
-								</div>
-							</div>
-
-							<hr>
-
-							<div class="row ad ad_8">
-								{% include "pos8/template_index.html" %}
-							</div>
-
-							<div class="row twitter_widget">
-								{% block twitter_plugin %}
-								<a class="twitter-timeline" href="https://twitter.com/ELDIARIOBOYACA" data-widget-id="345215838229520384">
-									Tweets por @ELDIARIOBOYACA
-								</a>
-								<script>!function(d,s,id){
-									var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-										if(!d.getElementById(id)){
-											js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
-											fjs.parentNode.insertBefore(js,fjs);
-										}
-									}
-
-									(document,"script","twitter-wjs");
-									</script>
-
-
-								{% endblock %}
-							</div>
-
-							<div class="row">
-								{% block weather_app %}
-
-									<div class="panel panel-default">
-									  	<div class="panel-body">
-											<iframe src="http://www.tutiempo.net/widget/app/?sc=1&LocId=70493"
-													scrolling="no" frameborder="0"
-													style="margin-left:5px;border:none; overflow:hidden; width:100%; height:411px;"
-													allowTransparency="true">
-											</iframe>
-										</div>
+									<div class="row ad ad_8">
+										{% include "pos8/template_index.html" %}
 									</div>
+
+									{% block plugins %}
+										{% include "right/plugins.html" %}
+									{% endblock %}
+									
+									{% block right_ads %}
+										<div class="row ad ad9">
+											{% include "pos9/template_index.html"%}
+										</div>
+									{% endblock %}
 								{% endblock %}
 							</div>
+							<!--End Left Col-->
 						</div>
-						{% endblock %}
-						<!--End Left Col-->
-
-					</div>
 					{% endblock %}
-
 
 					<div class="row" style="padding: 0;">
 						{% block media %}
-						<div class="row-fluid" style="padding: 0; background:white;">
-							<div class="media-tab">
-								<span>MULTIMEDIA</span>
-							</div>
-
-							<div class="col-xs-12" style="background:#737278; padding:5px 20px;">
-								<div class="row" style="background:#3D3D3D;">
-									<div class="col-xs-7 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
-										<a href="/fotogalerias/{{gallery.slug}}" style="color:white;">
-											<h4><b>{{gallery.title}}</b></h4>
-										</a>
-										{% include "carrousel.html"%}
-										{{ gallery.description|safe }}
-									</div>
-
-									<div class="col-xs-5 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
-										{% include "cartoons.html"%}
-									</div>
-								</div>
-							</div>
-						</div>
+							{% include "media.html"%}
 						{% endblock %}
-						<div class="row-fluid fat-menu">
-							<div style="background:#F0F0F0; padding:20px;">
-								<h5 style="display: inline-block; width:7%"><b>Secciones</b></h5>
-								<hr style="display: inline-block; width:92%; margin:0 0 4px 0; border-top-color: #ccc;">
-								<div class="row">
-									<div class="col-xs-8">
-										{% for cat in categories %}
-										<div class="col-xs-2">
-											<h4><a href="/categorias/{{cat.slug}}">{{cat.title}}</a></h4>
-											<ul>
-												{% for subcat in cat.parent_cat.all%}
-												<li><a href="/categorias/{{subcat.slug}}">{{subcat.title}}</a></li>
-												{% endfor %}
-											</ul>
-										</div>
-										{% endfor %}
-									</div>
-									<div class="col-xs-4 text-center">
-										<p>
-											Transversal 4 No 43- 56
-										</p>
-										<p>
-											Tunja, Boyacá - Colombia
-										</p>
-										<p>
-											Telefax: 747-2650 Cel.: 311-210-0738
-										</p>
-										<p>
-											Escríbanos a: <a href="mailto:gerencia@periodicoeldiario.com" target="_top">gerencia@periodicoeldiario.com</a>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row-fluid">
-							<div style="background:#AF1717; padding:20px;border-radius:0 0 8px 8px;color:white;">
-								<!--<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/deed.es_ES">
-									<img alt="Licencia de Creative Commons" style="border-width: 0px; float:left; margin-right: 10px;"
-										 src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" height="32" width="92">
-								</a>
-								<b>periodicoeldiario.com</b> por <a href="">EL DIARIO</a>
-								está bajo licencia Creative Commons Reconocimiento-NoComercial-SinObraDerivada 3.0 Unported License.
-								Creado a partir de la obra en <a href="http://periodicoeldiario.com/">http://periodicoeldiario.com/</a>.
-							  -->
-								© 2014 - Periodico El Diario
-								<small style="margin-left:35px; margin-right:5px;font-size:13px">
-									sitio desarrollado por
-								</small>
-								<img src="{% static "images/logo-hanabi.png" %}" style="max-height:40px;margin-top:-10px;">
-							</div>
-						</div>
+						
+						{% block fat_menu%}
+							{% include "fat_menu.html"%}
+						{% endblock %}
 					</div>
 				</div>
 			</div>
-
 
 			<div class="col-xs-1" style="padding-left:20px;">
 				<div class="row ad ad3">
 					{% include "pos3/template_index.html" %}
 				</div>
 			</div>
-
-
-
 		</div>
+
 	</body>
 
 	<script type="text/javascript">

@@ -27,7 +27,7 @@ class UserEditForm(UserChangeForm):
 	class Meta:
 		
 		model = User
-		fields = ['first_name', 'last_name', 'username', 'password', 'email', 'is_superuser', 'is_active', 'is_staff','user_permissions', 'groups']
+		fields = ['first_name', 'last_name', 'username', 'password', 'email', 'avatar', 'is_superuser', 'is_active', 'is_staff','user_permissions', 'groups']
 
 		labels = {
             'username': 'Usuario',
@@ -39,6 +39,7 @@ class UserEditForm(UserChangeForm):
             'user_permissions': 'Permisos',
             'groups': 'Grupos',
             'password': '',
+            'avatar': 'Imágen de perfil',
             'is_staff': 'Administrador'
         }
 

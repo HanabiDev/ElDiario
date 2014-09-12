@@ -38,10 +38,12 @@ def add_user(request):
 		form = UserAddForm(request.POST)
         if form.is_valid():
             new_user = form.save()
+
             return redirect('/backend/acceso/usuarios/editar/'+str(new_user.id))
         else:
         	return render_to_response(TEMPLATE_DIR+'add_edit.html',
 							  {'form':form}, context_instance=RequestContext(request))
+
 
 
 @login_required(login_url='login')
@@ -57,9 +59,15 @@ def edit_user(request, id):
 	elif request.method == 'POST':
 		user = User.objects.get(id=id)
 		form = UserEditForm(request.POST, instance=user)
-        if form.is_valid():
-            new_user = form.save()
-            return redirect('/backend/acceso/')
+		if form.is_valid():
+			new_user = form.save()
+
+			if request.FILES:
+				new_user.avatar = request.FILES['avatar']
+				new_user.save()
+			
+			return redirect('/backend/acceso/')
+
         else:
         	return render_to_response(TEMPLATE_DIR+'add_edit.html',
 							  {'form':form}, context_instance=RequestContext(request))

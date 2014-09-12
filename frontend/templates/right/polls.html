@@ -1,0 +1,57 @@
+<div class="row polls">
+	<div class="panel panel-default">
+	  	<div class="panel-body">
+			<h4><span class="fa fa-tasks"></span> Encuesta</h4><hr>
+
+			<div class="container-fluid poll" style="background:#eee; padding-top:20px;">
+				{% if request.session.voted %}
+					{% load poll_tags %}
+					<div class="alert alert-success">
+						<span class="fa fa-thumbs-up"></span>
+						Ya has votado esta encuesta, gracias por tu voto.
+					</div>
+					<h4>Resultados de la encuesta</h4>
+					<p>
+						{{poll.poll_question}}
+					</p>
+
+					{% for option in poll.option_set.all %}
+						<div>
+							<div class="col-xs-12">
+									<p>{{option.question_text}}</p>
+							</div>
+							<div class="col-xs-8">
+									<div class="progress">
+										<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ option|get_percent|floatformat:2 }}" aria-valuemin="0"
+											aria-valuemax="100" style="width: {{ option|get_percent|floatformat:0 }}%">
+											{{ option|get_percent|floatformat:2 }}%
+										</div>
+									</div>
+							</div>
+
+							<div class="col-xs-4">
+									<p>{{option.hits}} votos</p>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p>{{poll.poll_question}}</p>
+					<form role="form" id="poll_form" action="encuestas/votar/" method="POST">
+						{% csrf_token %}
+						{% for option in poll.option_set.all %}
+						<div class="form-group">
+							<input id="{{option.id}}" value="{{option.id}}" type="radio" name="vote"/>
+							<label for="{{option.id}}">{{option.question_text}}</label>
+						</div>
+						{% endfor %}
+
+						<div class="form-group text-right">
+							<a class="submit_poll btn btn-success">Votar</a>
+							<a class="get_results btn btn-primary" data-href="/encuestas/resultados/{{poll.id}}">Ver votaciones</a>
+						</div>
+					</form>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

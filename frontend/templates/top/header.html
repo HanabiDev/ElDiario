@@ -1,0 +1,38 @@
+{% load static %}
+<div class="container-fluid" style="padding: 0 8px;">
+	<div class="row ad ad_1">
+		{% include "pos1/template_index.html"%}
+	</div>
+	<div class="row">
+
+		<ul class="list-inline org">
+			<li><a id="hide-ads" href="#">Cerrar publicidades</a></li>
+			<li><a href="/suscribirse" target="_blank">Suscríbase</a></li>
+			<li><a href="http://periodicoeldiario.com/articulos/el-diario-estrena-portal-web-para-celebrar-sus-18-anos/" target="_blank">Quiénes somos</a></li>
+			<li><a href="http://periodicoeldiario.com/articulos/paute-con-nosotros/" target="_blank">Paute con nosotros</a></li>
+
+			<li class="hidden_li">
+				<a href="{{settings.1.1}}">Edición Impresa</a>
+				<ul>
+					<li class="text-center">
+						<a style="padding:0;" href="{{settings.1.1}}" target="_blank">
+							<img style="padding:5px;" src="{{settings.3.1}}">
+						</a>
+					</li>
+				</ul>
+			</li>
+
+
+			<li><a href="" target="_blank">Clasificados</a></li>
+
+		</ul>
+
+	</div>
+
+	<div class="row logo" style="padding:25px;height:110px;">
+		<img src="{% static "images/logo.png" %}" style="max-height:100%;">
+	</div>
+	<div class="row date text-center" style="background:#333; color:white; font-size:12px;">
+		{% now " l j \d\e F \d\e\l Y " %}
+	</div>
+</div>

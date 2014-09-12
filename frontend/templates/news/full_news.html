@@ -1,0 +1,26 @@
+<div class="row" style="padding:5px; margin-bottom:0;background:white;">
+	<div class="panel panel-default">
+	  	<div class="panel-body">
+	  		<div class="full_head">
+				<h1>
+					<b>
+						<a href="/articulos/{{full_width_article.slug}}">
+							{{full_width_article.title}}
+						</a>
+					</b>
+				</h1>
+
+				<small>
+					<span class="fa fa-user"></span>
+					Por: {{full_width_article.author.first_name}} {{full_width_article.author.last_name}}
+				</small>
+				<small>
+					<span class="glyphicon glyphicon-calendar"></span>
+					{{ full_width_article.creation_date|date:"d \d\e F \d\e\l Y" }}
+				</small>
+			</div>
+			<hr style="margin-top:10px; margin-bottom:15px;">
+			{{ full_width_article.abstract | safe }}
+		</div>
+	</div>
+</div>

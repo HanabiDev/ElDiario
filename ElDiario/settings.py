@@ -20,7 +20,7 @@ if socket.gethostname().startswith('localhost'):
 else:
     DEVEL = False
 
-DEBUG = True
+DEBUG = DEVEL
 
 TEMPLATE_DEBUG = DEVEL
 
@@ -147,6 +147,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'frontend', 'templates'),
     os.path.join(BASE_DIR, 'session_security', 'templates'),
     os.path.join(BASE_DIR, 'mobile', 'templates'),
+    os.path.join(BASE_DIR, 'conf', 'templates'),
     os.path.join(MEDIA_ROOT, 'uploads/ads'),
 )
 

@@ -1,0 +1,45 @@
+<div class="row-fluid" style="padding: 0; background:white;">
+	<div class="media-tab">
+		<span>MULTIMEDIA</span>
+	</div>
+
+	<div class="col-xs-12" style="background:#737278; padding:5px 20px;">
+		
+		<div class="row" style="background:#3D3D3D;">
+			{% with galleries.first as gallery %}
+				<div class="col-xs-7 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
+					<a href="/fotogalerias/{{gallery.slug}}" style="color:white;">
+						<h4><b>{{gallery.title}}</b></h4>
+					</a>
+					{% with gallery.images.all as images%}
+						{% include "carrousel.html"%}
+					{% endwith %}
+					{{ gallery.description|safe }}
+				</div>
+			{% endwith %}
+
+			<div class="col-xs-5 pre_gallery" style="background:#3D3D3D; padding:10px 20px;color:white;">
+				{% include "cartoons.html"%}
+			</div>
+		</div>
+
+		<div class="row" style="background:#3D3D3D; padding-bottom:20px;">	
+			{% for gallery in galleries %}
+				{% if not gallery == galleries.first %}
+					<div class="col-xs-4">
+						<a href="/fotogalerias/{{gallery.slug}}" style="color:white;">
+							<h4><b>{{gallery.title}}</b></h4>
+							{% with gallery.images.first as image %}
+								{% if image.code %}
+						          {{ image.code|safe }}
+						        {% else %}
+						        	<img {% if image.image %}src="/media/{{image.image}}"{% else %}src="{{image.url}}"{% endif %} alt="{{image.image_title}}">
+				        		{% endif %}
+							{% endwith %}
+						</a>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
