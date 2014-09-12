@@ -11,7 +11,9 @@
 
 {% block indicators %}{% endblock %}
 
-{% block main_content %}
+
+
+	{% block main_news %}
 
 		<div class="cat-tab">
 			<h4>
@@ -38,22 +40,23 @@
 		<hr>
 		{% empty %}
 		<div class="text-center">
-				<h4>No se encontraron artículos para esta categoría</h4>
+			<h4>No se encontraron artículos para esta categoría</h4>
 		</div>
 		{% endfor %}
+	{% endblock %}
 
-	{% block other_news%}{%endblock%}
-	{% block dept %}{% endblock %}
-	{% block misc %}{% endblock %}
-{% endblock %}
+	{% block columnists %}{% endblock %}
+
 
 {% block right_col %}
 	{{block.super}}
 	{% block alt_news %}{% endblock %}
 	{% block editorial %}{% endblock %}
 	{% block twitter_plugin %}{% endblock %}
-	{% block facebook_plugin %}{% endblock %}
 	{% block weather_app %}{% endblock %}
 {% endblock %}
 
 {% block media %}{% endblock %}
+
+
+

@@ -8,7 +8,7 @@
 
 {% block indicators %}{% endblock %}
 
-{% block main_content %}
+{% block main_news %}
 	<div class="new_extended">
 		<div class="new_head" style="padding:0;	">
 			<a href="/categorias/{% if article.category %}{{article.category.slug}}{% else %}general{% endif %}">
@@ -82,6 +82,8 @@
 	{% block other_news%}{%endblock%}
 	{% block dept %}{% endblock %}
 	{% block misc %}{% endblock %}
+
+	{% block columnists %}{% endblock %}
 {% endblock %}
 
 {% block right_col %}
