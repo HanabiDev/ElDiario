@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm, AdminPas
 from django.contrib.auth.models import User, Group
 from django import forms
 
+from models import *
+
 
 class UserAddForm(UserCreationForm):
 
@@ -26,7 +28,7 @@ class UserEditForm(UserChangeForm):
 
 	class Meta:
 		
-		model = User
+		model = SiteUser
 		fields = ['first_name', 'last_name', 'username', 'password', 'email', 'avatar', 'is_superuser', 'is_active', 'is_staff','user_permissions', 'groups']
 
 		labels = {

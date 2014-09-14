@@ -113,8 +113,8 @@ def search(request):
 		galleries = Gallery.objects.filter(
 			Q(title__contains=keyword) | Q(description__contains=keyword)
 		).exclude(published=False)
-
-		return render_to_response(TEMPLATE_DIR+'search.html', {'keyword':keyword, 'articles':articles, 'categories':categories, 'galleries':galleries})
+		settings = load_settings()
+		return render_to_response(TEMPLATE_DIR+'search.html', {'settings':settings, 'keyword':keyword, 'articles':articles, 'categories':categories, 'galleries':galleries})
 	else:
 		return redirect('/')
 
@@ -123,8 +123,8 @@ def serve_article(request, slug):
 	article.hits = article.hits + 1
 	article.save()
 	categories = Category.objects.filter(parent=None, published=True)
-
-	return render_to_response(TEMPLATE_DIR+'article.html', {'article':article, 'categories':categories})
+	settings = load_settings()
+	return render_to_response(TEMPLATE_DIR+'article.html', {'article':article, 'categories':categories,'settings':settings,})
 
 def serve_category(request, slug):
 	if slug == "general":
@@ -134,17 +134,18 @@ def serve_category(request, slug):
 
 	articles = Article.objects.filter(category=category).order_by('-creation_date')
 	categories = Category.objects.filter(parent=None, published=True)
+	settings = load_settings()
 
-	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'category':category, 'categories':categories})
+	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'category':category, 'settings':settings,'categories':categories})
 
 def serve_gallery(request, slug):
 	gallery = get_object_or_404(Gallery, slug=slug)
 	gallery.hits = gallery.hits + 1
 	gallery.save()
 	categories = Category.objects.filter(parent=None, published=True)
-
+	settings = load_settings()
 	return render_to_response(TEMPLATE_DIR+'gallery.html',
-		{'gallery':gallery, 'categories':categories, 'images':gallery.images.all(), 'order':range(0,len(gallery.images.all()))})
+		{'gallery':gallery, 'categories':categories, 'images':gallery.images.all(), 'settings':settings,'order':range(0,len(gallery.images.all()))})
 
 
 def impressed(request):
@@ -155,9 +156,11 @@ def all_articles(request):
 
 	articles = Article.objects.filter(published=True).order_by('-creation_date')
 	categories = Category.objects.filter(parent=None, published=True)
+	settings = load_settings()
 
-	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'all_arts':True, 'categories':categories})
+	return render_to_response(TEMPLATE_DIR+'category.html', {'articles':articles, 'settings':settings, 'all_arts':True, 'categories':categories})
 
 def all_cats(request):
 	categories = Category.objects.filter(parent=None, published=True)
-	return render_to_response(TEMPLATE_DIR+'categories.html', {'all_arts':True, 'categories':categories})
+	settings = load_settings() 
+	return render_to_response(TEMPLATE_DIR+'categories.html', {'all_arts':True, 'settings':settings, 'categories':categories})

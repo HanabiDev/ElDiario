@@ -241,9 +241,9 @@ h4{
 	min-height: 98%;
 }
 
-.ad{text-align:center;background:#BBB;margin-bottom:20px;}
+.ad{text-align:center;background:#EEE;margin-bottom:45px;}
 
-.ad_1{max-height: 150px;padding:0;}
+.ad_1{max-height: 150px;padding:0; margin-bottom: 10px;}
 .ad_2, .ad_3 {max-height: 660px;padding:0;}
 .ad_4, .ad_8{max-height: 90px;padding:0;}
 .ad_4{margin-bottom: 0;padding:0;}

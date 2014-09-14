@@ -5,13 +5,13 @@
 	Últimos Artículos
 </div>
 <div class="col-xs-12 misc dept" style="padding:0 !important;">
-	<div class="col-xs-7 text-left" style="padding:0 !important;">
+	<div class="col-xs-8 text-left" style="padding:0 !important;">
 	{% for article in opinion_news %}
 		<div class="col-xs-6 opin_art" style="padding-top:10px;height:120px;">
-			<div class="col-xs-3" style="padding:0;">
-				<img class="img-circle" style="width:40px; height:40px;" src="/media/{{article.author.avatar}}"/>
+			<div class="col-xs-4" style="padding:0;">
+				<img class="img-circle" style="width:60px; height:60px;" src="/media/{{article.author.avatar}}"/>
 			</div>
-			<div class="col-xs-9" style="padding:0;">
+			<div class="col-xs-8" style="padding:0 0 0 3px;">
 				<small class="section_name"><span>{{article.category.title}}</span></small>
 				<h5 class="text-left">
 					<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
@@ -20,7 +20,7 @@
 		</div>
 	{% endfor %}
 	</div>
-	<div class="col-xs-5 oth" style="padding:5px;">
+	<div class="col-xs-4 oth" style="padding:5px;">
 		<div class="row" style="padding:15px;">
 			<p class="divider text-center">
 				<span>CARTAS DEL LECTOR</span>
