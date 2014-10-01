@@ -229,7 +229,7 @@ h4{
 
 .indicators{background: #f8f8f8;}
 
-.ad{position: relative; z-index: 0; height: auto;margin-bottom: 10px; border:1px solid #ddd;}
+.ad{position: relative; z-index: 0; height: auto;border:1px solid #ddd;}
 
 #bgBody{padding-bottom: 25px !important;}
 #bgUl li a{color:white !important;}
@@ -241,15 +241,21 @@ h4{
 	min-height: 98%;
 }
 
-.ad{text-align:center;background:#EEE;margin-bottom:45px;}
+.ad{text-align:center;background:#EEE;}
 
-.ad_1{max-height: 150px;padding:0; margin-bottom: 10px;}
-.ad_2, .ad_3 {max-height: 660px;padding:0;}
-.ad_4, .ad_8{max-height: 90px;padding:0;}
-.ad_4{margin-bottom: 20px;padding:0;}
-.ad_5{max-height: 150px;padding:0;}
-.ad_6{max-height: 150px;padding:0;}
-.ad_7{max-height: 300px;padding:0;}
+.ad_5, .ad_7, .ad_8, .ad_9, .ad_10{margin-bottom: 10px;}
+.ad_6{margin-bottom: 20px;}
+
+.ad_1 .ad_content{max-height: 150px;padding:0;}
+.ad_2 .ad_content, .ad_3 .ad_content {max-height: 660px;padding:0;}
+.ad_4 .ad_content{max-height: 90px;padding:0;}
+.ad_5 .ad_content{max-height: 150px;padding:0;}
+.ad_6 .ad_content{max-height: 150px;padding:0;}
+.ad_7 .ad_content{max-height: 300px;padding:0;}
+.ad_8 .ad_content {max-height: 150px;padding:0;}
+.ad_9 .ad_content {max-height: 300px;padding:0;}
+
+.ad_10 .ad_content{max-height: 300px;}
 
 .ad9 img, .ad9 object embed, .ad9 iframe{
 	width: 100%;

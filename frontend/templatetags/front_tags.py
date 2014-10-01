@@ -24,4 +24,23 @@ def get_position_article(position_label):
   
   return article
 
+
+
+from ads.models import *
+
+def get_position_ad(position):
+
+  ad = None
+
+  try:
+    if position == "10":
+      ad = Ad.objects.filter(position=position, published=True)
+    else:
+      ad = Ad.objects.filter(position=position, published=True)[0]
+  except Exception, e:
+    pass  
+
+  return ad
+
 register.filter('get_position_article', get_position_article)
+register.filter('get_position_ad', get_position_ad)

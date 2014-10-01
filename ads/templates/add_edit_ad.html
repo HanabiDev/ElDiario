@@ -129,8 +129,11 @@
 						$("#id_pkg_file").parents(".form-group").fadeIn();
 					});
 				}
-			})
+			});
 
+			$(document).ready(function(){
+				$("#id_categories").chosen({placeholder_text_multiple:'Escribe para buscar...',width: "100%"});
+			});
 
 		});
 	</script>

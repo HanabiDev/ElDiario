@@ -1,6 +1,15 @@
 {% extends "base.html" %}
+{% load static %}
 {% load url from future %}
 {% block title %} Administrar Publicidad {% endblock %}
+
+{% block extrastyle %}
+		<link rel="stylesheet" href="{% static "css/chosen.min.css"%}"></link>
+{% endblock %}
+
+{% block extrahead %}
+	<script src="{% static "js/chosen.jquery.min.js"%}"></script>
+{% endblock %}
 
 {% block breadcrumbs %}
 	<ul class="breadcrumb">
