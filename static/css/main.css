@@ -436,6 +436,9 @@ span:after, .media-tab span:after,
 	padding:0 10px !important;
 }
 
+.misc-right{border-left:1px solid #ddd;margin-bottom:20px;}
+.misc-left{margin-right:-1px;border-right:1px solid #ddd;margin-bottom:20px;}
+
 .fat-menu ul{padding:0; list-style: none;}
 .fat-menu a{color: #A42C2B;}
 

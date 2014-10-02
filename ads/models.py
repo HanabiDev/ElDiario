@@ -51,25 +51,3 @@ class Ad(models.Model):
 			).exclude(id=self.id).update(published=False)
 		
 		super(Ad, self).save(*args, **kwargs)
-
-
-	# def delete(self, *args, **kwargs):
-	# 	if self.position == '9':
-	# 		clean_files(self.position, self)
-	# 		self.pkg_file.delete()
-	# 	else:
-	# 		self.pkg_file.delete()
-	# 		clean_files(self.position)
-
-
-	# 	super(Ad, self).delete(*args, **kwargs)
-
-def publish_files(ad):
-	pass
-	# if ad.published:
-	# 	if ad.ad_type == '3':
-	# 		unzip_pkg(ad.position, ad.embed_code, ad.ad_type)
-	# 	else:
-	# 		unzip_pkg(ad.position, ad.pkg_file, ad.ad_type)
-	# else:
-	# 	clean_files(ad.position)
