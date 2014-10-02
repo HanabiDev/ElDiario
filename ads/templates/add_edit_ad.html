@@ -120,13 +120,13 @@
 
 			$("#id_ad_type :radio").change(function(){
 				if($(this).val()==3){
-					$("#id_pkg_file").parents(".form-group").fadeOut(function(){
+					$("#id_ad_file").parents(".form-group").fadeOut(function(){
 						$("#id_embed_code").parents(".form-group").slideDown();
 					});
 
 				}else{
 					$("#id_embed_code").parents(".form-group").slideUp(function(){
-						$("#id_pkg_file").parents(".form-group").fadeIn();
+						$("#id_ad_file").parents(".form-group").fadeIn();
 					});
 				}
 			});
