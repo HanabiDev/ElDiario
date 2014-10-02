@@ -21,8 +21,8 @@ class Ad(models.Model):
 		('5','5: Pre Principales (710x120)'),
 		('6','6: Post Principales (710x160)'),
 		('7','7: Derecha Arriba A (275x300)'),
-		('8','8: Derecha Arriba B (275x300)'),
-		('9','9: Derecha Abajo (275x90)'),
+		('8','8: Derecha Arriba B (275x90)'),
+		('9','9: Derecha Abajo (275x300)'),
 		('10','10: Post Twitter (275 de ancho)'),
 	)
 
