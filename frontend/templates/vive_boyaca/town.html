@@ -41,7 +41,8 @@
 {% block main_news %}
 	{% block ads_4 %}{% endblock %}
 	{% block ads_5 %}{% endblock %}
-	{% block ads_6 %}{% endblock %}
+	{% block ads_7 %}{% endblock %}
+
 
 	<div class="row" style="padding-right:16px;margin-bottom:15px;">
 		<div class="pre_gallery">
@@ -79,7 +80,7 @@
 			{% endif %}
 		{% endfor %}
 	</div>
-	{% block ads_7 %}{{block.super}}{%endblock%}
+	{% block ads_6 %}{{block.super}}{% endblock %}
 	<div class="row">
 		{% for article in articles|slice:"4:10" %}
 			{% if forloop.counter|divisibleby:2 %}
