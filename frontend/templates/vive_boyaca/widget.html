@@ -1,0 +1,30 @@
+{% load static %}
+
+{% block town_widget %}
+	<div class="row" style="background:#333; color:white; margin-bottom:10px;padding:5px 0; border-radius:6px;">
+		<p style="font-family:'Open Sans';font-size:18px; margin-bottom:0; border-bottom:4px solid #AA1717">
+			<span style="background:#AA1717; margin-right:10px;padding: 5px 20px;"><b>VISITE:</b></span>
+			<b>{{main_town.name}}</b>
+		</p>
+		<p style="overflow:hidden; margin-bottom:0;">
+			<a href="/vive-boyaca/{{main_town.slug}}">
+				<img src="/media/{{main_town.cover_image}}" style="max-width:none;max-height:370px;">
+			</a>	
+		</p>
+		
+		<p class="text-center" style="width:100%;background:#AA1717; padding: 5px 20px;">
+			<b>O elija su próximo destino</b>
+		</p>
+		
+		<p style="padding:0 10px;color:#333;font-weight:bold;">
+			<b style="color:white;">MUNICIPIO</b> 	
+			<select id="towns">
+				<option></option>
+				{% for town in towns %}
+				<option value="/vive-boyaca/{{town.slug}}">{{town.name}}</option>
+				{% endfor %}
+			</select>
+		</p>	
+	</div>
+
+{% endblock %}

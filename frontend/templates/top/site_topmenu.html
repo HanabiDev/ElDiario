@@ -24,7 +24,7 @@
 							<a href="/categorias/{{cat.slug}}" class="dropdown-toggle" >
 								<b>{{cat.title}}</b>
 							</a>
-							{% if cat.parent_cat.all %}
+							{% if cat.parent_cat.all and not cat.slug == "vive-boyaca"  %}
 							<ul class="dropdown-menu">
 								{% for subcat in cat.parent_cat.all %}
 									<li><a href="/categorias/{{subcat.slug}}"></b>{{subcat.title}}</b></a></li>

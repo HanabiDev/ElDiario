@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% block title %} Vive Boyacá {% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li class="active"><i class="fa fa-road"></i> Vive Boyacá</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="panel panel-default">
+				  <div class="panel-heading">
+				    <h2 class="panel-title" style="display:inline-block; margin-right:5px">
+				    	<span class="fa fa-road"></span> Vive Boyacá
+				    </h2>
+				    <div class="hidden-xs" style="display:inline-block;width:50%;"></div>
+				    <div class="btn-group" style="display:inline-block;">
+						<a href="nuevo/" class="btn btn-success">
+							<span class="fa fa-plus"></span> <span class="hidden-xs"> 
+								Nuevo Municipio
+							</span>
+						</a>
+						<a href="publicar/" class="btn btn-primary toggle_publish disabled">
+							<span class="glyphicon glyphicon-eye-open"></span> <span class="hidden-xs">Publicar</span>
+						</a>
+						<a href="despublicar/" class="btn btn-warning toggle_publish disabled">
+							<span class="glyphicon glyphicon-eye-close"></span> <span class="hidden-xs">Despublicar</span>
+						</a>
+						<a href="eliminar/" class="btn btn-danger delete disabled">
+							<span class="glyphicon glyphicon-fire"></span> <span class="hidden-xs">Eliminar</span>
+						</a>
+					</div>
+					<div class="btn-group" style="display:inline-block;">
+						<a href="poi/" class="btn btn-primary">
+							<span class="fa fa-map-marker"></span> <span class="hidden-xs"> 
+								Puntos de Interés
+							</span>
+						</a>
+					</div>
+				  </div>
+				  <div class="panel-body" style="padding:0">
+
+				  	<form id="all_objects" method="POST">{% csrf_token %}</form>
+				    
+				    <table class="table table-striped">
+				      <thead>
+				        <tr class="active">
+				        	<th><input type="checkbox" id="toggle_all"/></th>
+				        	<th class="text-center hidden-xs">ID</th>
+				        	<th class="text-left">Nombre</th>
+				        	<th class="text-center hidden-xs">Provincia</th>
+				        	<th class="text-center">Publicado</th>
+				        	<th class="text-center hidden-xs">Teléfono</th>
+				        	<th class="text-center hidden-xs">Dirección</th>
+				        	<th class="text-center hidden-xs">Email</th>
+				        	<th class="text-center">Alcalde</th>
+				        </tr>
+				      </thead>
+				      <tbody>
+				      	{% for town in towns%}
+				        <tr>
+				        	<td class="text-left;">
+				        		<input type="checkbox" class="check" name="id" form="all_objects" value="{{town.id}}"/>
+				        	</td>
+				        	<td class="text-center hidden-xs">{{town.id}}</td>
+				        	<td class="text-left"><a href="editar/{{town.id}}">{{town.name}}</a></td>
+				        	<td class="text-center hidden-xs">{{town.province}}</td>
+				        	<td class="text-center hidden-xs">
+				        		{% if town.published %}
+				        		<a href="despublicar/{{town.id}}">
+				        			<span class="glyphicon glyphicon-eye-open text-primary"></span>
+				        		{% else %}
+				        		<a href="publicar/{{town.id}}">
+				        			<span class="glyphicon glyphicon-eye-close text-danger"></span>
+				        		{% endif %}
+				        	</td>
+				        	<td class="text-center hidden-xs">{{town.phone}}</td>
+				        	<td class="text-center hidden-xs">{{town.address}}</td>
+				        	<td class="text-center">{{town.email}}</td>
+				        	<td class="text-center">{{town.mayor}}</td>
+				        </tr>
+				        {% empty %}
+				        <tr>
+				        	<td colspan="9" class="text-center">
+				        		<div class="alert alert-info">No has creado municipios
+				        			<br><br>
+				        			<b>
+				        				<a href="nuevo/"> 
+				        					<span class="fa fa-plus"></span> Crear un Municipio
+				        				</a>
+				        			</b>
+				        		</div>
+				        	</td>
+				        </tr>
+				        {% endfor %}
+				      </tbody>
+				    </table>
+				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	$(".delete").confirm({
+		text: "Vas a eliminar uno o más municipios, esta acción no se puede deshacer. ¿Aún deseas continuar?",
+	    title: "Procede con cuidado!",
+	    confirm: function(button) {
+	        $("#all_objects").attr("action", button.attr("href"));
+			$("#all_objects").submit();
+	    },
+	    cancel: function(button) {
+	        return false;
+	    },
+	    confirmButton: "Lo entiendo, deseo continuar",
+	    cancelButton: "No",
+	    post: false
+	});
+	</script>
+
+
+{% endblock %}
+

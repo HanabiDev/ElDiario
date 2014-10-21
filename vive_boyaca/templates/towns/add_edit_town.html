@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% load url from future %}
+
+{% block title %} 
+	{% if editing %} Editando el municipio: {{title}} 
+	{% else %} Nuevo Municipio {% endif %} 
+{% endblock %}
+
+{% block extrastyle %}
+		<link rel="stylesheet" href="{% static "css/chosen.min.css"%}"></link>
+{% endblock %}
+
+{% block extrahead %}
+	<script src="{% static "js/chosen.jquery.min.js"%}"></script>
+{% endblock %}
+
+{% block breadcrumbs %}
+	<ul class="breadcrumb">
+		<li><a href="/backend"><i class="fa fa-home"></i> Inicio</a></li>
+		<li><a href="/backend/vive_boyaca"><i class="fa fa-road"></i> Vive Boyacá</a></li>
+		<li>
+			<i class="{% if editing %}fa fa-edit {% else %}fa fa-plus {% endif %}"></i>
+			{% if editing %} Editar Municipio ({{title}}) {% else %} Nuevo Municipio {% endif %}
+		</li>
+	</ul>
+{% endblock %}
+
+{% block mainbody %}
+	<div id="content-main">
+		<div class="row">
+			<div class="col-xs-12 col-sm-10 col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+				    	<h2 class="panel-title">
+				    		{% if editing %} <span class="fa fa-edit"></span> Editar Municipio ({{title}})
+				    		{% else %} <span class="fa fa-plus"></span> Nuevo Municipio  {% endif %}
+
+				    	</h2>
+				  	</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+				  			<div class="col-md-1"></div>
+				  			<div class="col-xs-12 col-md-10">
+				  				<form role="form" action="." method="POST" enctype="multipart/form-data">
+									{% csrf_token %}
+
+									<input type="hidden" name="user_id" value="{{user}}" />
+
+									{% for field in form %}
+										<div class="form-group {% if field.errors %} has-error{% endif %}">
+											{% if not form.this_is_the_login_form.errors %}
+											<label class="control-label required" for="{{field.field.id}}">
+												{% if not user.is_superuser and field.name == "published" %}
+												{% else %}
+													{{field.label}}:
+												{% endif %}
+											</label>
+											{% endif %}
+
+											{% if field.errors %}
+												<span class="help-inline text-danger">
+													{{field.errors}}
+												</span>
+											{% endif %}
+
+											{% if not user.is_superuser and field.name == "published"%}
+
+											{% else %}
+												<div class="input-group">
+												<span class="input-group-addon">
+													<span class="glyphicon glyphicon-asterisk"></span>
+												</span>
+													{{ field }}
+												</div>
+											{% endif %}
+
+
+
+
+										</div>
+									{% endfor %}
+
+									<br><br>
+									<div class="form-group" style="text-align:right;">
+										<a href="{% if editing %}../../{% else %}../{% endif %}" class="btn btn-danger">
+											Cancelar
+										</a>
+										<button type="submit" class="btn btn-success">
+											{% if editing %} Guardar cambios
+				    						{% else %} Crear Municipio {% endif %}
+				    					</button>
+									</div>
+								</form>
+				  			</div>
+				  		</div>
+				  	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#id_related_articles").chosen({placeholder_text_multiple:'Escribe para buscar...',width: "100%"});
+		});
+	</script>
+{% endblock %}

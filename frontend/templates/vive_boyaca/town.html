@@ -1,0 +1,185 @@
+{% extends "site_index.html" %}
+{% load static %}
+{% block title %}Vive {{town.name}} - Periódico El Diario{% endblock %}
+
+{% block indicators %}
+
+
+	<div class="town_wrapper">
+		<div class="row" style="height:200px;overflow:hidden;padding:0;background:url('/media/{{town.cover_image}}');background-size: 100% auto;background-position:center">
+			
+			<div class="data" style="position: relative;z-index:1;text-shadow: 1px 1px 2px black;color:white; background:rgba(0,0,0,0.3);">
+				<div class="row" style="padding: 10px 20px;">
+					<div class="col-xs-3 text-center" style="font-family: 'Open Sans'" >
+						<p>
+							<img src="/media/{{town.mayor_pic}}" style="width:130px; height:130px; box-shadow: 1px 1px 2px black;">
+						</p>
+						<p style="margin-bottom:0;"><b style="font-family: 'Open Sans'">{{town.mayor}}</b></p>
+						Alcalde municipal {{town.gov_period}}
+					</div>
+					<div class="col-xs-9 text-right">
+						<h1 style="font-family: 'Open Sans'; margin-bottom:0;" >{{town.name}}</h1>
+						<h4 style="font-family: 'Open Sans'; margin-top:0;" >{{town.province}}</h4>
+						<h4><i style="font-family: 'Open Sans'">{{town.slogan}}</i></h4>
+						<br>
+						{% if town.report %}
+						<p>
+							<a target="_blank" href="{{town.report}}" class="btn btn-danger" style="background:#A42C2B; text-shadow:none;border:none;font-family: 'Open Sans'; width:40%;"><b>INFORME DE GESTIÓN</b></a>
+						</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="background:#333; color:white;padding:2px 5px; font-family: 'Open Sans'; font-size:11px;">
+			Teléfono: {{town.phone}} | Dirección: {{town.address}} | Correo Electrónico: {{town.email}} | Sitio Web: <a href="{{town.website}}" style="font-family: 'Open Sans'; color:white;">{{town.website}}</a>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block main_news %}
+	{% block ads_4 %}{% endblock %}
+	{% block ads_5 %}{% endblock %}
+	{% block ads_6 %}{% endblock %}
+
+	<div class="row" style="padding-right:16px;margin-bottom:15px;">
+		<div class="pre_gallery">
+			{% with gallery.images.all as images%}
+				{% include "carrousel.html"%}
+			{% endwith %}
+		</div>
+	</div>
+
+	<div class="row">
+		{% for article in articles|slice:":4" %}
+			{% if forloop.counter|divisibleby:2 %}
+			<div class="col-xs-5 misc-right">
+				<div class="row-fluid">
+					<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+					<h3 class="text-left">
+						<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+					</h3>
+					<hr>
+					{{ article.abstract|safe }}
+				</div>
+			</div>
+			{% else %}
+			<div class="col-xs-7 misc-left">
+					<small class="section_name">
+						<span>{{article.category.title}}</span> 
+						{{article.creation_date}}
+					</small>
+					<h3 class="text-left">
+						<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+					</h3>
+					<hr>
+					{{ article.abstract|safe }}
+			</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+	{% block ads_7 %}{{block.super}}{%endblock%}
+	<div class="row">
+		{% for article in articles|slice:"4:10" %}
+			{% if forloop.counter|divisibleby:2 %}
+			<div class="col-xs-5 misc-right">
+				<div class="row-fluid">
+					<small class="section_name"><span>{{article.category.title}}</span> {{article.creation_date}}</small>
+					<h3 class="text-left">
+						<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+					</h3>
+					<hr>
+					{{ article.abstract|safe }}
+				</div>
+			</div>
+			{% else %}
+			<div class="col-xs-7 misc-left">
+					<small class="section_name">
+						<span>{{article.category.title}}</span> 
+						{{article.creation_date}}
+					</small>
+					<h3 class="text-left">
+						<b><a href="/articulos/{{article.slug}}">{{article.title}}</a></b>
+					</h3>
+					<hr>
+					{{ article.abstract|safe }}
+			</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	{% block other_news%}{%endblock%}
+	{% block dept %}{% endblock %}
+	{% block misc %}{% endblock %}
+
+	{% block columnists %}{% endblock %}
+{% endblock %}
+
+{% block right_col %}
+	{% block printed_ed %} {{block.super}} {% endblock %}
+	{% include "vive_boyaca/widget.html" %}
+
+	{% block alt_news %}{% endblock %}
+	<div class="row">
+		{% if hotels %}
+			<img src="{% static "images/hoteles.png" %}" style="height:70px; margin-bottom:-20px;">
+			{% for poi in hotels %}
+				{% if poi.point_type == '3' %}
+				<div style="padding-left:70px">
+					<h4>{{poi.name}}</h4>
+					Dirección: {{poi.address}} <br/>
+					{% if poi.phone %}
+						Teléfono: {{poi.phone}} <br/>
+					{% endif %}
+					{% if poi.mobile %}
+						Móvil: {{poi.mobile}} <br/>
+					{% endif %}
+				</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+	<div class="row">
+		{% if restaurants %}
+			<img src="{% static "images/restaurantes.png" %}" style="height:70px; margin-bottom:-20px;">
+			{% for poi in restaurants %}
+				{% if poi.point_type == '2' %}
+				<div style="padding-left:70px">
+					<h4>{{poi.name}}</h4>
+					Dirección: {{poi.address}} <br/>
+					{% if poi.phone %}
+						Teléfono: {{poi.phone}} <br/>
+					{% endif %}
+					{% if poi.mobile %}
+						Móvil: {{poi.mobile}} <br/>
+					{% endif %}
+				</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+	<div class="row">
+		{% if places %}
+			<img src="{% static "images/lugares.png" %}" style="height:70px; margin-bottom:-20px;">
+			{% for poi in places %}
+				<div style="padding-left:70px">
+				{% if poi.point_type == '1' %}
+					<h4>{{poi.name}}</h4>
+					Dirección: {{poi.address}} <br/>
+					{% if poi.phone %}
+						Teléfono: {{poi.phone}} <br/>
+					{% endif %}
+					{% if poi.mobile %}
+						Móvil: {{poi.mobile}} <br/>
+					{% endif %}
+				</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</div>
+	<hr>
+	{% block plugins %}{{block.super}}{% endblock %}
+{% endblock %}
+
+{% block media %}{% endblock %}

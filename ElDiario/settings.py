@@ -81,6 +81,7 @@ INSTALLED_APPS = (
     'frontend',
     'polls',
     'suscriptions',
+    'vive_boyaca',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -148,6 +149,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'session_security', 'templates'),
     os.path.join(BASE_DIR, 'mobile', 'templates'),
     os.path.join(BASE_DIR, 'conf', 'templates'),
+    os.path.join(BASE_DIR, 'vive_boyaca', 'templates'),
     os.path.join(MEDIA_ROOT, 'uploads/ads'),
 )
 

@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response, HttpResponseRedirect, redirect
 from django.template import RequestContext
 from models import *
 from forms import *
+
+from django.contrib.auth.decorators import permission_required, login_required
 # Create your views here.
 
 TEMPLATE_DIR = 'photogallery/../'
@@ -15,6 +17,9 @@ def home(request):
 
 	return render_to_response(TEMPLATE_DIR+'index_gallery.html', {'galleries':galleries},
 								context_instance=RequestContext(request))
+
+@login_required(login_url='login')
+@permission_required('photogallery.add_gallery', login_url='/backend/permisos_insuficientes/')
 
 def add_gallery(request):
 
@@ -36,6 +41,8 @@ def add_gallery(request):
 			return render_to_response(TEMPLATE_DIR+'add_edit_gallery.html',
 					  {'form':form}, context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('photogallery.change_gallery', login_url='/backend/permisos_insuficientes/')
 def edit_gallery(request, id):
 
 	gallery = Gallery.objects.get(id=id)
@@ -62,6 +69,8 @@ def edit_gallery(request, id):
         	return render_to_response(TEMPLATE_DIR+'add_edit_gallery.html',
 							  {'form':form, 'editing':True, 'title':gallery.title}, context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('photogallery.change_gallery', login_url='/backend/permisos_insuficientes/')
 def publish_group(request):
 	ids = request.POST.getlist('id')
 	for gallery_id in ids:
@@ -70,6 +79,8 @@ def publish_group(request):
 		gallery.save()
 	return HttpResponseRedirect('/backend/fotogalerias')
 
+@login_required(login_url='login')
+@permission_required('photogallery.change_gallery', login_url='/backend/permisos_insuficientes/')
 def unpublish_group(request):
 	ids = request.POST.getlist('id')
 	for gallery_id in ids:
@@ -78,12 +89,17 @@ def unpublish_group(request):
 		gallery.save()
 	return HttpResponseRedirect('/backend/fotogalerias')
 
+@login_required(login_url='login')
+@permission_required('photogallery.change_gallery', login_url='/backend/permisos_insuficientes/')
 def toggle_publish(request, id):
 	gallery = Gallery.objects.get(id=id)
 	gallery.published = not gallery.published
 	gallery.save()
 	return HttpResponseRedirect('/backend/fotogalerias')
 
+
+@login_required(login_url='login')
+@permission_required('photogallery.delete_gallery', login_url='/backend/permisos_insuficientes/')
 def delete_gallery(request):
 	ids = request.POST.getlist('id')
 	for gallery_id in ids:
@@ -175,6 +191,8 @@ def index_images(request):
 	return render_to_response(TEMPLATE_DIR+'index_images.html', {'images':images},
 								context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('photogallery.add_image', login_url='/backend/permisos_insuficientes/')
 def new_image(request):
 	if request.method == 'GET':
 		form = ImageForm()
@@ -194,6 +212,8 @@ def new_image(request):
 			return render_to_response(TEMPLATE_DIR+'add_edit_image.html',
 									{'form':form}, context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('photogallery.change_image', login_url='/backend/permisos_insuficientes/')
 def edit_image(request, id):
 	if request.method == 'GET':
 		image = Image.objects.get(id=id)
@@ -214,6 +234,8 @@ def edit_image(request, id):
 			return render_to_response(TEMPLATE_DIR+'add_edit_image.html',
 									{'form':form, 'editing':True, 'title':image.image_title}, context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('photogallery.delete_image', login_url='/backend/permisos_insuficientes/')
 def delete_image(request):
 	ids = request.POST.getlist('id')
 	for image_id in ids:

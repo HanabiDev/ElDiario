@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, HttpResponse, redirect, get_obj
 from django.template import RequestContext
 from models import Poll, Option
 from forms import PollForm
-
+from django.contrib.auth.decorators import permission_required, login_required
 # Create your views here.
 
 def list_polls(request):
@@ -15,6 +15,8 @@ def list_polls(request):
 
 	return render_to_response('polls_index.html', {'polls':polls}, context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('polls.add_poll', login_url='/backend/permisos_insuficientes/')
 def add_poll(request):
 	if request.method == 'GET':
 		form = PollForm()
@@ -30,6 +32,8 @@ def add_poll(request):
 
 		return render_to_response('add_edit_poll.html', {'form':form}, context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('polls.change_poll', login_url='/backend/permisos_insuficientes/')
 def edit_poll(request, id):
 
 	poll = Poll.objects.get(id=id)
@@ -61,6 +65,8 @@ def edit_poll(request, id):
 			{'form':form, 'editing':True, 'title':poll.poll_title},
 			context_instance=RequestContext(request))
 
+@login_required(login_url='login')
+@permission_required('polls.change_poll', login_url='/backend/permisos_insuficientes/')
 def toggle_publish(request, id):
 	Poll.objects.exclude(id=id).update(closed=True)
 	poll = Poll.objects.get(id=id)
@@ -72,6 +78,8 @@ def toggle_publish(request, id):
 	poll.save()
 	return redirect('/backend/encuestas')
 
+@login_required(login_url='login')
+@permission_required('polls.delete_poll', login_url='/backend/permisos_insuficientes/')
 def delete_poll(request):
 	ids = request.POST.getlist('id')
 	for id in ids:

@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.db.models import Q
 from content.models import *
 from polls.models import *
+from vive_boyaca.models import *
 from photogallery.models import *
 from conf.views import load_settings
 # Create your views here.
@@ -129,6 +130,8 @@ def serve_article(request, slug):
 def serve_category(request, slug):
 	if slug == "general":
 		category = None
+	elif slug == 'vive-boyaca':
+		return redirect('/vive-boyaca/')
 	else:
 		category = get_object_or_404(Category, slug=slug)
 
@@ -164,3 +167,59 @@ def all_cats(request):
 	categories = Category.objects.filter(parent=None, published=True)
 	settings = load_settings() 
 	return render_to_response(TEMPLATE_DIR+'categories.html', {'all_arts':True, 'settings':settings, 'categories':categories})
+
+def serve_town(request, slug):
+	categories = Category.objects.filter(parent=None, published=True)
+	town = Town.objects.get(slug=slug)
+	towns = Town.objects.exclude(id=town.id).exclude(main_page=True)
+	gallery = None
+
+	try:
+		main_page_town = Town.objects.get(main_page=True)
+		gallery = Gallery.objects.get(category__slug=town.slug)
+
+	except Exception, e:
+		pass
+
+	hotels = PointOfInterest.objects.filter(town=town, point_type=3)
+	restaurants = PointOfInterest.objects.filter(town=town, point_type=2)
+	places = PointOfInterest.objects.filter(town=town, point_type=1)
+
+	articles = Article.objects.filter(category__slug=town.slug)
+
+	return render_to_response('vive_boyaca/town.html', 
+		{'gallery':gallery,'categories':categories, 
+		 'main_town':main_page_town, 'towns':towns, 
+		 'town':town, 'hotels':hotels, 'places':places, 'restaurants':restaurants,
+		 'articles': articles,
+		})
+
+from django.db.models import Q
+def vive_boyaca_home(request):
+	categories = Category.objects.filter(parent=None, published=True)
+	poll = None
+	main_page_town = None
+	gallery = None
+
+	try:
+		main_page_town = Town.objects.get(main_page=True)
+		gallery = Gallery.objects.get(category__slug=main_page_town.slug)
+	except Exception, e:
+		pass
+	
+	category = get_object_or_404(Category, slug='vive-boyaca')
+	articles = Article.objects.filter(
+    	Q(category=category) | Q(category__parent=category)
+    )
+    
+	towns = Town.objects.exclude(id=main_page_town.id)
+
+	try:
+		poll = Poll.objects.get(closed=False)
+	except Exception as e:
+		pass
+
+	return render_to_response('vive_boyaca/home.html', 
+		{'towns':towns,'main_town':main_page_town, 'articles':articles, 'categories':categories, 'poll':poll, 'gallery':gallery}
+	)
+
