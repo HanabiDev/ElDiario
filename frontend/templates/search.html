@@ -82,7 +82,7 @@
 						{% if preview.code %}
 							{{ preview.code|safe }}
 						{% else %}
-							<img src="{% if preview.url %}{{preview.url}}{% else %}/media/{{preview.image}}{%endif%}"/>
+							<img alt="imagen no disponible" src="{% if preview.url %}{{preview.url}}{% else %}/media/{{preview.image}}{%endif%}"/>
 						{% endif %}
 					{% endwith %}
 

@@ -12,7 +12,7 @@
 				<div class="row" style="padding: 10px 20px;">
 					<div class="col-xs-3 text-center" style="font-family: 'Open Sans'" >
 						<p>
-							<img src="/media/{{town.mayor_pic}}" style="width:130px; height:130px; box-shadow: 1px 1px 2px black;">
+							<img alt="imagen no disponible" src="/media/{{town.mayor_pic}}" style="width:130px; height:130px; box-shadow: 1px 1px 2px black;">
 						</p>
 						<p style="margin-bottom:0;"><b style="font-family: 'Open Sans'">{{town.mayor}}</b></p>
 						Alcalde municipal {{town.gov_period}}
@@ -124,7 +124,7 @@
 	{% block alt_news %}{% endblock %}
 	<div class="row">
 		{% if hotels %}
-			<img src="{% static "images/hoteles.png" %}" style="height:70px; margin-bottom:-20px;">
+			<img alt="imagen no disponible" src="{% static "images/hoteles.png" %}" style="height:70px; margin-bottom:-20px;">
 			{% for poi in hotels %}
 				{% if poi.point_type == '3' %}
 				<div style="padding-left:70px">
@@ -143,7 +143,7 @@
 	</div>
 	<div class="row">
 		{% if restaurants %}
-			<img src="{% static "images/restaurantes.png" %}" style="height:70px; margin-bottom:-20px;">
+			<img alt="imagen no disponible" src="{% static "images/restaurantes.png" %}" style="height:70px; margin-bottom:-20px;">
 			{% for poi in restaurants %}
 				{% if poi.point_type == '2' %}
 				<div style="padding-left:70px">
@@ -162,7 +162,7 @@
 	</div>
 	<div class="row">
 		{% if places %}
-			<img src="{% static "images/lugares.png" %}" style="height:70px; margin-bottom:-20px;">
+			<img alt="imagen no disponible" src="{% static "images/lugares.png" %}" style="height:70px; margin-bottom:-20px;">
 			{% for poi in places %}
 				<div style="padding-left:70px">
 				{% if poi.point_type == '1' %}

@@ -12,7 +12,7 @@
 			<div class="row-fluid ad_content">
 				{% with "1"|get_position_ad as ad %}
 					{% if ad.ad_type == "2" %}
-						<img src="/media/{{ad.ad_file}}">
+						<img alt="imagen no disponible" src="/media/{{ad.ad_file}}">
 					{% elif ad.ad_type == "3" %}
 						{{ad.embed_code|safe}}
 					{% else%}
@@ -49,7 +49,7 @@
 	</div>
 
 	<div class="row logo" style="padding:25px;height:110px;">
-		<img src="{% static "images/logo.png" %}" style="max-height:100%;">
+		<img alt="imagen no disponible" src="{% static "images/logo.png" %}" style="max-height:100%;">
 	</div>
 	<div class="row date text-center" style="background:#333; color:white; font-size:12px;">
 		{% now " l j \d\e F \d\e\l Y " %}
