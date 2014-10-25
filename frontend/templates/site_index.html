@@ -8,16 +8,18 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><!--<![endif]-->
 
-<html lang="{{ LANGUAGE_CODE|default:"es-co" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<html lang="{{ LANGUAGE_CODE|default:"es-co" }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %} itemscope itemtype="http://schema.org/Article">
+
 	<head>
 		<meta name="google-site-verification" content="nY2VcjTvM87CaJMF1S-Jk-LLQZUTaJ0KM58I77lK8ow" />
 		<meta charset="utf-8">
 		<title>{% block title %}Periódico El Diario - Inicio{% endblock %}</title>
 
 		{% block metadata %}
+			{% include "top/meta.html"%}
 		{% endblock %}
 
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="description" content="Sitio web de El Diario">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
