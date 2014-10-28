@@ -213,6 +213,7 @@ def vive_boyaca_home(request):
     )
     
 	towns = Town.objects.exclude(id=main_page_town.id)
+	slide_ads = Article.objects.filter(category__slug="publicidad")
 
 	try:
 		poll = Poll.objects.get(closed=False)
@@ -220,6 +221,7 @@ def vive_boyaca_home(request):
 		pass
 
 	return render_to_response('vive_boyaca/home.html', 
-		{'towns':towns,'main_town':main_page_town, 'articles':articles, 'categories':categories, 'poll':poll, 'gallery':gallery}
+		{'towns':towns,'main_town':main_page_town, 'articles':articles, 
+		 'categories':categories, 'poll':poll, 'gallery':gallery, 'slide_ads':slide_ads}
 	)
 

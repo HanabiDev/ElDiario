@@ -126,12 +126,19 @@
 
 {% block right_col %}
 	{{block.super}}
+
+	{% block ads_slide %}
+		<div class="row" style="padding-right:16px;margin-bottom:15px;">
+			<div class="pre_gallery">
+				{% if slide_ads %}
+					{% include "right/ads_slide.html"%}
+				{% endif %}
+			</div>
+		</div>
+	{% endblock %}
 	{% block printed_ed%}{% endblock %}
 	{% block alt_news %}{% endblock %}
-	{% block editorial %}{% endblock %}
-	{% block twitter_plugin %}{% endblock %}
-	{% block facebook_plugin %}{% endblock %}
-	{% block weather_app %}{% endblock %}
+
 {% endblock %}
 
 {% block media %}{% endblock %}

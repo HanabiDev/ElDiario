@@ -1,0 +1,40 @@
+{% if slide_ads %}
+
+<div class="row-fluid ad">
+	<div class="row-fluid text-center">
+		<span class="fa fa-angle-down"></span> 
+			Publicidad 
+		<span class="fa fa-angle-down"></span>
+	</div>
+	<div class="row-fluid ad_content">
+
+		<div id="ad_carousel" class="carousel slide" data-ride="carousel" style="height:320px;">
+
+		  <!-- Wrapper for slides -->
+		  <div class="carousel-inner" style="height:100%">
+
+		    {% for ad in slide_ads %}
+		      {% if ad == slide_ads|first %}
+		      <div class="item active">
+		      {% else %}
+		      <div class="item">
+		      {% endif %}
+
+		      {{ ad.abstract|safe }}
+		      </div>
+
+		    {% endfor %}
+		  </div>
+
+		  <!-- Controls -->
+		  <a class="left carousel-control" href="#ad_carousel" role="button" data-slide="prev">
+		    <span class="glyphicon glyphicon-chevron-left"></span>
+		  </a>
+		  <a class="right carousel-control" href="#ad_carousel" role="button" data-slide="next">
+		    <span class="glyphicon glyphicon-chevron-right"></span>
+		  </a>
+		</div>
+	</div>
+</div>
+
+{% endif %}
