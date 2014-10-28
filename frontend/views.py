@@ -186,12 +186,13 @@ def serve_town(request, slug):
 	places = PointOfInterest.objects.filter(town=town, point_type=1)
 
 	articles = Article.objects.filter(category__slug=town.slug)
+	slide_ads = Article.objects.filter(category__slug="publicidad")
 
 	return render_to_response('vive_boyaca/town.html', 
 		{'gallery':gallery,'categories':categories, 
 		 'main_town':main_page_town, 'towns':towns, 
 		 'town':town, 'hotels':hotels, 'places':places, 'restaurants':restaurants,
-		 'articles': articles,
+		 'articles': articles, 'slide_ads':slide_ads,
 		})
 
 from django.db.models import Q

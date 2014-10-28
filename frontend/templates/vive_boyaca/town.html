@@ -181,6 +181,15 @@
 	</div>
 	<hr>
 	{% block plugins %}{{block.super}}{% endblock %}
+	{% block ads_slide %}
+		<div class="row" style="padding-right:16px;margin-bottom:15px;">
+			<div class="pre_gallery">
+				{% if slide_ads %}
+					{% include "right/ads_slide.html"%}
+				{% endif %}
+			</div>
+		</div>
+	{% endblock %}
 {% endblock %}
 
 {% block media %}{% endblock %}
