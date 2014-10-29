@@ -1,0 +1,28 @@
+
+body{
+	overflow-x: visible !important;
+}
+
+#right_col, #top_menu, .org, 
+.indicators, .ad, .related, 
+.fat-menu, .fb-comments, .logo:before,
+.media_section{
+	display: none !important;
+}
+div{
+	width:100% !important; 
+	border: none !important;
+	width: auto; 
+	float: none;
+	position: static;     
+	overflow: visible; 
+}
+
+#devel{display: inline !important;}
+#devel_logo{display: none;}
+span:after{display: none;}
+
+.cat-label{padding: 0 10px 0 0; margin:0;}
+
+.logo{padding:20px 0 0 0 !important; text-align: center;height: 70px !important;}
+.logo img{height:50px !important;}
