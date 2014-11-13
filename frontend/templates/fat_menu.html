@@ -9,9 +9,11 @@
 				<div class="col-xs-2">
 					<h4><a href="/categorias/{{cat.slug}}">{{cat.title}}</a></h4>
 					<ul>
-						{% for subcat in cat.parent_cat.all%}
-						<li><a href="/categorias/{{subcat.slug}}">{{subcat.title}}</a></li>
-						{% endfor %}
+						{% if cat.parent_cat.all and not cat.slug == "vive-boyaca"  %}
+							{% for subcat in cat.parent_cat.all %}
+								<li><a href="/categorias/{{subcat.slug}}">{{subcat.title}}</a></li>
+							{% endfor %}
+						{% endif %}
 					</ul>
 				</div>
 				{% endfor %}
