@@ -3,27 +3,13 @@
 {% load url from future %}
 
 {% block extrahead %}
-	<script src='{% static "js/oocharts.min.js" %}'></script>
-	<script src="https://www.google.com/jsapi"></script>
 	<script>
-
-        window.onload = function(){
-
-            oo.setAPIKey("cf691005659d07762ba947e6368d45138336d0ac");
-
-            oo.load(function(){
-
-                var timeline = new oo.Timeline("86155580", "7d");
-
-                timeline.addMetric("ga:visits", "Visitantes");
-
-                timeline.addMetric("ga:newVisits", "Nuevos visitantes");
-
-                timeline.draw('chart');
-
-            });
-        };
-
+		(function(w,d,s,g,js,fs){
+		  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(f){this.q.push(f);}};
+		  js=d.createElement(s);fs=d.getElementsByTagName(s)[0];
+		  js.src='https://apis.google.com/js/platform.js';
+		  fs.parentNode.insertBefore(js,fs);js.onload=function(){g.load('analytics');};
+		}(window,document,'script'));
 	</script>
 {% endblock %}
 
@@ -52,7 +38,15 @@
 				      <div class="panel-body">
 
 							<div class="row-fluid hidden-phone">
-								<div id='chart'></div>
+								<div id="embed-api-auth-container">
+									
+								</div>
+								<div id="chart-container">
+									
+								</div>
+								<div id="view-selector-container">
+									
+								</div>
 							</div>
 				      </div>
 				    </div>
@@ -149,38 +143,95 @@
 					<h3 class="filter-title">Acciones recientes</h3>
 					<ul class="nav nav-list">
 
-							{% if not admin_log %}
-								<li>
-									<p class="tip">No se han registrado acciones</p>
-								</li>
-							{% else %}
-								{% for entry in admin_log %}
-								<li>
-									{% if not entry.is_deletion and entry.get_admin_url %}
-									<a class="log-link" href="{{ entry.get_admin_url }}">
-									{% endif %}
-										<i class="glyphicon glyphicon-{% if entry.is_addition %}plus{% elif entry.is_change %}edit{% elif entry.is_deletion %}remove{% endif %}"></i>
+						{% if not admin_log %}
+							<li>
+								<p class="tip">No se han registrado acciones</p>
+							</li>
+						{% else %}
+							{% for entry in admin_log %}
+							<li>
+								{% if not entry.is_deletion and entry.get_admin_url %}
+								<a class="log-link" href="{{ entry.get_admin_url }}">
+								{% endif %}
+									<i class="glyphicon glyphicon-{% if entry.is_addition %}plus{% elif entry.is_change %}edit{% elif entry.is_deletion %}remove{% endif %}"></i>
 
-										{{ entry.object_repr }}
+									{{ entry.object_repr }}
 
-									{% if not entry.is_deletion and entry.get_admin_url %}
-									</a>
-									{% endif %}
+								{% if not entry.is_deletion and entry.get_admin_url %}
+								</a>
+								{% endif %}
 
-									{% if entry.content_type %}
-									<span class="mini quiet">
-										{% filter capfirst %}entry.content_type.name{% endfilter %}
-									</span>
-									{% else %}
-									<span class="mini quiet">Unknown content</span>
-									{% endif %}
-									<span class="mini">{{entry.action_time|date:"d N, H:i"}}</span>
-								</li>
-								{% endfor %}
-							{% endif %}
+								{% if entry.content_type %}
+								<span class="mini quiet">
+									{% filter capfirst %}entry.content_type.name{% endfilter %}
+								</span>
+								{% else %}
+								<span class="mini quiet">Unknown content</span>
+								{% endif %}
+								<span class="mini">{{entry.action_time|date:"d N, H:i"}}</span>
+							</li>
+							{% endfor %}
+						{% endif %}
 					</ul>
 				</div>
 		  	</div>
 		</div>
 	</div>
+	<script>
+		gapi.analytics.ready(function() {
+
+		  /**
+		   * Authorize the user immediately if the user has already granted access.
+		   * If no access has been created, render an authorize button inside the
+		   * element with the ID "embed-api-auth-container".
+		   */
+		  gapi.analytics.auth.authorize({
+		    container: 'embed-api-auth-container',
+		    clientid: '86155580',
+		  });
+
+
+		  /**
+		   * Create a new ViewSelector instance to be rendered inside of an
+		   * element with the id "view-selector-container".
+		   */
+		  var viewSelector = new gapi.analytics.ViewSelector({
+		    container: 'view-selector-container'
+		  });
+
+		  // Render the view selector to the page.
+		  viewSelector.execute();
+
+
+		  /**
+		   * Create a new DataChart instance with the given query parameters
+		   * and Google chart options. It will be rendered inside an element
+		   * with the id "chart-container".
+		   */
+		  var dataChart = new gapi.analytics.googleCharts.DataChart({
+		    query: {
+		      metrics: 'ga:sessions',
+		      dimensions: 'ga:date',
+		      'start-date': '2014-06-01',
+		      'end-date': 'yesterday'
+		    },
+		    chart: {
+		      container: 'chart-container',
+		      type: 'LINE',
+		      options: {
+		        width: '100%'
+		      }
+		    }
+		  });
+
+
+		  /**
+		   * Render the dataChart on the page whenever a new view is selected.
+		   */
+		  viewSelector.on('change', function(ids) {
+		    dataChart.set({query: {ids: ids}}).execute();
+		  });
+
+		});
+	</script>
 {% endblock %}
