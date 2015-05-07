@@ -51,6 +51,10 @@ def home(request):
 
 	main_art = None
 	all_articles = None
+	secondary = None
+	misc_news = None
+	cartas_lector = None
+	cafe_con = None
 
 	settings = load_settings()
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from content.models import *
+from ads.models import Ad
 from django.db.models import Q
 
 TEMPLATE_DIR = 'mobile/../'
@@ -8,10 +9,12 @@ TEMPLATE_DIR = 'mobile/../'
 def home(request):
 
 	full_width_article = None
+	
 	try:
 		full_width_article = Article.objects.filter(full_width=True, published=True)[0]
 	except Exception as e:
 		pass
+
 
 	poll = None
 	try:

@@ -24,6 +24,7 @@ class Ad(models.Model):
 		('8','8: Derecha Arriba B (275x90)'),
 		('9','9: Derecha Abajo (275x300)'),
 		('10','10: Post Twitter (275 de ancho)'),
+		('11','11: Móvil'),
 	)
 
 	AD_TYPES = (
@@ -45,7 +46,7 @@ class Ad(models.Model):
 		if not self.id:
 			super(Ad, self).save(*args, **kwargs)
 		
-		if not self.position == "10":
+		if not (self.position == "10" or self.position == "11"):
 			Ad.objects.filter(
 				position=self.position
 			).exclude(id=self.id).update(published=False)
