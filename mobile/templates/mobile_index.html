@@ -130,6 +130,7 @@
         </div>
 
         {% if forloop.counter|divisibleby:2 %}
+          {% with forloop.counter|get_ad as ad %}
           <div class="col-lg-12 ad_mobile">
             <div class="row-fluid text-center">
               <span class="fa fa-angle-down"></span> 
@@ -137,17 +138,15 @@
               <span class="fa fa-angle-down"></span>
             </div>
             <div class="row-fluid ad_content">
-              {% with forloop.counter|get_ad as ad %}
-                  {% if ad.ad_type == "2" %}
-                    <img alt="imagen no disponible" src="/media/{{ad.ad_file}}">
-                  {% elif ad.ad_type == "3" %}
-                    {{ad.embed_code|safe}}
-                  {% else %}
-                  {% endif %}
-              {% endwith %}
-
+              {% if ad.ad_type == "2" %}
+                <img alt="imagen no disponible" src="/media/{{ad.ad_file}}">
+              {% elif ad.ad_type == "3" %}
+                {{ad.embed_code|safe}}
+              {% else %}
+              {% endif %}
             </div>
           </div>
+          {% endwith %}
         {% endif %}
         {% endfor %}
       </div>

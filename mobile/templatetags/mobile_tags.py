@@ -9,7 +9,7 @@ def get_ad(index):
   	index = index/2
   	
 	try:
-		ad = Ad.objects.filter(position='11', published=True).order_by('-creation_date')[index]
+		ad = Ad.objects.filter(position='11', published=True).order_by('-creation_date')[index-1]
 	except Exception as e:
 		pass
 	  
